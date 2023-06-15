@@ -1,0 +1,48 @@
+---
+import:
+  - prod/_defaults
+  - prod/globals
+  - catalog/asg/*
+  - catalog/ec2/*
+  - catalog/alb/*
+
+vars:
+  region: us-east-2
+  environment: ue2
+  namespace: accelerator-prod
+
+components:
+  terraform:
+    vpc:
+      vars:
+        name: vpc
+        tags:
+          component: "vpc"
+          expense-class: "network"
+        ipv4_primary_cidr_block: "10.240.0.0/17"
+        ipv4_cidrs:
+        -
+          public:
+            - "10.240.0.0/24"
+            - "10.240.1.0/24"
+            - "10.240.2.0/24"
+          private:
+            - "10.240.32.0/19"
+            - "10.240.64.0/19"
+            - "10.240.96.0/19"
+        #transit_gateway_id: "tgw-00765178b819867a6"
+        nat_gateway_enabled: true
+        availability_zones:
+          - us-east-2a
+          - us-east-2b
+          - us-east-2c
+    dns-delegated:
+      vars:
+        tags:
+          component: "dns-delegated"
+          expense-class: "network"
+        zone_config:
+          - subdomain: prod-ue2
+            zone_name: accelerator.slalom.com
+        request_acm_certificate: true
+        dns_private_zone_enabled: false

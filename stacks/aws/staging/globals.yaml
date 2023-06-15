@@ -1,0 +1,21 @@
+---
+import:
+  - staging/_defaults
+
+terraform:
+  vars: {}
+
+  backend_type: s3
+  backend:
+    s3:
+      encrypt: true
+      bucket: "accelerator-staging-ue2-tfstate"
+      key: "terraform.tfstate"
+      dynamodb_table: "accelerator-staging-ue2-tfstate-lock"
+      acl: "bucket-owner-full-control"
+      region: "us-east-2"
+      role_arn: "arn:aws:iam::333333333333:role/accelerator-staging-automation-role"
+
+  remote_state_backend:
+    s3:
+      role_arn: null

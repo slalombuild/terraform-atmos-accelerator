@@ -1,0 +1,14 @@
+---
+import:
+  - account-globals
+vars:
+  account_number: 333333333333
+  account_name: staging
+  tags:
+    
+    
+    product: "accelerator"
+    environment: "staging"
+    component: ""
+    expense-class: ""
+    contact: "accelerator@slalom.com"

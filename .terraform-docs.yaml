@@ -1,0 +1,32 @@
+---
+formatter: markdown table
+recursive:
+  enabled: true
+  path: .
+output:
+  file: "README.md"
+  mode: inject
+  template: |-
+    <!-- BEGIN-TERRAFORM-DOCS -->
+    {{ .Content }}
+    <!-- END-TERRAFORM-DOCS -->
+sort:
+  enabled: true
+  by: name
+sections:
+  show:
+    - all
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: true
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: false
+  read-comments: false
+  required: true
+  sensitive: true
+  type: true

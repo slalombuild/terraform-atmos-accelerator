@@ -1,0 +1,55 @@
+# JetBrains IDE
+.idea/
+*.iml
+
+# Local .terraform directories and files
+**/.terraform
+**/.terraform/*
+**/*.lock.hcl
+**/*.disabled
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+**/*.tfstate**
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# .plan files
+*.plan
+*.planfile
+
+# Ignore configuration tfvars under the deployments folder
+deployments/**/*.tfvars
+
+# MacOS ignores
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Atmos generated files
+**/backend.tf.json
+**/backend.tf
+**/*.tfvars.json
+**/*.tfvars
+
+#tfsec html reports
+*.html
+# Secureli-generated files (do not modify):
+.secureli
+# End Secureli-generated files

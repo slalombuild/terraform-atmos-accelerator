@@ -1,0 +1,12 @@
+---
+import:
+  - account-globals
+vars:
+  account_number: 222222222222
+  account_name: dev
+  tags:
+    product: "accelerator"
+    environment: "dev"
+    component: ""
+    expense-class: ""
+    contact: "accelerator@slalom.com"

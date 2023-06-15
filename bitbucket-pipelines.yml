@@ -1,0 +1,30 @@
+image:
+  name: ghcr.io/slalombuild/pe-toolkit-full-ubuntu-amd64:latest
+
+definitions:
+  steps:
+    - step: &confirm-versions
+        name: Confirm tool versions
+        script:
+          - terraform version
+          - atmos version
+          - terraform-docs version
+
+    - step: &secrets-scan
+        name: Scan for secrets
+        script:
+          - pipe: atlassian/git-secrets-scan:0.5.1
+
+    - step: &tfsec-scan
+        name: Run tfsec static code analysis for Terraform components
+        script:
+          - tfsec ./components/terraform --force-all-dirs --exclude-downloaded-modules -m HIGH --concise-output --exclude-path ".terraform"
+
+pipelines:
+  default:
+    - step: *confirm-versions
+    - parallel:
+        - step:
+            <<: *secrets-scan
+        - step:
+            <<: *tfsec-scan

@@ -1,0 +1,21 @@
+# stacks/catalog/ecs-service/defaults.yaml
+components:
+  terraform:
+    ecs-service/defaults:
+      metadata:
+        component: ecs-service
+        type: abstract
+      vars:
+        enabled: true
+        public_lb_enabled: false
+        task:
+          launch_type: FARGATE
+          network_mode: awsvpc
+          desired_count: 1
+          ignore_changes_desired_count: true
+          ignore_changes_task_definition: false
+          assign_public_ip: false
+          propagate_tags: SERVICE
+          wait_for_steady_state: true
+          circuit_breaker_deployment_enabled: true
+          circuit_breaker_rollback_enabled: true

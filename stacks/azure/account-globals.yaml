@@ -1,0 +1,7 @@
+# Global variables used for account maps, role maps and other global values
+vars:
+  account_map:
+    dev: "f2a22a7e-b4f1-4e48-b4ff-902b8ee5cec4"
+    staging: "e4cf3b00-8ebe-4146-a570-ba9d380bb757"
+    automation: "7a46bdeb-058d-4ecb-be48-18856e59f63c"
+    prod: "6cf56fb1-8c39-4730-b6f0-4a0bb3ec30b2"

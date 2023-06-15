@@ -1,0 +1,36 @@
+---
+# stacks/catalog/asg/defaults.yaml
+components:
+  terraform:
+    asg/defaults:
+      metadata:
+        component: asg
+        type: abstract
+      vars:
+        region: "us-east-2"
+        availability_zones: ["us-east-2a", "us-east-2b"]
+        instance_type: "t3.micro"
+        ami_name: "CentOS-7-2111-20220825_1.x86_64-*"
+        ami_owner: "679593333241"
+        health_check_type: "EC2"
+        wait_for_capacity_timeout: "10m"
+        max_size: 2
+        min_size: 1
+        cpu_utilization_high_threshold_percent: 80
+        cpu_utilization_low_threshold_percent: 20
+        ssh_ingress_cidrs: ["10.240.128.0/18"]
+        # to enable or disable imdsv2 metadata auth
+        metadata_http_tokens_required: false
+        custom_managed_policies: []
+        block_device_mappings: 
+        - device_name: "/dev/sdb"
+          no_device: null
+          virtual_name: null
+          ebs: 
+            delete_on_termination: true
+            encrypted: true
+            volume_size: 8
+            volume_type: "gp2"
+            iops: null
+            kms_key_id: null
+            snapshot_id: null

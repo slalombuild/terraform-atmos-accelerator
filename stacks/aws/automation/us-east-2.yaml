@@ -1,0 +1,145 @@
+---
+import:
+  - automation/_defaults
+  - automation/globals
+  - catalog/ecs-service/defaults
+
+vars:
+  region: us-east-2
+  environment: ue2
+  namespace: accelerator-auto
+
+components:
+  terraform:
+    vpc:
+      vars:
+        name: vpc
+        tags:
+          component: "vpc"
+          expense-class: "network"
+        ipv4_primary_cidr_block: "10.156.192.0/18"
+        nat_gateway_enabled: true
+        availability_zones:
+          - us-east-2a
+          - us-east-2b
+          - us-east-2c
+    dns-primary:
+      vars:
+        domain_names:
+          - domain_name: accelerator.slalom.com
+            register_domain: false
+            admin_contact:
+              - first_name: "Some"
+                last_name: "Name"
+                email: "some.name@slalom.com"
+                organization_name: "Slalom, Inc"
+                contact_type: "COMPANY"
+                address_line_1: "821 2nd Avenue Suite 1900"
+                city: "Seattle"
+                country_code: "US"
+                state: "WA"
+                zip_code: "98104"
+                phone_number: "206-438-5700"
+        soa_record_ttl: 900
+        tags:
+          component: "dns-primary"
+          expense-class: "network"
+        record_config:
+          - root_zone: accelerator.slalom.com
+            name: "api."
+            type: A
+            ttl: 60
+            records:
+              - 10.128.40.111
+              - 10.128.40.135
+              - 10.128.40.136
+          
+    atlantis/acm/cert:
+      metadata:
+        component: acm
+        type: real
+      vars:
+        enabled: true
+        domain_name: atlantis.auto-ue2.accelerator.slalom.com
+        zone_name: accelerator.slalom.com
+        process_domain_validation_options: yes
+        validation_method: DNS
+
+    # ALB + ECS Cluster attachment
+    atlantis/ecs/alb:
+      metadata:
+          component: ecs
+          type: real
+      vars:
+        name: atlantis
+        enabled: true
+        tags:
+          component: "atlantis"
+        acm_certificate_domain: atlantis.auto-ue2.accelerator.slalom.com
+        route53_record_name: "atlantis.auto-ue2"
+        domain_name: accelerator.slalom.com
+        github_hook_enabled: true
+        alb_configuration:
+          atlantis:
+            http_ingress_cidr_blocks: 
+              - 96.49.34.55/32
+            https_ingress_cidr_blocks: 
+              - 0.0.0.0/0
+  
+    atlantis/ecs:
+      metadata:
+        component: ecs-service
+        inherits:
+          - ecs-service/defaults
+      vars:
+        enabled: true
+        name: atlantis
+        public_lb_enabled: true
+        use_lb: true
+        alb_domain_name: atlantis.auto-ue2.accelerator.slalom.com
+        unauthenticated_priority: 50
+        unauthenticated_paths: 
+          - "/events"
+        authenticated_priority: 100
+        authenticated_paths:
+          - "/*"
+        authentication_type: OIDC
+        authentication_oidc_client_id: "xxxxxxxxxxxxxxxxxxxxxxxxx"
+        authentication_oidc_client_secret: atlantis/AUTHENTICATION_OIDC_CLIENT_SECRET
+        authentication_oidc_issuer: "https://login.microsoftonline.com/xxxxxxxxxxxxxxxxx/v2.0"
+        authentication_oidc_authorization_endpoint: "https://login.microsoftonline.com/xxxxxxxxxxxxx/oauth2/v2.0/authorize"
+        authentication_oidc_token_endpoint: "https://login.microsoftonline.com/xxxxxxxxxxxxxxxxxxx/oauth2/v2.0/token"
+        authentication_oidc_user_info_endpoint: "https://graph.microsoft.com/oidc/userinfo"
+        domain_name: accelerator.slalom.com
+        cluster_name: atlantis
+        containers:
+          service:
+            name: "atlantis"
+            image: ghcr.io/runatlantis/atlantis:v0.21.0
+            port_mappings:
+              - containerPort: 4141
+                hostPort: 4141
+                protocol: tcp
+            log_configuration:
+              logDriver: "awslogs"
+              options: {}
+            map_secrets:
+              ATLANTIS_GH_APP_KEY: atlantis/ATLANTIS_GH_APP_KEY
+              ATLANTIS_GH_WEBHOOK_SECRET: atlantis/ATLANTIS_GH_WEBHOOK_SECRET
+            map_environment:
+              ATLANTIS_GH_APP_ID: "111111"
+              ATLANTIS_GH_APP_SLUG: "build-internal-accelerator"
+              ATLANTIS_REPO_ALLOWLIST: "bitbucket.org:slalom-consulting/terraform-accelerator"
+              ATLANTIS_WRITE_GIT_CREDS: true
+              ATLANTIS_ENABLE_DIFF_MARKDOWN_FORMAT: true
+              ATLANTIS_SILENCE_VCS_STATUS_NO_PLANS: true
+              ATLANTIS_HIDE_PREV_PLAN_COMMENTS: true 
+              ATLANTIS_LOG_LEVEL: info
+              ATLANTIS_ATLANTIS_URL: https://atlantis.auto-ue2.accelerator.slalom.com
+              ATLANTIS_REPO_CONFIG_JSON: '{"repos":[{"id":"/.*/", "allowed_overrides":["apply_requirements","workflow","delete_source_branch_on_merge"], "allow_custom_workflows":true ,"apply_requirements": ["mergeable"]}]}'
+
+        task:
+          desired_count: 1
+          task_memory: 16384
+          task_cpu: 4096
+
