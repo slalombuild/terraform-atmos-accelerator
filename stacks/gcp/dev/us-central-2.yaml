@@ -1,12 +1,14 @@
 ---
 import:
-  - dev/_defaults
-  - dev/globals
+  - gcp/dev/_defaults
+  - gcp/dev/globals
 
 vars:
-  region: "northamerica-northeast1"
-  environment: na1
-  namespace: accelerator-dev
+  enabled: true
+  region: "us-centra12"
+  environment: "dev"
+  namespace: "accelerator-dev"
+  stage: "uc2"
 
 components:
   terraform:
@@ -38,3 +40,19 @@ components:
               
             -  range_name: "services-2"
                ip_cidr_range: "192.168.2.0/24"
+
+    gcs-bucket:
+      metadata:
+        component: gcp/gcs-bucket
+      vars:
+        bucket_name: "test-bucket"
+        kms_encryption_enabled: false
+        gcs_bucket: {}
+        kms: {}
+        bucket_iam: []
+        additional_tag_map:
+          "env": "dev"
+          "component": "gcs-bucket"
+          "class": "storage"
+        
+        
