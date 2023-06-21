@@ -1,0 +1,90 @@
+---
+import:
+  - gcp/dev/_defaults
+  - gcp/dev/globals
+
+vars:
+  region: "us-central2"
+  environment: "dev"
+  namespace: "platlive"
+  stage: "uc2"
+
+components:
+  terraform:
+    vpc:
+      metadata:
+        component: gcp/vpc
+      vars:
+        routing_mode: "GLOBAL"
+        subnets:
+        - subnet_name: "subnet-1"
+          
+          cidr: "10.1.0.0/16"
+          private_google_access: true
+          secondary_cidrs:
+          - name: "pods-1" 
+            range: "172.16.1.0/24"
+              
+          - name: "services-1"
+            range: "192.168.1.0/24"
+          flow_logs:
+            aggregation_interval: "INTERVAL_5_SEC"
+            flow_sampling: "0.5"
+            metadata: "INCLUDE_ALL_METADATA"
+          
+        - subnet_name: "subnet-2"
+          
+          cidr: "10.2.0.0/16"
+          secondary_cidrs:
+          - name: "pods-2" 
+            range: "172.16.2.0/24"
+              
+          - name: "services-2"
+            range: "192.168.2.0/24"
+
+        routes:
+        - name: "egress-internet"
+          destination_range: "0.0.0.0/0"
+          tags: "egress-inet"
+          next_hop_internet: "true"
+
+        cloud_nat:
+          nat_ip_allocate_option: "AUTO_ONLY"
+          subnetworks:
+          - name: "subnet-1"
+            source_ip_ranges_to_nat:
+            - "ALL_IP_RANGES"
+          
+          - name: "subnet-2"
+            source_ip_ranges_to_nat:
+            - "10.2.0.0/16"
+            - "172.16.2.0/24"
+            - "192.168.2.0/24"
+    # vpc:
+    #   metadata:
+    #     component: gcp/net-vpc
+    #   vars:
+    #     name: vpc
+    #     auto_create_subnetworks: false
+    #     subnets:
+    #     - name: "subnet-1"
+          
+    #       ip_cidr_range: "10.1.0.0/16"
+    #       secondary_ip_ranges:
+    #         -
+    #           range_name: "pods-1" 
+    #           ip_cidr_range: "172.16.1.0/24"
+              
+    #         -
+    #           range_name: "services-1"
+    #           ip_cidr_range: "192.168.1.0/24"
+    #     - name: "subnet-2"
+          
+    #       ip_cidr_range: "10.2.0.0/16"
+    #       secondary_ip_ranges:
+    #         -
+    #           range_name: "pods-2" 
+    #           ip_cidr_range: "172.16.2.0/24"
+              
+    #         -  range_name: "services-2"
+    #            ip_cidr_range: "192.168.2.0/24"
