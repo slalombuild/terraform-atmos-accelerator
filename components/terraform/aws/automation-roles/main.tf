@@ -21,14 +21,14 @@ resource "aws_iam_policy" "allow_automation_tasks_to_assume" {
   count       = module.this.enabled ? 1 : 0
   name        = "allow_automation_tasks_to_assume"
   description = "Policy used for atlantis to be permitted to assume roles"
-  policy      = one(data.aws_iam_policy_document.assume_role_policy.*.json)
+  policy      = one([data.aws_iam_policy_document.assume_role_policy[*].json])
   provider    = aws.auto
   tags        = module.this.tags
 }
 
 resource "aws_iam_role_policy_attachment" "allow_automation_tasks_to_assume" {
   role       = var.iac_automation_role_name
-  policy_arn = one(aws_iam_policy.allow_automation_tasks_to_assume.*.arn)
+  policy_arn = one([aws_iam_policy.allow_automation_tasks_to_assume[*].arn])
   provider   = aws.auto
 }
 
