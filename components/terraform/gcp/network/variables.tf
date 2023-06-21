@@ -20,6 +20,7 @@ variable "shared_vpc_host" {
   default     = false
 }
 
+<<<<<<< HEAD
 variable "vpc_description" {
   description = "An optional description of this resource. The resource must be recreated to modify this field."
   type        = string
@@ -32,6 +33,8 @@ variable "vpc_mtu" {
   default     = 0
 }
 
+=======
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
 variable "service_project_names" {
   description = "list of service projects to connect with host vpc to share the network"
   type        = list(string)
@@ -53,7 +56,11 @@ variable "delete_default_internet_gateway_routes" {
 variable "subnets" {
   type = list(object({
     subnet_name           = string,
+<<<<<<< HEAD
     description           = optional(string, null),
+=======
+    description           = optional(string, ""),
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
     cidr                  = string,
     private_google_access = optional(bool, false),
     flow_logs = optional(object({
@@ -61,10 +68,19 @@ variable "subnets" {
       flow_sampling        = optional(number, 0.5),
       metadata             = optional(string, "INCLUDE_ALL_METADATA")
     }), null),
+<<<<<<< HEAD
     secondary_cidrs = optional(list(object({
       name = string,
       cidr = string
     })), [])
+=======
+    secondary_cidrs = optional(list(
+      object({
+        name = string,
+        cidr = string
+      })
+    ), [])
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
   }))
   description = "List of subnets to be created in the network. See the main module documentation for possible values."
   default     = []
@@ -73,6 +89,7 @@ variable "subnets" {
 variable "routes" {
   description = "List of custom routes to be created in the network. Leave empty if you won't need custom routes. See the main module documentation for possible values."
   type = list(object({
+<<<<<<< HEAD
     name                   = string,
     description            = optional(string, null),
     destination_range      = string,
@@ -85,6 +102,14 @@ variable "routes" {
     next_hop_vpn_tunnel    = optional(string, null),
     next_hop_ilb           = optional(string, null),
     # more variables can be added directly here
+=======
+    name              = string,
+    description       = optional(string, ""),
+    destination_range = string,
+    tags              = string,                   #This is a list in string format. Eg. "tag-01,tag-02"
+    next_hop_internet = optional(string, "true"), #Use "false" to disable this as next hop
+    priority          = optional(string, "1000")
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
   }))
   default = []
 }
@@ -93,11 +118,19 @@ variable "cloud_nat" {
   description = "Configurations for Cloud NAT. Leave empty if you won't need a NAT gateway. See the main module documentation for possible values."
   type = object({
     nat_ips                            = optional(list(string), []),
+<<<<<<< HEAD
     source_subnetwork_ip_ranges_to_nat = optional(string, "LIST_OF_SUBNETWORKS")
     subnetworks = list(object({
       name                     = string,
       source_ip_ranges_to_nat  = optional(list(string), ["ALL_IP_RANGES"])
       secondary_ip_range_names = optional(list(string), []),
+=======
+    nat_ip_allocate_option             = optional(string, "AUTO_ONLY"),
+    source_subnetwork_ip_ranges_to_nat = optional(string, "LIST_OF_SUBNETWORKS")
+    subnetworks = list(object({
+      name                    = string,
+      source_ip_ranges_to_nat = optional(list(string), ["ALL_IP_RANGES"])
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
     })),
     enable_dynamic_port_allocation      = optional(bool, false),
     enable_endpoint_independent_mapping = optional(bool, null),
@@ -110,13 +143,18 @@ variable "cloud_nat" {
     tcp_time_wait_timeout_sec           = optional(string, "120"),
     udp_idle_timeout_sec                = optional(string, "30"),
   })
+<<<<<<< HEAD
   default = null
+=======
+  default = {}
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
 }
 
 variable "firewall_rules" {
   description = "value"
   type = list(object({
     name                    = string,
+<<<<<<< HEAD
     description             = optional(string, null),
     direction               = string,
     priority                = optional(number, null),
@@ -125,6 +163,16 @@ variable "firewall_rules" {
     source_service_accounts = optional(list(string), []),
     target_tags             = optional(list(string), []),
     target_service_accounts = optional(list(string), []),
+=======
+    description             = optional(string, ""),
+    direction               = string,
+    priority                = optional(number),
+    ranges                  = list(string),
+    source_tags             = optional(list(string)),
+    source_service_accounts = optional(list(string)),
+    target_tags             = optional(list(string)),
+    target_service_accounts = optional(list(string)),
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
     allow = optional(list(object({
       protocol = string
       ports    = optional(list(string))
@@ -138,6 +186,7 @@ variable "firewall_rules" {
     }), null)
   }))
   default = []
+<<<<<<< HEAD
 }
 
 variable "peers" {
@@ -162,3 +211,6 @@ variable "private_connections" {
   description = "List of private connections to establish a one-to-one relationship between the VPC network and the GCP Networking API ('servicenetworking.googleapis.com'). Leave empty if you won't need private VPC connections. See the main module documentation for possible values."
   default     = []
 }
+=======
+}
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)

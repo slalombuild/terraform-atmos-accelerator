@@ -2,7 +2,11 @@ resource "google_compute_subnetwork" "subnets" {
   for_each                 = local.enabled ? { for i, subnet in var.subnets : i => subnet } : {}
   project                  = var.project_id
   network                  = module.vpc[0].network_name
+<<<<<<< HEAD
   name                     = "${module.this.id}-${each.value.subnet_name}"
+=======
+  name                     = "${module.this.id}-${subnet_name}"
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
   description              = each.value.description
   ip_cidr_range            = each.value.cidr
   region                   = var.region
@@ -24,4 +28,8 @@ resource "google_compute_subnetwork" "subnets" {
       ip_cidr_range = secondary_ip_range.value.cidr
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 31b4528 (fixing the conflicts in stacks file of gcp)
