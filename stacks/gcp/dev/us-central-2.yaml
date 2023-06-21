@@ -4,14 +4,44 @@ import:
   - gcp/dev/globals
 
 vars:
+  enabled: true
   region: "us-central2"
   environment: "dev"
-  namespace: "platlive"
+  namespace: "accelerator-dev"
   stage: "uc2"
 
 components:
   terraform:
     vpc:
+      metadata:
+        component: gcp/net-vpc
+      vars:
+        name: vpc
+        auto_create_subnetworks: false
+        subnets:
+        - name: "subnet-1"
+          
+          ip_cidr_range: "10.1.0.0/16"
+          secondary_ip_ranges:
+            -
+              range_name: "pods-1" 
+              ip_cidr_range: "172.16.1.0/24"
+              
+            -
+              range_name: "services-1"
+              ip_cidr_range: "192.168.1.0/24"
+        - name: "subnet-2"
+          
+          ip_cidr_range: "10.2.0.0/16"
+          secondary_ip_ranges:
+            -
+              range_name: "pods-2" 
+              ip_cidr_range: "172.16.2.0/24"
+              
+            -  range_name: "services-2"
+               ip_cidr_range: "192.168.2.0/24"
+
+    new-vpc:
       metadata:
         component: gcp/vpc
       vars:
@@ -60,31 +90,3 @@ components:
             - "10.2.0.0/16"
             - "172.16.2.0/24"
             - "192.168.2.0/24"
-    # vpc:
-    #   metadata:
-    #     component: gcp/net-vpc
-    #   vars:
-    #     name: vpc
-    #     auto_create_subnetworks: false
-    #     subnets:
-    #     - name: "subnet-1"
-          
-    #       ip_cidr_range: "10.1.0.0/16"
-    #       secondary_ip_ranges:
-    #         -
-    #           range_name: "pods-1" 
-    #           ip_cidr_range: "172.16.1.0/24"
-              
-    #         -
-    #           range_name: "services-1"
-    #           ip_cidr_range: "192.168.1.0/24"
-    #     - name: "subnet-2"
-          
-    #       ip_cidr_range: "10.2.0.0/16"
-    #       secondary_ip_ranges:
-    #         -
-    #           range_name: "pods-2" 
-    #           ip_cidr_range: "172.16.2.0/24"
-              
-    #         -  range_name: "services-2"
-    #            ip_cidr_range: "192.168.2.0/24"
