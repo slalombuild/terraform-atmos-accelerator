@@ -1,0 +1,21 @@
+vars:
+  environment: bootstrap
+  namespace: common
+  stage: shared
+
+components:
+  terraform:
+    project:
+      metadata:
+        component: gcp/project
+      vars:
+        name: "test-project"
+        project_id: "test-project"
+        
+    folder:
+      metadata:
+        component: gcp/folder
+      vars:
+        name: "test-folder"
+        parent: "organizations/{org_id}"
+        
