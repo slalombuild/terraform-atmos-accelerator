@@ -81,7 +81,7 @@ components:
 | <a name="input_delimiter"></a> [delimiter](#input\_delimiter) | Delimiter to be used between ID elements.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
 | <a name="input_descriptor_formats"></a> [descriptor\_formats](#input\_descriptor\_formats) | Describe additional descriptors to be output in the `descriptors` output map.<br>Map of maps. Keys are names of descriptors. Values are maps of the form<br>`{<br>   format = string<br>   labels = list(string)<br>}`<br>(Type is `any` so the map values can later be enhanced to provide additional options.)<br>`format` is a Terraform format string to be passed to the `format()` function.<br>`labels` is a list of labels, in order, to pass to `format()` function.<br>Label values will be normalized before being passed to `format()` so they will be<br>identical to how they appear in `id`.<br>Default is `{}` (`descriptors` output will be empty). | `any` | `{}` | no |
 | <a name="input_dns_soa_config"></a> [dns\_soa\_config](#input\_dns\_soa\_config) | Root domain name DNS SOA record:<br>- awsdns-hostmaster.amazon.com. ; AWS default value for administrator email address<br>- 1 ; serial number, not used by AWS<br>- 7200 ; refresh time in seconds for secondary DNS servers to refreh SOA record<br>- 900 ; retry time in seconds for secondary DNS servers to retry failed SOA record update<br>- 1209600 ; expire time in seconds (1209600 is 2 weeks) for secondary DNS servers to remove SOA record if they cannot refresh it<br>- 60 ; nxdomain TTL, or time in seconds for secondary DNS servers to cache negative responses<br>See [SOA Record Documentation](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html) for more information. | `string` | `"awsdns-hostmaster.amazon.com. 1 7200 900 1209600 60"` | no |
-| <a name="input_domain_names"></a> [domain\_names](#input\_domain\_names) | Root domain name list, e.g. and the option to attempt registering the domain. | <pre>list(object({<br> domain_name        = string<br> register_domain    = optional(bool, "false")<br> admin_contact      = optional(list(object()))<br> registrant_contact = optional(list(object()))<br> tech_contact       = optional(list(object()))<br>})) </pre>| `null` | yes |
+| <a name="input_domain_names"></a> [domain\_names](#input\_domain\_names) | Root domain name list, e.g. and the option to manage a PREVIOUSLY registered the domain. See [here](#the-register_domain-flag) for further details about the register_domain flag. | <pre>list(object({<br> domain_name        = string<br> register_domain    = optional(bool, "false")<br> admin_contact      = optional(list(object()))<br> registrant_contact = optional(list(object()))<br> tech_contact       = optional(list(object()))<br>})) </pre>| `null` | yes |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | ID element. Usually used for region e.g. 'uw2', 'us-west-2', OR role 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | <a name="input_id_length_limit"></a> [id\_length\_limit](#input\_id\_length\_limit) | Limit `id` to this many characters (minimum 6).<br>Set to `0` for unlimited length.<br>Set to `null` for keep the existing setting, which defaults to `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
@@ -107,4 +107,33 @@ components:
 |------|-------------|
 | <a name="output_acms"></a> [acms](#output\_acms) | ACM certificates for domains |
 | <a name="output_zones"></a> [zones](#output\_zones) | DNS zones |
+
+
+## Note about managing Route53 Domains in the same account as the Hosted Zone
+
+### Importing the Hosted Zone
+
+When Route53 is used as a registrar, it will automatically create a Hosted Zone with the domain name that was registered. This module will attempt to create another one with the same name unless we import that Hosted zone.
+
+Steps to import the Hosted Zone:
+
+```
+# ensure atmos creates the var file
+atmos terraform plan dns-primary -s STACK_NAME
+# go to the component directory
+cd components/terraform/dns-primary
+# ensure you are in the correct workspace
+terraform workspace select STACK_NAME
+# import the hosted zone
+terraform import -var-file=STACK-NAME-dns-primary.terraform.tfvars.json 'aws_route53_zone.root["example.io"]' HOSTED_ZONE_ID
+# import the SOA record
+terraform import -var-file=STACK-NAME-dns-primary.terraform.tfvars.json 'aws_route53_record.soa["example.io"]' HOSTED_ZONE_ID_example.io_SOA
+```
+
+### The register_domain flag
+
+This flag uses the resource [aws_route53domains_registered_domain](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53domains_registered_domain) to include the Route53 domain in the Terraform state.
+This CANNOT be used to register a new domain from scratch through Terraform. That is an asynchronous process that requires somebody from the AWS side to approve it.
+This module only allows you to include that domain after the previous process has happened.
+Once in the Terraform state, one is able to change some contact information and control the renewal settings, for example.
 <!-- END-TERRAFORM-DOCS -->
