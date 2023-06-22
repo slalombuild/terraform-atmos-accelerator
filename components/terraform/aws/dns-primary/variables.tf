@@ -60,7 +60,8 @@ variable "domain_names" {
     )))
   }))
   description = <<-EOT
-    Root domain name list, e.g. and the option to attempt registering the domain.
+    Root domain name list, e.g. and the option to manage a PREVIOUSLY registered the domain.
+    This last option will NOT work if the domain wasn't registered/bought before, and therefore doesn't appear in the Route53 domains console.
     Admin, tech and registrant contact only work if register_domain is true, but they are still optional
     e.g.:
     [
