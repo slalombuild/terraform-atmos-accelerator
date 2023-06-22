@@ -8,7 +8,7 @@ module "acm" {
   for_each = local.domains_set
 
   source  = "cloudposse/acm-request-certificate/aws"
-  version = "0.17.0"
+  version = "0.16.3"
 
   enabled = local.certificate_enabled
 
