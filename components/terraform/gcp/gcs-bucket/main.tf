@@ -1,11 +1,11 @@
 resource "google_storage_bucket" "bucket" {
   count         = local.enabled ? 1 : 0
   project       = var.project_id
-  name          = "${module.this.id}-${var.bucket_name}"
+  name          = module.this.id
   location      = var.gcs_bucket.location
   force_destroy = var.gcs_bucket.force_destroy
   storage_class = var.gcs_bucket.storage_class
-  labels        = module.this.additional_tag_map
+  labels        = module.this.tags
 
   public_access_prevention    = var.gcs_bucket.public_access_prevention
   uniform_bucket_level_access = var.gcs_bucket.uniform_bucket_level_access
