@@ -13,20 +13,22 @@ output "subnets" {
 }
 
 output "router" {
-  value       = module.cloud_router[0].router
+  value       = local.enabled && var.cloud_nat != null ? module.cloud_router[0].router : null
   description = "The created router"
 }
 
 output "nat" {
   description = "Attributes of newly created NAT"
-  value = [for i in module.cloud_nat[0] : {
+  value = local.enabled && var.cloud_nat != null ? [for i in module.cloud_nat : {
     name                   = i.name
     nat_ip_allocate_option = i.nat_ip_allocate_option
     router_name            = i.router_name
-  }]
+  }] : null
 }
 
 output "firewall_rules" {
   description = "created firewall rules"
-  value       = module.firewall_rules[0].firewall_rules
+  value = local.enabled && var.firewall_rules != [] ? [for i in module.firewall_rules : {
+    firewall_rules = i.firewall_rules
+  }] : null
 }

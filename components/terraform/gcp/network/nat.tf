@@ -1,17 +1,17 @@
 module "cloud_router" {
   source  = "terraform-google-modules/cloud-router/google"
   version = "~> 5.0.1"
-  count   = local.enabled && var.cloud_nat != {} ? 1 : 0
+  count   = local.enabled && var.cloud_nat != null ? 1 : 0
   name    = module.this.id
   project = var.project_id
   region  = var.region
-  network = module.vpc.network_name
+  network = module.vpc[0].network_name
 
   depends_on = [google_compute_subnetwork.subnets]
 }
 
 module "cloud_nat" {
-  count      = local.enabled && var.cloud_nat != {} ? 1 : 0
+  count      = local.enabled && var.cloud_nat != null ? 1 : 0
   source     = "terraform-google-modules/cloud-nat/google"
   version    = "~> 4.0.0"
   project_id = var.project_id
@@ -21,7 +21,6 @@ module "cloud_nat" {
 
   name                               = module.this.id
   nat_ips                            = var.cloud_nat.nat_ips
-  nat_ip_allocate_option             = var.cloud_nat.nat_ip_allocate_option
   subnetworks                        = var.cloud_nat.subnetworks
   source_subnetwork_ip_ranges_to_nat = var.cloud_nat.source_subnetwork_ip_ranges_to_nat
 

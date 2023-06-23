@@ -2,7 +2,7 @@ resource "google_compute_subnetwork" "subnets" {
   for_each                 = local.enabled ? { for i, subnet in var.subnets : i => subnet } : {}
   project                  = var.project_id
   network                  = module.vpc[0].network_name
-  name                     = "${module.this.id}-${subnet_name}"
+  name                     = "${module.this.id}-${each.value.subnet_name}"
   description              = each.value.description
   ip_cidr_range            = each.value.cidr
   region                   = var.region

@@ -11,12 +11,12 @@ module "vpc" {
   project_id   = var.project_id
   network_name = module.this.id
   routing_mode = var.routing_mode
+  description  = var.vpc_description
+  mtu          = var.vpc_mtu
 
   shared_vpc_host                        = var.shared_vpc_host
   auto_create_subnetworks                = var.auto_create_subnetworks
   delete_default_internet_gateway_routes = var.delete_default_internet_gateway_routes
-
-  context = module.this.context
 }
 
 resource "google_compute_shared_vpc_service_project" "service_project" {
@@ -24,7 +24,7 @@ resource "google_compute_shared_vpc_service_project" "service_project" {
   host_project    = var.project_id
   service_project = var.service_project_names[count.index]
 
-  depends_on = [module.vpc[0]]
+  depends_on = [module.vpc]
 }
 
 module "vpc_routes" {
@@ -36,8 +36,6 @@ module "vpc_routes" {
   network_name = module.vpc[0].network_name
 
   routes = var.routes
-
-  context = module.this.context
 }
 
 
