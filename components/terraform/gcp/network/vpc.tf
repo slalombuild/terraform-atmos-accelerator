@@ -6,7 +6,7 @@ provider "google" {
 module "vpc" {
   count   = local.enabled ? 1 : 0
   source  = "terraform-google-modules/network/google//modules/vpc"
-  version = "~> 2.0.0"
+  version = "~> 7.0.0"
 
   project_id   = var.project_id
   network_name = module.this.id
@@ -30,7 +30,7 @@ resource "google_compute_shared_vpc_service_project" "service_project" {
 module "vpc_routes" {
   count   = local.enabled ? 1 : 0
   source  = "terraform-google-modules/network/google//modules/routes"
-  version = "~> 2.0.0"
+  version = "~> 7.0.0"
 
   project_id   = var.project_id
   network_name = module.vpc[0].network_name
