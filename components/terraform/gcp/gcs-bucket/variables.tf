@@ -3,11 +3,6 @@ variable "project_id" {
   description = "The ID of the existing GCP project where the GCS bucket will be deployed."
 }
 
-variable "bucket_name" {
-  type        = string
-  description = "The name for the new GCS bucket (must be unique within GCP)."
-}
-
 variable "kms_encryption_enabled" {
   type        = bool
   description = "weather to enable Kms encryption on GCS Bucket or not"
