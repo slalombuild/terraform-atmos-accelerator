@@ -4,9 +4,9 @@ import:
   - gcp/dev/globals
 
 vars:
-  enabled: true
   label_key_case: "lower"
   label_value_case: "lower"
+  enabled: true
   region: "us-central2"
   environment: "dev"
   namespace: "accelerator-dev"
@@ -102,14 +102,11 @@ components:
       metadata:
         component: gcp/gcs-bucket
       vars:
-        bucket_name: "test-bucket"
+        attributes: []
         kms_encryption_enabled: false
         gcs_bucket: {}
         kms: {}
         bucket_iam: []
-        additional_tag_map:
-          "env": "dev"
-          "component": "gcs-bucket"
-          "class": "storage"
+        tags: {}
         
         
