@@ -94,7 +94,7 @@ variable "cloud_nat" {
     tcp_time_wait_timeout_sec           = optional(string, "120"),
     udp_idle_timeout_sec                = optional(string, "30"),
   })
-  default = {}
+  default = null
 }
 
 variable "firewall_rules" {

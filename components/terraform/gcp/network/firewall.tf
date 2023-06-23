@@ -7,6 +7,4 @@ module "firewall_rules" {
   rules = var.firewall_rules
 
   depends_on = [google_compute_subnetwork.subnets]
-
-  context = module.this.context
 }

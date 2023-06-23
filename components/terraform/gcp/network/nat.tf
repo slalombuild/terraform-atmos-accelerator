@@ -1,19 +1,17 @@
 module "cloud_router" {
   source  = "terraform-google-modules/cloud-router/google"
   version = "~> 5.0"
-  count   = local.enabled && var.cloud_nat != null ? 1 : 0
+  count   = local.enabled && var.cloud_nat != {} ? 1 : 0
   name    = module.this.id
   project = var.project_id
   region  = var.region
   network = module.vpc.network_name
 
-  context = module.this.context
-
   depends_on = [google_compute_subnetwork.subnets]
 }
 
 module "cloud_nat" {
-  count      = local.enabled && var.cloud_nat != null ? 1 : 0
+  count      = local.enabled && var.cloud_nat != {} ? 1 : 0
   source     = "terraform-google-modules/cloud-nat/google"
   version    = "~> 1.2"
   project_id = var.project_id
@@ -39,6 +37,4 @@ module "cloud_nat" {
   tcp_time_wait_timeout_sec           = var.cloud_nat.tcp_time_wait_timeout_sec
 
   depends_on = [google_compute_subnetwork.subnets]
-
-  context = module.this.context
 }
