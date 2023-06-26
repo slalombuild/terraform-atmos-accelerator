@@ -1,10 +1,11 @@
 module "naming" {
   source        = "Azure/naming/azurerm"
+  version       = "0.3.0"
   unique-length = 4
   suffix        = [var.suffix]
 }
 
-resource "azurerm_key_vault" "default" {
+resource "azurerm_key_vault" "this" {
   name      = module.naming.key_vault.name_unique
   tenant_id = data.azurerm_client_config.current.tenant_id
 
@@ -26,6 +27,17 @@ resource "azurerm_key_vault" "default" {
   sku_name = var.sku_name
 
   tags = var.extra_tags
+
+  dynamic "network_acls" {
+    for_each = var.network_acls == null ? [] : [var.network_acls]
+    iterator = acl
+    content {
+      bypass                     = acl.value.bypass
+      default_action             = acl.value.default_action
+      ip_rules                   = acl.value.ip_rules
+      virtual_network_subnet_ids = acl.value.virtual_network_subnet_ids
+    }
+  }
 }
 
 resource "azurerm_key_vault_access_policy" "readers_policy" {
@@ -33,7 +45,7 @@ resource "azurerm_key_vault_access_policy" "readers_policy" {
 
   object_id    = each.value
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  key_vault_id = azurerm_key_vault.default.id
+  key_vault_id = azurerm_key_vault.this.id
 
   key_permissions = [
     "Get",
@@ -56,7 +68,7 @@ resource "azurerm_key_vault_access_policy" "admin_policy" {
 
   object_id    = each.value
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  key_vault_id = azurerm_key_vault.default.id
+  key_vault_id = azurerm_key_vault.this.id
 
   key_permissions = [
     "Backup",
@@ -111,7 +123,7 @@ resource "azurerm_key_vault_access_policy" "admin_policy" {
 resource "azurerm_role_assignment" "rbac_keyvault_administrator" {
   for_each = toset(var.rbac_authorization_enabled ? var.admin_objects_ids : [])
 
-  scope                = azurerm_key_vault.default.id
+  scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Administrator"
   principal_id         = each.value
 }
@@ -119,7 +131,7 @@ resource "azurerm_role_assignment" "rbac_keyvault_administrator" {
 resource "azurerm_role_assignment" "rbac_keyvault_secrets_users" {
   for_each = toset(var.rbac_authorization_enabled ? var.reader_objects_ids : [])
 
-  scope                = azurerm_key_vault.default.id
+  scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Secrets User"
   principal_id         = each.value
 }
@@ -127,7 +139,7 @@ resource "azurerm_role_assignment" "rbac_keyvault_secrets_users" {
 resource "azurerm_role_assignment" "rbac_keyvault_reader" {
   for_each = toset(var.rbac_authorization_enabled ? var.reader_objects_ids : [])
 
-  scope                = azurerm_key_vault.default.id
+  scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Reader"
   principal_id         = each.value
 }
