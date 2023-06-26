@@ -35,5 +35,5 @@ module "cloud_nat" {
   tcp_transitory_idle_timeout_sec     = var.cloud_nat.tcp_transitory_idle_timeout_sec
   tcp_time_wait_timeout_sec           = var.cloud_nat.tcp_time_wait_timeout_sec
 
-  depends_on = [google_compute_subnetwork.subnets]
+  depends_on = [module.cloud_router]
 }

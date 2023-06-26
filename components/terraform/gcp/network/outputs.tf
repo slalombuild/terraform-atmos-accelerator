@@ -8,7 +8,7 @@ output "vpc" {
 }
 
 output "subnets" {
-  value       = { for subnet in google_compute_subnetwork.subnets : "${subnet.name}" => subnet }
+  value       = local.enabled && var.subnets != [] ? { for subnet in google_compute_subnetwork.subnets : "${subnet.name}" => subnet } : null
   description = "The new subnets."
 }
 
@@ -31,4 +31,9 @@ output "firewall_rules" {
   value = local.enabled && var.firewall_rules != [] ? [for i in module.firewall_rules : {
     firewall_rules = i.firewall_rules
   }] : null
+}
+
+output "private_connections" {
+  value       = local.enabled && var.private_connections != [] ? google_service_networking_connection.private_vpc_connections : null
+  description = "The new private VPC connections."
 }

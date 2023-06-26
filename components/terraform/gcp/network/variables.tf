@@ -139,3 +139,26 @@ variable "firewall_rules" {
   }))
   default = []
 }
+
+variable "peers" {
+  type = list(object({
+    name      = string,
+    self_link = string
+  }))
+  description = "List of networks to establish a peering connection with. Leave empty if you won't need peered VPC connections."
+  default     = []
+}
+
+variable "private_connections" {
+  type = list(object({
+    name          = string,
+    description   = string,
+    purpose       = optional(string, "VPC_PEERING"),
+    address_type  = optional(string, "INTERNAL"),
+    ip_version    = optional(string, "IPV4"),
+    prefix_start  = string,
+    prefix_length = optional(number, 16)
+  }))
+  description = "List of private connections to establish a one-to-one relationship between the VPC network and the GCP Networking API ('servicenetworking.googleapis.com'). Leave empty if you won't need private VPC connections. See the main module documentation for possible values."
+  default     = []
+}

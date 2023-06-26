@@ -79,7 +79,6 @@ components:
           next_hop_internet: "true"
 
         cloud_nat:
-          nat_ip_allocate_option: "AUTO_ONLY"
           subnetworks:
           - name: "subnet-1"
             source_ip_ranges_to_nat:
