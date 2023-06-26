@@ -5,6 +5,7 @@ variable "location" {
 
 variable "suffix" {
   description = "Suffix for the name of the key Vault"
+  type        = string
 }
 
 variable "resource_group_name" {
