@@ -76,7 +76,7 @@ variable "routes" {
     name                   = string,
     description            = optional(string, null),
     destination_range      = string,
-    tags                   = optional(string, null),   #This is a list in string format. Eg. "tag-01,tag-02"
+    tags                   = string,                   #This is a list in string format. Eg. "tag-01,tag-02"
     next_hop_internet      = optional(string, "true"), #Use "false" to disable this as next hop
     priority               = optional(string, "1000"),
     next_hop_ip            = optional(string, null),
@@ -152,7 +152,7 @@ variable "peers" {
 variable "private_connections" {
   type = list(object({
     name          = string,
-    description   = string,
+    description   = optional(string, null),
     purpose       = optional(string, "VPC_PEERING"),
     address_type  = optional(string, "INTERNAL"),
     ip_version    = optional(string, "IPV4"),

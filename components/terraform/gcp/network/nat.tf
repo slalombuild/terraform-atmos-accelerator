@@ -17,7 +17,7 @@ module "cloud_nat" {
   project_id = var.project_id
   region     = var.region
 
-  router = module.cloud_router[0].router
+  router = module.cloud_router[0].router.name
 
   name                               = module.this.id
   nat_ips                            = var.cloud_nat.nat_ips
