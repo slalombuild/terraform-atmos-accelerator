@@ -13,6 +13,7 @@ June 2023: We're just getting this project off the ground, and it's under heavy 
    2. maintainable - the structure should be logical, code should be DRY and straightforward, no hacks
    3. extensible - the patterns used should enable others to a) easily extend existing code, and b) create their own implementations
    4. well-tested - no explanation required hopefully!
+   5. not just our best practice - follow [Terraform best practices](https://www.terraform-best-practices.com) as closely as possible. See [naming conventions](https://www.terraform-best-practices.com/naming) and [code structure](https://www.terraform-best-practices.com/code-structure)
 1. Standardize creation of the following basic resources (and more as the need is discovered), with the understanding that they will be further customized for every use case ([reference](https://cloud.google.com/free/docs/aws-azure-gcp-service-comparison)):
 
     | Service type | AWS | Google Cloud | Azure |
