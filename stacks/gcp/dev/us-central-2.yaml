@@ -42,6 +42,7 @@ components:
               
             -  range_name: "services-2"
                ip_cidr_range: "192.168.2.0/24"
+
     gcs-bucket:
       metadata:
         component: gcp/gcs-bucket
@@ -52,7 +53,7 @@ components:
         kms: {}
         bucket_iam: []
         tags: {}
-        
+
     network:
       metadata:
         component: gcp/network
@@ -108,4 +109,3 @@ components:
         private_connections: []
         attributes: []
     
-      
