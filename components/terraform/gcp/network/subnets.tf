@@ -1,5 +1,5 @@
 resource "google_compute_subnetwork" "subnets" {
-  for_each                 = local.enabled ? { for i, subnet in var.subnets : i => subnet } : {}
+  for_each                 = local.enabled && length(var.subnets) > 0 ? { for i, subnet in var.subnets : i => subnet } : {}
   project                  = var.project_id
   network                  = module.vpc[0].network_name
   name                     = "${module.this.id}-${each.value.subnet_name}"
@@ -18,7 +18,7 @@ resource "google_compute_subnetwork" "subnets" {
   }
 
   dynamic "secondary_ip_range" {
-    for_each = each.value.secondary_cidrs == [] ? {} : { for i, index in each.value.secondary_cidrs : i => index }
+    for_each = length(each.value.secondary_cidrs) > 0 ? { for i, index in each.value.secondary_cidrs : i => index } : {} 
     content {
       range_name    = "${module.this.id}-${secondary_ip_range.value.name}"
       ip_cidr_range = secondary_ip_range.value.cidr

@@ -118,20 +118,20 @@ variable "firewall_rules" {
   type = list(object({
     name                    = string,
     description             = optional(string, null),
-    direction               = string,
-    priority                = optional(number, null),
+    direction               = string, # The input Value must be uppercase
+    priority                = optional(number, 1000),
     ranges                  = list(string),
-    source_tags             = optional(list(string), []),
-    source_service_accounts = optional(list(string), []),
-    target_tags             = optional(list(string), []),
-    target_service_accounts = optional(list(string), []),
+    source_tags             = optional(list(string), null),
+    source_service_accounts = optional(list(string), null),
+    target_tags             = optional(list(string), null),
+    target_service_accounts = optional(list(string), null),
     allow = optional(list(object({
-      protocol = string
-      ports    = optional(list(string))
+      protocol = string # The input Value must be uppercase
+      ports    = optional(list(string), [])
     })), []),
     deny = optional(list(object({
-      protocol = string
-      ports    = optional(list(string))
+      protocol = string # The input Value must be uppercase
+      ports    = optional(list(string), [])
     })), []),
     log_config = optional(object({
       metadata = string
