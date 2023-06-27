@@ -5,6 +5,8 @@ import:
 
 vars:
   enabled: true
+  label_key_case: "lower"
+  label_value_case: "lower"
   region: "us-central2"
   environment: "dev"
   namespace: "accelerator-dev"
@@ -89,3 +91,9 @@ components:
             - "10.2.0.0/16"
             - "172.16.2.0/24"
             - "192.168.2.0/24"
+        shared_vpc_host: false
+        service_project_names: []
+        firewall_rules: []
+        peers: []
+        private_connections: []
+        attributes: []
