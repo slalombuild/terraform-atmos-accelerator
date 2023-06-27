@@ -11,7 +11,7 @@ variable "enable_key_rotation" {
 }
 
 variable "user_arn" {
-  default =""
+  default = ""
 }
 
 variable "description" {
@@ -49,3 +49,4 @@ variable "multi_region" {
   default     = false
   description = "Indicates whether the KMS key is a multi-Region (true) or regional (false) key."
 }
+
