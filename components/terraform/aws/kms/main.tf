@@ -32,7 +32,7 @@ module "kms_key" {
 
 
 ###############################
-#KMS policy
+# KMS policy document
 ##############################
 data "aws_iam_policy_document" "this" {
   count = var.create ? 1 : 0
@@ -41,7 +41,6 @@ data "aws_iam_policy_document" "this" {
   override_policy_documents = var.override_policy_documents
 
   # Default policy - account wide access to all key operations
-  # Do we want to use default policy
   statement {
     for_each = var.enable_default_policy ? [1] : []
     content {
