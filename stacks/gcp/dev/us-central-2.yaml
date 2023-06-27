@@ -43,9 +43,9 @@ components:
             -  range_name: "services-2"
                ip_cidr_range: "192.168.2.0/24"
 
-    new-vpc:
+    network:
       metadata:
-        component: gcp/vpc
+        component: gcp/network
       vars:
         routing_mode: "GLOBAL"
         subnets:
