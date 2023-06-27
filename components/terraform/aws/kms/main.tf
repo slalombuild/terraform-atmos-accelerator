@@ -14,7 +14,6 @@ module "kms_key" {
   key_usage                = var.key_usage
   customer_master_key_spec = var.customer_master_key_spec
   multi_region             = var.multi_region
-  tags                     = var.tags
   label_value_case         = var.label_value_case
   labels_as_tags           = var.labels_as_tags
   stage                    = var.stage
@@ -29,4 +28,31 @@ module "kms_key" {
   descriptor_formats       = var.descriptor_formats
 
   context = module.this.context
+}
+
+
+###############################
+#KMS policy
+##############################
+data "aws_iam_policy_document" "this" {
+  count = var.create ? 1 : 0
+
+  source_policy_documents   = var.source_policy_documents
+  override_policy_documents = var.override_policy_documents
+
+  # Default policy - account wide access to all key operations
+  # Do we want to use default policy
+  statement {
+    for_each = var.enable_default_policy ? [1] : []
+    content {
+      sid       = "Default"
+      actions   = ["kms:*"]
+      resources = ["*"]
+
+      principals {
+        type        = "AWS"
+        identifiers = ["arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"]
+      }
+    }
+  }
 }
