@@ -118,11 +118,6 @@ components:
       tags:
           component: "service-quotas"
           expense-class: "compute"
-    kms: 
-      vars: 
-        alias: ""
-        customer_master_key_spec: "SYMMETRIC_DEFAULT"
-        # Still working on this
 
     ############################
     ### ECS example

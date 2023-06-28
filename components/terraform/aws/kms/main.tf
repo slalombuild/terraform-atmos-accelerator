@@ -4,7 +4,6 @@ module "kms_key" {
   version                  = "5.5.0"
   name                     = var.name
   description              = var.description
-  user_arn                 = var.user_arn
   deletion_window_in_days  = var.deletion_window_in_days
   enable_key_rotation      = var.enable_key_rotation
   alias                    = var.alias
