@@ -11,8 +11,6 @@ module "kms_key" {
   key_usage                = var.key_usage
   customer_master_key_spec = var.customer_master_key_spec
   multi_region             = var.multi_region
-  label_value_case         = var.label_value_case
-  labels_as_tags           = var.labels_as_tags
 
   context = module.this.context
 }
