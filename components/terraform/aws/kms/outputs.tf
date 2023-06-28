@@ -1,13 +1,22 @@
+output "key_arn" {
+  value       = join("", aws_kms_key.default.*.arn)
+  description = "Key ARN"
+}
+
+output "key_id" {
+  value       = join("", aws_kms_key.default.*.key_id)
+  description = "Key ID"
+}
+
 output "alias_arn" {
-  value       = module.kms_key.alias_arn
+  value       = join("", aws_kms_alias.default.*.arn)
   description = "Alias ARN"
 }
 
-output "name" {
-  value       = module.kms_key.name
+output "alias_name" {
+  value       = join("", aws_kms_alias.default.*.name)
   description = "Alias name"
 }
-
 output "kms_policy_json" {
   value = var.create ? data.aws_iam_policy_document.this.json : null
 }
