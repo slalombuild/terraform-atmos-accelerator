@@ -1,15 +1,15 @@
 output "zone_name" {
-  value = module.cloud_dns[0].name
+  value = local.enabled ? module.cloud_dns[0].name : null
 }
 
 output "domain" {
-  value = module.cloud_dns[0].domain
+  value = local.enabled ? module.cloud_dns[0].domain : null
 }
 
 output "name_servers" {
-  value = module.cloud_dns[0].name_servers
+  value = local.enabled ? module.cloud_dns[0].name_servers : null
 }
 
 output "dns_type" {
-  value = module.cloud_dns[0].type
+  value = local.enabled ? module.cloud_dns[0].type : null
 }
