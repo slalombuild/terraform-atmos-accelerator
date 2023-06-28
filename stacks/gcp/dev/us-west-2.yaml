@@ -7,10 +7,10 @@ vars:
   label_key_case: "lower"
   label_value_case: "lower"
   enabled: true
-  region: "us-central2"
+  region: "us-west-2"
   environment: "dev"
   namespace: "accelerator-dev"
-  stage: "uc2"
+  stage: "uw2"
 
 components:
   terraform:
