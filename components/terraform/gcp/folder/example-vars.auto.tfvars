@@ -1,6 +1,6 @@
 # enabled        = true
 # namespace      = "test"
-# environment    = "network"
+# environment    = "folder"
 # stage          = "uw2"
 # label_key_case = "lower"
 
