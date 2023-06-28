@@ -46,7 +46,7 @@ Icon
 **/backend.tf.json
 **/backend.tf
 **/*.tfvars.json
-**/*.tfvars
+
 
 #tfsec html reports
 *.html

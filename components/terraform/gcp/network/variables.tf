@@ -98,7 +98,7 @@ variable "cloud_nat" {
       name                     = string,
       source_ip_ranges_to_nat  = optional(list(string), ["ALL_IP_RANGES"])
       secondary_ip_range_names = optional(list(string), []),
-    })),
+    })), ## must need to pass name of the subnet like {namespace}-{environment-{stage}-{subnet_name}
     enable_dynamic_port_allocation      = optional(bool, false),
     enable_endpoint_independent_mapping = optional(bool, null),
     icmp_idle_timeout_sec               = optional(string, "30"),

@@ -7,10 +7,10 @@ vars:
   label_key_case: "lower"
   label_value_case: "lower"
   enabled: true
-  region: "us-central2"
+  region: "us-west2"
   environment: "dev"
   namespace: "accelerator-dev"
-  stage: "uc2"
+  stage: "uw2"
 
 components:
   terraform:
@@ -66,10 +66,10 @@ components:
           private_google_access: true
           secondary_cidrs:
           - name: "pods-1" 
-            range: "172.16.1.0/24"
+            cidr: "172.16.1.0/24"
               
           - name: "services-1"
-            range: "192.168.1.0/24"
+            cidr: "192.168.1.0/24"
           flow_logs:
             aggregation_interval: "INTERVAL_5_SEC"
             flow_sampling: "0.5"
@@ -80,10 +80,10 @@ components:
           cidr: "10.2.0.0/16"
           secondary_cidrs:
           - name: "pods-2" 
-            range: "172.16.2.0/24"
+            cidr: "172.16.2.0/24"
               
           - name: "services-2"
-            range: "192.168.2.0/24"
+            cidr: "192.168.2.0/24"
 
         routes:
         - name: "egress-internet"
