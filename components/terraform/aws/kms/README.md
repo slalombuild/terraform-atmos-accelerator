@@ -23,9 +23,9 @@ Here's an example snippet for how to use this component and which inputs are req
 
     Here's an example snippet for the Atmos stack:
 
-```terraform
-terraform:
-    kms:
+```
+
+ kms:
       vars:
         enabled             = true
         namespace           = accelerator-dev
@@ -36,7 +36,8 @@ terraform:
         deletion_window_days = 10
         enable_key_rotation = true
         key_usage           = ENCRYPT_DECRYPT
-```
+
+```terraform
 
 ## Requirements
 
