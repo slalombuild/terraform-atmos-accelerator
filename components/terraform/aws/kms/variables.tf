@@ -45,3 +45,14 @@ variable "multi_region" {
   default     = false
   description = "Indicates whether the KMS key is a multi-Region (true) or regional (false) key."
 }
+
+variable "region" {
+  type        = string
+  description = "The AWS region where the provider will operate."
+}
+
+variable "account_map" {
+  type        = map(any)
+  description = "Account map of all the available accounts"
+  default     = {}
+}
