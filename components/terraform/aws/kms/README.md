@@ -1,4 +1,4 @@
-##Component: Terraform-aws-kms-key
+##Component: aws-kms-key
 
 This module creates a KMS customer default key
 ## Usage
@@ -10,7 +10,6 @@ Here's an example snippet for how to use this component and which inputs are req
    ```terraform
       module "kms_key" {
       source = "cloudposse/kms-key/aws"
-      # Cloud Posse recommends pinning every module to a specific version
       # version = "x.x.x"
       namespace               = "eg"
       stage                   = "test"
@@ -21,6 +20,24 @@ Here's an example snippet for how to use this component and which inputs are req
       alias                   = "alias/parameter_store_key"
     }
     ```
+
+    Here's an example snippet for the Atmos stack:
+
+```terraform
+terraform:
+    kms:
+      vars:
+        enabled             = true
+        namespace           = accelerator-dev
+        tenant              = null
+        environment         = ue2
+        stage               = null
+        name                = null
+        deletion_window_days = 10
+        enable_key_rotation = true
+        key_usage           = ENCRYPT_DECRYPT
+```
+
 ## Requirements
 
 | Name | Version |
