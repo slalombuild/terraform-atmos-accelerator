@@ -1,10 +1,10 @@
 output "vpc" {
   description = "outputs of created VPC"
-  value = [for i in module.vpc : {
+  value = local.enabled ? [for i in module.vpc : {
     network           = i.network
     network_name      = i.network_name
     network_self_link = i.network_self_link
-  }]
+  }] : null
 }
 
 output "subnets" {
