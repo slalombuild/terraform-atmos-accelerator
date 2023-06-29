@@ -13,8 +13,8 @@ Here's an example snippet for how to use this component and which inputs are req
       # version = "x.x.x"
       namespace               = "eg"
       stage                   = "test"
-      name                    = "chamber"
-      description             = "KMS key for chamber"
+      name                    = ""
+      description             = "KMS key for example"
       deletion_window_in_days = 10
       enable_key_rotation     = true
       alias                   = "alias/parameter_store_key"
@@ -26,16 +26,26 @@ Here's an example snippet for how to use this component and which inputs are req
 ```
 
  kms:
+terraform:
+   kms:
+      metadata:
+         component: aws/kms
       vars:
-        enabled             = true
-        namespace           = accelerator-dev
-        tenant              = null
-        environment         = ue2
-        stage               = null
-        name                = null
-        deletion_window_days = 10
-        enable_key_rotation = true
-        key_usage           = ENCRYPT_DECRYPT
+         enabled: true
+         namespace: “accelerator”
+         environment : “dev”
+         stage: “uw2”
+         region: “us-west-2”
+         account_map:
+            automation:
+            dev: 123456789
+            staging: 123456789
+            prod: 123456789
+         deletion_window_in_days: 10
+         enable_key_rotation: true
+         key_usage: “ENCRYPT_DECRYPT"
+         customer_master_key_spec: "SYMMETRIC_DEFAULT"
+         multi_region: false
 
 ```terraform
 
