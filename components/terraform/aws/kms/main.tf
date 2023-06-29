@@ -1,6 +1,5 @@
 module "kms_key" {
-  source = "cloudposse/kms-key/aws"
-  # Cloud Posse recommends pinning every module to a specific version
+  source                   = "cloudposse/kms-key/aws"
   version                  = "0.12.1"
   name                     = var.name
   description              = var.description

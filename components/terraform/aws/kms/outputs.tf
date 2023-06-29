@@ -17,6 +17,3 @@ output "alias_name" {
   value       = join("", aws_kms_alias.default.*.name)
   description = "Alias name"
 }
-output "kms_policy_json" {
-  value = var.create ? data.aws_iam_policy_document.this.json : null
-}
