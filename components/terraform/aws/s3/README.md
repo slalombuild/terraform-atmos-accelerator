@@ -1,4 +1,51 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
+# Component: terraform-aws-s3-bucket
+
+# Description: |-
+  This module creates an S3 bucket with support for versioning, lifecycles, object locks, replication, encryption, ACL,
+  bucket object policies, and static website hosting.
+  
+  If `user_enabled` variable is set to `true`, the module will provision a basic IAM user with permissions to access the bucket.
+  This basic IAM system user is suitable for CI/CD systems (_e.g._ TravisCI, CircleCI) or systems which are *external* to AWS that cannot leverage
+  [AWS IAM Instance Profiles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html) 
+  or [AWS OIDC](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) to authenticate and
+  do not already have IAM credentials. Users or systems that have IAM credentials should either be granted access directly based on
+  their IAM identity via `privileged_principal_arns` or be allowed to assume an IAM role with access.
+
+  We do not recommend creating IAM users this way for any other purpose.
+
+  This module blocks public access to the bucket by default. See `block_public_acls`, `block_public_policy`,
+  `ignore_public_acls`, and `restrict_public_buckets` to change the settings. See [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html)
+  for more details.
+
+  If an IAM user is created, the IAM user name is constructed using [terraform-null-label](https://github.com/cloudposse/terraform-null-label)
+  and some input is required. The simplest input is `name`. By default the name will be converted to lower case
+  and all non-alphanumeric characters except for hyphen will be removed. See the documentation for `terraform-null-label`
+  to learn how to override these defaults if desired.
+  
+  If an AWS Access Key is created, it is stored either in SSM Parameter Store or is provided as a module output,
+  but not both. Using SSM Parameter Store is recommended because module outputs are stored in plaintext in
+  the Terraform state file.
+# Usage of atmos stack
+Components:
+    terraform:
+      s3:
+       metadata: 
+        component: aws/s3
+       vars:
+        bucket_name: null
+        kms_master_key_id: null
+        enabled: true
+        namespace: "accelerator"
+        environment: "dev"
+        account_map: {
+          dev: 123456789
+          staging: 123456789
+          prod: 123456789
+        }
+        region: "us-west-2"
+        stage: "uw2"
+        
 ## Requirements
 
 | Name | Version |

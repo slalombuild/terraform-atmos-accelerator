@@ -33,5 +33,4 @@ module "s3_bucket" {
   website_configuration                   = var.website_configuration
   lifecycle_configuration_rules           = var.lifecycle_configuration_rules
   context                                 = module.this.context
-  depends_on                              = [module.this]
 }
