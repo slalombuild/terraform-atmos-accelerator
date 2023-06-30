@@ -36,11 +36,6 @@ terraform:
          environment : “dev”
          stage: “uw2”
          region: “us-west-2”
-         account_map:
-            automation:
-            dev: 123456789
-            staging: 123456789
-            prod: 123456789
          deletion_window_in_days: 10
          enable_key_rotation: true
          key_usage: “ENCRYPT_DECRYPT"
