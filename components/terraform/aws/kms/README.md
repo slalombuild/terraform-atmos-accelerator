@@ -7,8 +7,9 @@ Stack Level: Regional
 
 Here's an example snippet for how to use this component and which inputs are required.
 
-   ```terraform
-      module "kms_key" {
+```
+
+   module "kms_key" {
       source = "cloudposse/kms-key/aws"
       # version = "x.x.x"
       namespace               = "eg"
@@ -18,15 +19,14 @@ Here's an example snippet for how to use this component and which inputs are req
       deletion_window_in_days = 10
       enable_key_rotation     = true
       alias                   = "alias/parameter_store_key"
-    }
-    ```
-
-    Here's an example snippet for the Atmos stack:
+   }
 
 ```
 
- kms:
-terraform:
+Here's an example snippet for the Atmos stack:
+
+```
+
    kms:
       metadata:
          component: aws/kms
@@ -42,7 +42,7 @@ terraform:
          customer_master_key_spec: "SYMMETRIC_DEFAULT"
          multi_region: false
 
-```terraform
+```
 
 ## Requirements
 
