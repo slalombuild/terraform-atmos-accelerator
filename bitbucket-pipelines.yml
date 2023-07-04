@@ -13,7 +13,7 @@ definitions:
     - step: &secrets-scan
         name: Scan for secrets
         script:
-          - pipe: atlassian/git-secrets-scan:0.5.1
+          - pipe: atlassian/git-secrets-scan:1.2.1
 
     - step: &tfsec-scan
         name: Run tfsec static code analysis for Terraform components
