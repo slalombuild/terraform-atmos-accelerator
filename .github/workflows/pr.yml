@@ -1,23 +1,14 @@
 name: Pull Request Workflow
 on: [pull_request]
 
-jobs:
-  format:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
-      - run: terraform fmt -check
+permissions:
+  pull-requests: write
+  id-token: write
+  contents: read
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
-      - name: tflint
-        uses: reviewdog/action-tflint@master
-        with:
-          github_token: ${{ secrets.github_token }}
-          tflint_rulesets: "aws azurerm google"
-          working_directory: "components/terraform"
-          filter_mode: nofilter
+jobs:
+  ci-terraform:
+    uses: cloudposse/github-actions-workflows/.github/workflows/ci-terraform.yml@main
+    with:
+      suggestions: true
+      filter-mode: diff_context
