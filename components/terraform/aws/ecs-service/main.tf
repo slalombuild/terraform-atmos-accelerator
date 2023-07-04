@@ -19,7 +19,7 @@ module "logs" {
 
 module "container_definition" {
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "0.58.1"
+  version = "0.60.0"
 
   for_each = var.containers
 
