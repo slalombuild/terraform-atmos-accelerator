@@ -47,7 +47,7 @@ module "lambda_function" {
 
 module "lambda_s3_bucket" {
   source  = "cloudposse/s3-bucket/aws"
-  version = "3.1.1"
+  version = "3.1.2"
 
   bucket_name             = module.this.id
   allow_ssl_requests_only = true
