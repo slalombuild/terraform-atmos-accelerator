@@ -4,7 +4,7 @@ module "network" {
   version = "~> 7.0.0"
 
   project_id   = var.project_id
-  network_name = module.this.id
+  network_name = var.name != null ? var.name : module.this.id
   routing_mode = var.routing_mode
   description  = var.vpc_description
   mtu          = var.vpc_mtu

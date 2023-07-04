@@ -31,14 +31,16 @@
 # ]
 
 # secondary_ranges = {
-#   "subnet-1" = [{
-#     ip_cidr_range = "172.16.1.0/24"
-#     range_name    = "pods-1"
+#   "subnet-1" = [
+#     {
+#       ip_cidr_range = "172.16.1.0/24"
+#       range_name    = "pods-1"
 #     },
 #     {
 #       ip_cidr_range = "192.168.1.0/24"
 #       range_name    = "services-1"
-#   }]
+#     }
+#   ]
 
 #   "subnet-2" = [{
 #     ip_cidr_range = "172.16.2.0/24"
@@ -47,7 +49,8 @@
 #     {
 #       ip_cidr_range = "192.168.2.0/24"
 #       range_name    = "services-2"
-#   }]
+#     }
+#   ]
 # }
 
 # routes = [
@@ -84,7 +87,6 @@
 # }
 
 # peers = []
-
 
 # private_connections = [
 #   {
