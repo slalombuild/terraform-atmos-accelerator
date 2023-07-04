@@ -540,7 +540,7 @@ variable "ssh_ingress_cidrs" {
 
 variable "userdata_file" {
   type        = string
-  default     = "cubes_user_data.sh"
+  default     = "accelerator_user_data.sh"
   description = "The userdata script name from component/asg/userdata to use for the instances"
 }
 
