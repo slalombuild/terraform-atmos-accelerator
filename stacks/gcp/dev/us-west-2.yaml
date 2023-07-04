@@ -7,7 +7,7 @@ vars:
   label_key_case: "lower"
   label_value_case: "lower"
   enabled: true
-  region: "us-west2"
+  region: "us-west-2"
   environment: "dev"
   namespace: "accelerator-dev"
   stage: "uw2"
@@ -53,7 +53,6 @@ components:
         kms: {}
         bucket_iam: []
         tags: {}
-
     dns:
       metadata:
         component: gcp/dns
