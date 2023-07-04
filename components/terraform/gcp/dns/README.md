@@ -23,9 +23,9 @@ components:
                 project_id: "gcp-project-id"
                 attributes: []
                 dns: 
-                type: "public"
-                domain_name: "testdomain.io"
-                record_sets: []
+                - type: "public"
+                  domain_name: "testdomain.io"
+                  record_sets: []
 
 ## Requirements
 
