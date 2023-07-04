@@ -51,28 +51,28 @@ body:
     validations:
       required: false
   - type: dropdown
-    id: browsers
+    id: cloud
     attributes:
-      label: "Browsers"
-      description: What browsers are you seeing the problem on ?
+      label: "Cloud"
+      description: If the bug is with specific clouds, which ones?
       multiple: true
       options:
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
-        - Opera
-    validations:
-      required: false
+        - AWS
+        - Azure
+        - GCP
+        - Other
   - type: dropdown
-    id: os
+    id: tool
     attributes:
-      label: "OS"
-      description: What is the impacted environment ?
+      label: "Tool"
+      description: If the bug is with specific tools, which ones?
       multiple: true
       options:
-        - Windows
-        - Linux
-        - Mac
+        - terraform
+        - atmos
+        - tflint
+        - terraform-docs
+        - tfsec
+        - Other
     validations:
       required: false
