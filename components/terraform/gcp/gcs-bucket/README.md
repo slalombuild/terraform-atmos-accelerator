@@ -1,4 +1,31 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
+## Description:
+
+Creates a new bucket in Google cloud storage service (GCS) with an option to enable or disable kms. Once a bucket has been created, its location can't be changed.
+
+Note: If the project id is not set on the resource or in the provider block it will be dynamically determined which will require enabling the compute api.
+
+## Reference to pass variable values from atmos stack
+
+<p>components: <br>
+    &ensp terraform:<br>
+     &ensp &ensp gcs-bucket:<br>
+       &ensp &ensp &ensp metadata:<br>
+        &ensp &ensp &ensp &ensp component: gcp/gcs-bucket <br>
+       &ensp &ensp &ensp vars:<br>
+        &ensp &ensp &ensp &ensp enabled: true <br>
+        &ensp &ensp &ensp &ensp namespace: "test" <br>
+        &ensp &ensp &ensp &ensp environment: "gcs" <br>
+        &ensp &ensp &ensp &ensp stage: "uw2" <br>
+        &ensp &ensp &ensp &ensp label_key_case: "lower" <br>
+        &ensp &ensp &ensp &ensp project_id: "gcp-project-id" <br>
+        &ensp &ensp &ensp &ensp attributes: [] <br>
+        &ensp &ensp &ensp &ensp kms_encryption_enabled: false <br>
+        &ensp &ensp &ensp &ensp gcs_bucket: {} <br>
+        &ensp &ensp &ensp &ensp kms: {} <br>
+        &ensp &ensp &ensp &ensp bucket_iam: [] <br>
+        &ensp &ensp &ensp &ensp tags: {} <br></p>
+
 ## Requirements
 
 No requirements.
