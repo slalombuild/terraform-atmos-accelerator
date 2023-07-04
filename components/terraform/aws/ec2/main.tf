@@ -1,6 +1,6 @@
 module "ec2_instance" {
   source                      = "cloudposse/ec2-instance/aws"
-  version                     = "0.50.0"
+  version                     = "1.0.0"
   vpc_id                      = local.vpc_id
   subnet                      = local.subnet
   security_groups             = [aws_security_group.instance.id]
