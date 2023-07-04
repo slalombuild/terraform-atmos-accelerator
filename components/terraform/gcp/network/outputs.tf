@@ -8,9 +8,9 @@ output "network" {
     project_id               = i.project_id
     route_names              = i.route_names
     subnets                  = i.subnets
+    subnets_names            = i.subnets_names
     subnets_flow_logs        = i.subnets_flow_logs
     subnets_ids              = i.subnets_ids
-    subnets_names            = i.subnets_names
     subnets_private_access   = i.subnets_private_access
     subnets_secondary_ranges = i.subnets_secondary_ranges
     subnets_self_links       = i.subnets_self_links
