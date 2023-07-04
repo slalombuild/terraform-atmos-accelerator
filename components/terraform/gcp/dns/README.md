@@ -7,7 +7,7 @@ The resources/services/activations/deletions that this module will create/trigge
    * One google_dns_managed_zone for the zone
    * Zero or more google_dns_record_set for the zone records
 
-## Reference to pass values from atmos stack
+## Reference to pass variable values from atmos stack
 
 components:
     terraform:
