@@ -2,9 +2,20 @@ name: Pull Request Workflow
 on: [pull_request]
 
 jobs:
-  lint:
+  format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
       - run: terraform fmt -check
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - name: tflint
+        uses: reviewdog/action-tflint@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          tflint_rulesets: "aws azurerm google"
