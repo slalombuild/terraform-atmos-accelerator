@@ -1,11 +1,6 @@
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
-module "vpc" {
+module "network" {
   count   = local.enabled ? 1 : 0
-  source  = "terraform-google-modules/network/google//modules/vpc"
+  source  = "terraform-google-modules/network/google"
   version = "~> 7.0.0"
 
   project_id   = var.project_id
@@ -14,8 +9,13 @@ module "vpc" {
   description  = var.vpc_description
   mtu          = var.vpc_mtu
 
-  shared_vpc_host                        = var.shared_vpc_host
-  auto_create_subnetworks                = var.auto_create_subnetworks
+  routes                  = var.routes
+  auto_create_subnetworks = var.auto_create_subnetworks
+  subnets                 = var.subnets
+  secondary_ranges        = var.secondary_ranges
+  firewall_rules          = var.firewall_rules
+  shared_vpc_host         = var.shared_vpc_host
+
   delete_default_internet_gateway_routes = var.delete_default_internet_gateway_routes
 }
 
@@ -24,18 +24,7 @@ resource "google_compute_shared_vpc_service_project" "service_project" {
   host_project    = var.project_id
   service_project = var.service_project_names[count.index]
 
-  depends_on = [module.vpc]
-}
-
-module "vpc_routes" {
-  count   = local.enabled ? 1 : 0
-  source  = "terraform-google-modules/network/google//modules/routes"
-  version = "~> 7.0.0"
-
-  project_id   = var.project_id
-  network_name = module.vpc[0].network_name
-
-  routes = var.routes
+  depends_on = [module.network]
 }
 
 

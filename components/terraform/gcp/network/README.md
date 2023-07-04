@@ -1,4 +1,24 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
+## Description
+
+This module makes it easy to set up a new VPC Network in GCP by defining your network and subnet ranges in a concise syntax.
+It supports creating:
+   * A Google Virtual Private Network (VPC)
+   * Routes (if applicable)
+   * Subnets within the VPC
+   * Secondary ranges for the subnets (if applicable)
+   * Firewall rules (if applicable)
+   * Cloud router & Nat Gateway  (if applicable)
+   * VPC Peerings (if applicable)
+   * Private service connections (if applicable)
+
+## Reference to pass variable values from atmos stack
+
+<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;network:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/network <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "network" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;region: "us-west2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;project_id: "gcp-project-id" <br>&emsp;&emsp;&emsp;&emsp;attributes: [] <br>&emsp;&emsp;&emsp;&emsp;routing_mode: "GLOBAL" <br>&emsp;&emsp;&emsp;&emsp;shared_vpc_host: false <br>&emsp;&emsp;&emsp;&emsp;service_project_names: [] <br>&emsp;&emsp;&emsp;&emsp;subnets: [] <br>&emsp;&emsp;&emsp;&emsp;secondary_ranges: {} <br>&emsp;&emsp;&emsp;&emsp;routes: [] <br>&emsp;&emsp;&emsp;&emsp;firewall_rules = [] <br>&emsp;&emsp;&emsp;&emsp;cloud_nat: {} <br>&emsp;&emsp;&emsp;&emsp;peers: [] <br>&emsp;&emsp;&emsp;&emsp;private_connections: [] <br></p>
+
+## Requirements
+
+
 ## Requirements
 
 No requirements.

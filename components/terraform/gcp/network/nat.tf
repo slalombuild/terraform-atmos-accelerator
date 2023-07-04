@@ -5,9 +5,7 @@ module "cloud_router" {
   name    = module.this.id
   project = var.project_id
   region  = var.region
-  network = module.vpc[0].network_name
-
-  depends_on = [google_compute_subnetwork.subnets]
+  network = module.network[0].network_name
 }
 
 module "cloud_nat" {
@@ -34,6 +32,4 @@ module "cloud_nat" {
   tcp_established_idle_timeout_sec    = var.cloud_nat.tcp_established_idle_timeout_sec
   tcp_transitory_idle_timeout_sec     = var.cloud_nat.tcp_transitory_idle_timeout_sec
   tcp_time_wait_timeout_sec           = var.cloud_nat.tcp_time_wait_timeout_sec
-
-  depends_on = [module.cloud_router]
 }

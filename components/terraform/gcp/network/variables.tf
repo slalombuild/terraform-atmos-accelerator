@@ -52,28 +52,33 @@ variable "delete_default_internet_gateway_routes" {
 
 variable "subnets" {
   type = list(object({
-    subnet_name           = string,
-    description           = optional(string, null),
-    cidr                  = string,
-    private_google_access = optional(bool, false),
-    flow_logs = optional(object({
-      aggregation_interval = optional(string, "INTERVAL_5_SEC"),
-      flow_sampling        = optional(number, 0.5),
-      metadata             = optional(string, "INCLUDE_ALL_METADATA")
-    }), null),
-    secondary_cidrs = optional(list(object({
-      name = string,
-      cidr = string
-    })), [])
+    subnet_name               = string,
+    subnet_ip                 = string,
+    subnet_region             = string,
+    description               = optional(string, null),
+    subnet_private_access     = optional(bool, false),
+    subnet_flow_logs          = optional(bool, false),
+    subnet_flow_logs_interval = optional(string, "INTERVAL_5_SEC"),
+    subnet_flow_logs_sampling = optional(number, 0.5),
+    subnet_flow_logs_metadata = optional(string, "INCLUDE_ALL_METADATA"),
   }))
   description = "List of subnets to be created in the network. See the main module documentation for possible values."
   default     = []
 }
 
+variable "secondary_ranges" {
+  description = "Secondary ranges that will be used in some of the subnets"
+  type = map(list(object({
+    range_name    = string,
+    ip_cidr_range = string,
+  })))
+  default = {}
+}
+
 variable "routes" {
   description = "List of custom routes to be created in the network. Leave empty if you won't need custom routes. See the main module documentation for possible values."
   type = list(object({
-    name                   = string,
+    name                   = optional(string, null),
     description            = optional(string, null),
     destination_range      = string,
     tags                   = string,                   #This is a list in string format. Eg. "tag-01,tag-02"
@@ -84,7 +89,6 @@ variable "routes" {
     next_hop_instance_zone = optional(string, null),
     next_hop_vpn_tunnel    = optional(string, null),
     next_hop_ilb           = optional(string, null),
-    # more variables can be added directly here
   }))
   default = []
 }
