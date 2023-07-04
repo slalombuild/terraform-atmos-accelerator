@@ -9,23 +9,7 @@ The resources/services/activations/deletions that this module will create/trigge
 
 ## Reference to pass variable values from atmos stack
 
-components:
-    terraform:
-        dns:
-            metadata:
-                component: gcp/dns
-            vars:
-                enabled: true
-                namespace: "test"
-                environment: "dns"
-                stage: "uw2"
-                label_key_case: "lower"
-                project_id: "gcp-project-id"
-                attributes: []
-                dns: 
-                    type: "public"
-                    domain_name: "testdomain.io"
-                    record_sets: []
+<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;gcs-bucket:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/gcs-bucket <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "gcs" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;project_id: "gcp-project-id" <br>&emsp;&emsp;&emsp;&emsp;attributes: [] <br>&emsp;&emsp;&emsp;&emsp;dns: <br>&emsp;&emsp;&emsp;&emsp;&emsp;type: "public"<br>&emsp;&emsp;&emsp;&emsp;&emsp;domain_name:<br>&emsp;&emsp;&emsp;&emsp;&emsp; "testdomain.io"<br>&emsp;&emsp;&emsp;&emsp;&emsp;record_sets: []<br></p>
 
 ## Requirements
 
