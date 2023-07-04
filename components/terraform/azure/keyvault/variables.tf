@@ -3,6 +3,12 @@ variable "location" {
   type        = string
 }
 
+variable "test_reviewdog" {
+  description = "Should trigger a comment on the PR"
+  type        = string
+}
+
+
 variable "suffix" {
   description = "Suffix for the name of the key Vault"
   type        = string
