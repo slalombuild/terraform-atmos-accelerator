@@ -7,24 +7,7 @@ Note: If the project id is not set on the resource or in the provider block it w
 
 ## Reference to pass variable values from atmos stack
 
-<p>components: <br>
-    terraform:<br>
-        gcs-bucket:<br>
-            metadata:<br>
-                component: gcp/gcs-bucket <br>
-            vars:<br>
-                enabled: true <br>
-                namespace: "test" <br>
-                environment: "gcs" <br>
-                stage: "uw2" <br>
-                label_key_case: "lower" <br>
-                project_id: "gcp-project-id" <br>
-                attributes: [] <br>
-                kms_encryption_enabled: false <br>
-                gcs_bucket: {} <br>
-                kms: {} <br>
-                bucket_iam: [] <br>
-                tags: {} <br></p>
+<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;gcs-bucket:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/gcs-bucket <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "gcs" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;project_id: "gcp-project-id" <br>&emsp;&emsp;&emsp;&emsp;attributes: [] <br>&emsp;&emsp;&emsp;&emsp;kms_encryption_enabled: false <br>&emsp;&emsp;&emsp;&emsp;gcs_bucket: {} <br>&emsp;&emsp;&emsp;&emsp;kms: {} <br>&emsp;&emsp;&emsp;&emsp;bucket_iam: [] <br>&emsp;&emsp;&emsp;&emsp;tags: {} <br></p>
 
 ## Requirements
 
