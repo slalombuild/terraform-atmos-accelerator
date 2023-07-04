@@ -30,7 +30,7 @@ components:
         kms_master_key_id: ["alias/aws/sqs"]
         kms_data_key_reuse_period_seconds: 300
         deduplication_scope: []
-        name: "lock-cubes"
+        name: "lock-accelerator"
         attributes:
           - pepelock
 ```

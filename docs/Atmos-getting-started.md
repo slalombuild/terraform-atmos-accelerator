@@ -109,7 +109,7 @@ For a complete `atmos.yaml`, see [the example in the CloudPosse repo](https://gi
 
 ## Example: a stack defintiion 
 
-This is for deploying Terraform-defined IaC resources in the `test` environment in the `us-west-2` AWS region for a customer named `bcas`:  
+This is for deploying Terraform-defined IaC resources in the `test` environment in the `us-west-2` AWS region for a customer named `accelerator`:  
   ```yaml
   import: # Any other stack files to import and combine with this one
     - test/_defaults
@@ -117,7 +117,7 @@ This is for deploying Terraform-defined IaC resources in the `test` environment 
   vars: # Variables to apply to all components in the stack, regardless of IaC tool
     region: us-west-2
     environment: uw2
-    namespace: bcas-test
+    namespace: accelerator-test
   components: # Which components to deploy as part of this stack, regardless of IaC tool
     terraform: # Which specific IaC tool to use
       vpc: # Corresponds to the module in components/terraform/vpc/
@@ -160,7 +160,7 @@ This is for deploying Terraform-defined IaC resources in the `test` environment 
 
 3. Run `atmos terraform plan` against the VPC component:
     ```bash
-    atmos terraform plan vpc --stack bcas-test-uw2
+    atmos terraform plan vpc --stack accelerator-test-uw2
     ```
     <details>
 
