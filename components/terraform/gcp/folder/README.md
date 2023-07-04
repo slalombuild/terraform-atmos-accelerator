@@ -1,4 +1,16 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
+## Description
+
+Allows creation and management of a Google Cloud Platform Folder.
+
+A folder can contain projects, other folders, or a combination of both. You can use folders to group projects under an organization in a hierarchy. For example, your organization might contain multiple departments, each with its own set of Cloud Platform resources. Folders allows you to group these resources on a per-department basis. 
+
+IAM permissions at folder level can be implemented while creating a folder and those permissions apply to all projects in that folder (if applicable).
+
+## Reference to pass variable values from atmos stacks
+
+<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;folder:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/folder <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "folder" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;name: "test-folder" <br>&emsp;&emsp;&emsp;&emsp;parent: "organizations/{org_id}" <br>&emsp;&emsp;&emsp;&emsp;iam_bindings: [] <br></p>
+
 ## Requirements
 
 No requirements.

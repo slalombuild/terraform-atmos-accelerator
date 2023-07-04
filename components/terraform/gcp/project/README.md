@@ -1,4 +1,18 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
+## Description
+
+Allows creation and management of a Google Cloud Platform project.
+
+Projects created with this resource must be associated with an Organization.
+
+IAM permissions at project level can be implemented while creating a project (if applicable).
+
+Allows management of API services to enable/disable for a Google Cloud Platform project (if applicable).
+
+## Reference to pass variable values from atmos stacks
+
+<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;project:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/project <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "project" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;project_id: "test-project-id" <br>&emsp;&emsp;&emsp;&emsp;billing_account_id: "123456789" <br>&emsp;&emsp;&emsp;&emsp;org_id: null <br>&emsp;&emsp;&emsp;&emsp;folder_id: null <br>&emsp;&emsp;&emsp;&emsp;name: "test-project" <br>&emsp;&emsp;&emsp;&emsp;iam_bindings: [] <br>&emsp;&emsp;&emsp;&emsp;apis: [] <br>&emsp;&emsp;&emsp;&emsp;tags: {} <br></p>
+
 ## Requirements
 
 No requirements.
