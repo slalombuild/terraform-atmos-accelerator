@@ -1,4 +1,32 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
+## Description:
+
+This module makes it easy to create Google Cloud DNS zones of different types, and manage their records. It supports creating public, private, forwarding, peering, reverse_lookup and service directory zones.
+
+The resources/services/activations/deletions that this module will create/trigger are:
+   * One google_dns_managed_zone for the zone
+   * Zero or more google_dns_record_set for the zone records
+
+## Reference to pass values from atmos stack
+
+components:
+    terraform:
+        dns:
+            metadata:
+                component: gcp/dns
+            vars:
+                enabled: true
+                namespace: "test"
+                environment: "dns"
+                stage: "uw2"
+                label_key_case: "lower"
+                project_id: "gcp-project-id"
+                attributes: []
+                dns: 
+                type: "public"
+                domain_name: "testdomain.io"
+                record_sets: []
+
 ## Requirements
 
 No requirements.
