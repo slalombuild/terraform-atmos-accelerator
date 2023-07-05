@@ -77,4 +77,4 @@ jobs:
           working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
 
-      - run: ls -l ~/.tflint.d/plugins
+      - run: echo $TFLINT_PATH
