@@ -9,7 +9,7 @@ module "s3_bucket" {
   versioning_enabled                      = var.versioning_enabled
   bucket_key_enabled                      = var.bucket_key_enabled
   kms_master_key_arn                      = var.kms_master_key_id != null ? data.aws_kms_key.s3_customer_key[0].arn : var.kms_master_key_id
-  bucket_name                             = var.bucket_name == null ? module.this.id : var.bucket_name
+  bucket_name                             = module.this.id
   access_key_enabled                      = var.access_key_enabled
   acl                                     = "private"
   allow_encrypted_uploads_only            = var.allow_encrypted_uploads_only
