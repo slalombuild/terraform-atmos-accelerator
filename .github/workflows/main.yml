@@ -16,5 +16,5 @@ jobs:
   ci-terraform:
     uses: cloudposse/github-actions-workflows/.github/workflows/ci-terraform.yml@main
     with:
-      suggestions: true
+      suggestions: false
       filter-mode: nofilter
