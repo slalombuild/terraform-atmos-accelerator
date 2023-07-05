@@ -59,6 +59,8 @@ jobs:
 
       - run: terraform init
         working-directory: ${{ matrix.tfdir }}
+      
+      - run: mkdir -p ${{ env.TFLINT_PLUGIN_DIR }}
 
       - name: cache tflint plugins
         id: cache-plugins
@@ -76,5 +78,3 @@ jobs:
           tflint_init: true
           working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
-
-      - run: echo $TFLINT_PATH
