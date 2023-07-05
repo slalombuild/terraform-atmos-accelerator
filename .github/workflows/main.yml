@@ -13,6 +13,19 @@ env:
   TFLINT_PLUGINS: "aws azurerm google"
 
 jobs:
+  format:
+    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Terraform format
+        uses: dflook/terraform-fmt@v1
+
+      - name: Status check
+        shell: bash
+        run: git diff --exit-code
+
   lint-find-dirs:
     runs-on: ubuntu-latest
     steps:
