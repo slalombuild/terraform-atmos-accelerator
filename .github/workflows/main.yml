@@ -2,15 +2,12 @@ name: Main Branch Workflow
 on:
   push:
     branches:
-      - main-pipeline
+      - main
 
 permissions:
   pull-requests: write
   id-token: write
   contents: read
-
-env:
-  TFLINT_PLUGINS: "aws azurerm google"
 
 jobs:
   format:
