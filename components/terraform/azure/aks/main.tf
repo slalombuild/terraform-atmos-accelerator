@@ -1,6 +1,7 @@
 module "naming" {
-  source = "Azure/naming/azurerm"
-  suffix = [var.component_suffix]
+  version = "0.3.0"
+  source  = "Azure/naming/azurerm"
+  suffix  = [var.component_suffix]
 }
 
 resource "azurerm_resource_group" "main" {
