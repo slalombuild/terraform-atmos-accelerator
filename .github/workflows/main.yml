@@ -1,0 +1,20 @@
+name: Pull Request Workflow
+on:
+  push:
+      branches:
+      - main-pipeline
+
+permissions:
+  pull-requests: write
+  id-token: write
+  contents: read
+
+env:
+  TFLINT_PLUGINS: "aws azurerm google"
+
+jobs:
+  ci-terraform:
+    uses: cloudposse/github-actions-workflows/.github/workflows/ci-terraform.yml@main
+    with:
+      suggestions: true
+      filter-mode: nofilter
