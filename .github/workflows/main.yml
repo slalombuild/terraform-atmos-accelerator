@@ -1,7 +1,7 @@
 name: Main Branch Workflow
 on:
   push:
-      branches:
+    branches:
       - main-pipeline
 
 permissions:
