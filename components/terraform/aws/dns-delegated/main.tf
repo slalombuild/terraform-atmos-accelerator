@@ -45,7 +45,7 @@ module "utils" {
 resource "aws_route53_zone_association" "secondary" {
   for_each = local.private_enabled && length(var.vpc_secondary_environment_names) > 0 ? toset(var.vpc_secondary_environment_names) : toset([])
 
-  zone_id    = join("", local.aws_route53_zone.*.zone_id)
+  zone_id    = join("", local.aws_route53_zone[*].zone_id)
   vpc_id     = local.vpc_id
   vpc_region = module.utils.region_az_alt_code_maps[format("from_%s", var.vpc_region_abbreviation_type)][each.value]
 }

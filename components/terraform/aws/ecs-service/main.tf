@@ -187,7 +187,7 @@ module "alb_ingress" {
 
 resource "aws_iam_policy" "default" {
   count    = local.enabled && var.iam_policy_enabled ? 1 : 0
-  policy   = join("", data.aws_iam_policy_document.this.*.json)
+  policy   = join("", data.aws_iam_policy_document.this[*].json)
   tags_all = module.this.tags
 }
 
@@ -237,7 +237,7 @@ resource "aws_kinesis_stream" "default" {
   count               = local.enabled && var.kinesis_enabled ? 1 : 0
   name                = format("%s-%s", module.this.id, "kinesis-stream")
   shard_count         = var.shard_count
-  retention_period    = var.retention_period
+  retention_period    = var.retention_period_hours
   shard_level_metrics = var.shard_level_metrics
   stream_mode_details {
     stream_mode = var.stream_mode

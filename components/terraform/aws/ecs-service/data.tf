@@ -121,9 +121,9 @@ data "aws_lb_listener" "selected_https" {
 }
 
 # This is purely a check to ensure this zone exists
+# tflint-ignore: terraform_unused_declarations
 data "aws_route53_zone" "selected" {
-  count = local.enabled ? 1 : 0
-
+  count        = local.enabled ? 1 : 0
   name         = local.zone_domain
   private_zone = false
 }

@@ -1,12 +1,12 @@
 locals {
   enabled               = module.this.enabled
-  account_id            = one(data.aws_caller_identity.current.*.account_id)
+  account_id            = one(data.aws_caller_identity.current[*].account_id)
   vpc_cidr              = data.aws_vpc.main.cidr_block
   region                = var.region
   lambda_function_names = var.lambda_function_names
   open_api_config       = var.openapi_config != null ? var.openapi_config : yamldecode(templatefile("./openapi-doc/${var.open_api_file_name}", {}))
 
-  private_api_policy = one(data.aws_iam_policy_document.rest_api_policy.*.json)
+  private_api_policy = one(data.aws_iam_policy_document.rest_api_policy[*].json)
   create_api_policy  = var.endpoint_type == "PRIVATE" && var.rest_api_policy == null ? true : false
   api_policy = var.rest_api_policy != null ? var.rest_api_policy : jsonencode({
     Version = "2012-10-17"

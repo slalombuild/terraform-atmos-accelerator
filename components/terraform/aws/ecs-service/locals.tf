@@ -11,8 +11,6 @@ locals {
     for container in module.container_definition :
     container.json_map_object
   ]
-
-  role_name      = format("%s-%s-%s-role", var.namespace, var.environment, var.name)
   kinesis_kms_id = try(one(data.aws_kms_alias.selected[*].id), null)
 
   zone_domain = var.domain_name
@@ -37,9 +35,7 @@ locals {
   ecs_cluster_arn = try(one(data.aws_ecs_cluster.selected[*].arn), null)
 
   lb_arn                = try(one(data.aws_lb.selected[*].arn), null)
-  lb_name               = try(one(data.aws_lb.selected[*].name), null)
   lb_listener_https_arn = try(one(data.aws_lb_listener.selected_https[*].arn), null)
   lb_sg_id              = try(one(data.aws_security_group.lb[*].id), null)
-  lb_zone_id            = try(one(data.aws_lb.selected[*].zone_id), null)
   account_id            = try(one(data.aws_caller_identity.current[*].account_id), null)
 }

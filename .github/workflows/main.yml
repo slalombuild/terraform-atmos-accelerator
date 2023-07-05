@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   format:
-    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
