@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - tflint-fixes
 
 permissions:
   pull-requests: write
@@ -75,3 +76,5 @@ jobs:
           tflint_init: true
           working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
+
+      - run: ls -l ${{ github.workspace }}/.tflint.d
