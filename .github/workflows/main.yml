@@ -13,8 +13,55 @@ env:
   TFLINT_PLUGINS: "aws azurerm google"
 
 jobs:
-  ci-terraform:
-    uses: cloudposse/github-actions-workflows/.github/workflows/ci-terraform.yml@main
-    with:
-      suggestions: true
-      filter-mode: nofilter
+  lint-find-dirs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: set-matrix
+        run: |
+          matrix=$(find ./ -name '*.tf' \
+            -not -path '*/.terraform/*' \
+            -exec dirname {} \; \
+            | sort \
+            | uniq \
+            | jq --raw-input --slurp 'split("\n")| map(select(. != ""))')
+          echo "matrix=$(echo $matrix)" >> $GITHUB_OUTPUT
+    outputs:
+      tfdirs_matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: lint-find-dirs
+    strategy:
+      fail-fast: false
+      matrix:
+        tfdir: ${{ fromJson(needs.lint-find-dirs.outputs.tfdirs_matrix) }}
+    env:
+      TFLINT_PLUGIN_DIR: ${{ github.workspace }}/.tflint.d/plugins
+      TFLINT_PLUGINS: aws azurerm google
+      TFLINT_CACHE_VER: 1 # Increment this to force a cache refresh
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: hashicorp/setup-terraform@v2
+
+      - run: terraform init
+        working-directory: ${{ matrix.tfdir }}
+
+      - name: cache tflint plugins
+        id: cache-plugins
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.TFLINT_PLUGIN_DIR }}
+          key: tflint-plugins-${{ env.TFLINT_CACHE_VER }}
+
+      - name: tflint
+        uses: reviewdog/action-tflint@v1.19.1
+        with:
+          reporter: 'local'
+          fail_on_error: true
+          tflint_rulesets: ${{ env.TFLINT_PLUGINS }}
+          tflint_init: true
+          working_directory: ${{ matrix.tfdir }}
+          filter_mode: nofilter
