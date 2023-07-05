@@ -49,12 +49,6 @@ variable "iam_bindings" {
   default     = []
 }
 
-variable "labels" {
-  type        = map(string)
-  description = "Labels to apply to the GCP project and its resources."
-  default     = {}
-}
-
 variable "skip_delete" {
   type        = bool
   description = "If true, the Terraform resource can be deleted without deleting the Project via the Google API"
