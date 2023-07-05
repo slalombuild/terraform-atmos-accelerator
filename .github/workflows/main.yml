@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - tflint-fixes
 
 permissions:
   pull-requests: write

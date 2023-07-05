@@ -8,7 +8,7 @@ module "acm" {
   process_domain_validation_options = var.process_domain_validation_options
   ttl                               = 300
   subject_alternative_names         = var.subject_alternative_names
-  zone_id                           = join("", data.aws_route53_zone.default.*.zone_id)
+  zone_id                           = join("", data.aws_route53_zone.default[*].zone_id)
 
   context = module.this.context
 }
