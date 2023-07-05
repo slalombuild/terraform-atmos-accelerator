@@ -33,12 +33,6 @@ variable "acm_certificate_domain" {
   description = "Domain to get the ACM cert to use on the ALB."
 }
 
-variable "acm_certificate_domain_suffix" {
-  type        = string
-  default     = null
-  description = "Domain suffix to use with dns delegated HZ to get the ACM cert to use on the ALB"
-}
-
 variable "route53_record_name" {
   type        = string
   default     = "*"
@@ -67,30 +61,6 @@ variable "container_insights_enabled" {
   type        = bool
   default     = true
   description = "Whether or not to enable container insights"
-}
-
-variable "dns_delegated_stage_name" {
-  type        = string
-  default     = null
-  description = "Use this stage name to read from the remote state to get the dns_delegated zone ID"
-}
-
-variable "dns_delegated_environment_name" {
-  type        = string
-  default     = "gbl"
-  description = "Use this environment name to read from the remote state to get the dns_delegated zone ID"
-}
-
-variable "dns_delegated_component_name" {
-  type        = string
-  default     = "dns-delegated"
-  description = "Use this component name to read from the remote state to get the dns_delegated zone ID"
-}
-
-variable "github_hook_enabled" {
-  type        = bool
-  default     = false
-  description = "Enable github ip allowlist to access the alb for the ecs service"
 }
 
 variable "account_number" {
