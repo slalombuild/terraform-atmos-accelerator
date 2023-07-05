@@ -146,9 +146,7 @@ components:
         bucket:
           object_path: "/"
           generation: null
-        ##
-        # Must needs to pass either one of the repo_source or bucket_source to the cloud funtion or it throws an error.
-        ##
+       
         repo_source_enabled: false
         repo_source:
           branch_name: "test"

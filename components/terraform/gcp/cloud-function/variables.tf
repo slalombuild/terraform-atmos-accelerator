@@ -1,7 +1,3 @@
-##
-# Must needs to pass either one of the repo_source or bucket_source to the cloud funtion or it throws an error.
-##
-
 variable "project_id" {
   type        = string
   description = "The ID of the existing GCP project where the GCS bucket will be deployed."
