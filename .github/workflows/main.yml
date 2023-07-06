@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - tflint-cache-fix
 
 permissions:
   pull-requests: write
@@ -50,7 +51,6 @@ jobs:
     env:
       TFLINT_PLUGIN_DIR: ${{ github.workspace }}/.tflint.d/plugins
       TFLINT_PLUGINS: aws azurerm google
-      TFLINT_CACHE_VER: 1 # Increment this to force a cache refresh
     steps:
       - uses: actions/checkout@v3
 
@@ -59,14 +59,18 @@ jobs:
       - run: terraform init
         working-directory: ${{ matrix.tfdir }}
       
-      - run: mkdir -p ${{ env.TFLINT_PLUGIN_DIR }}
+      - name: Create TFLint Plugin Directory
+        run: mkdir -p ${{ env.TFLINT_PLUGIN_DIR }}
+
+      - name: Set current date as env variable
+        run: echo "TODAY=$(date +'%Y-%b-%d' | awk '{print toupper($0)}')" >> $GITHUB_ENV
 
       - name: cache tflint plugins
         id: cache-plugins
         uses: actions/cache@v3
         with:
           path: ${{ env.TFLINT_PLUGIN_DIR }}
-          key: tflint-plugins-${{ env.TFLINT_CACHE_VER }}
+          key: tflint-plugins-${{ env.TODAY }}
 
       - name: tflint
         uses: reviewdog/action-tflint@v1.19.1

@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Set current date as env variable
-      run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+      run: echo "NOW=$(date +'%Y-%b-%d)" >> $GITHUB_ENV
     - run: mkdir -p ~/my/folder
     - name: cache tflint plugins
       id: cache-plugins
