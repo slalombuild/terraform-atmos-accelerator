@@ -1,7 +1,7 @@
 vars:
-  environment: "bootstrap"
-  namespace: "common"
-  stage: "shared"
+  environment: "shared"
+  namespace: "bootstrap"
+  stage: "uw2"
   region: "us-west2"
   enabled: true
   label_key_case: "lower"
