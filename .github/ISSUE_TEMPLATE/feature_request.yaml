@@ -17,6 +17,7 @@ body:
       label: "Priority"
       description: Urgent means this enhancement is required to resolve specific issues, Normal means this should be considered during regular planned work.
       multiple: false
+      required: true
       options:
         - Normal
         - Urgent
