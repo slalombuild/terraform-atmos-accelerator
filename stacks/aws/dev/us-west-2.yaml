@@ -120,6 +120,12 @@ components:
           component: "service-quotas"
           expense-class: "compute"
     
+    s3:
+      vars:
+        bucket_name: null
+        kms_master_key_id: null
+          
+    
     ### api gateway example
     apigateway:
       vars:
