@@ -107,7 +107,7 @@ components:
         component: asg
         type: real
         inherits:
-          - asg/test-component/defaults
+          - asg/defaults
       vars:
         name: "test-component"
         enabled: true

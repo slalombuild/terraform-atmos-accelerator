@@ -1,7 +1,7 @@
 ---
 import:
-  - gcp/dev/_defaults
-  - gcp/dev/globals
+  - dev/_defaults
+  - dev/globals
 
 vars:
   label_key_case: "lower"
@@ -9,7 +9,7 @@ vars:
   enabled: true
   region: "us-west-2"
   environment: "dev"
-  namespace: "accelerator-dev"
+  namespace: "accelerator"
   stage: "uw2"
 
 components:
@@ -158,3 +158,27 @@ components:
         kms: {}
         bucket_iam: []
         tags: {}
+
+    kms:
+      metadata:
+        component: gcp/kms
+      vars:
+        location: "US"
+        create_default_key: true
+        keys: []
+
+        set_owners_for_default_key: true
+        owners_iam: ["user:test@gmail.com"]
+        set_owners_fo: []
+
+        set_encrypters_for_default_key: true
+        encrypters_iam: ["group:test@gmail.com"]
+        set_encrypters_for: []
+ 
+        set_decrypters_for_default_key: true
+        decrypters_iam: ["serviceaccount:test@gmail.com"]
+        set_decrypters_for: []
+        
+        attributes: []
+        tags: {}
+
