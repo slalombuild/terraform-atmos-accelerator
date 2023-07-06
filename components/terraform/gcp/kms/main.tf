@@ -4,7 +4,7 @@ module "kms" {
   version = "~> 2.2.2"
 
   project_id           = var.project_id
-  location             = upper(var.location)
+  location             = lower(var.location)
   keyring              = module.this.id
   keys                 = var.create_default_key ? [module.this.id] : var.keys
   set_owners_for       = var.create_default_key && var.set_owners_for_default_key ? [module.this.id] : var.set_owners_for
