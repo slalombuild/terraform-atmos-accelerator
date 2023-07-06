@@ -9,7 +9,7 @@ module "kms" {
   keys                 = var.create_default_key ? [module.this.id] : var.keys
   set_owners_for       = var.create_default_key && var.set_owners_for_default_key ? [module.this.id] : var.set_owners_for
   set_encrypters_for   = var.create_default_key && var.set_encrypters_for_default_key ? [module.this.id] : var.set_encrypters_for
-  set_decrypters_for   = var.set_decrypters_for_default_key ? [module.this.id] : var.set_encrypters_for
+  set_decrypters_for   = var.create_default_key && var.set_decrypters_for_default_key ? [module.this.id] : var.set_decrypters_for
   owners               = var.owners_iam
   encrypters           = var.encrypters_iam
   decrypters           = var.decrypters_iam
