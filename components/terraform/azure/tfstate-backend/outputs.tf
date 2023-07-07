@@ -1,17 +1,8 @@
-# ---------------------------------------------------------------------------------------------------------------------
-# Resource Group attributes
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group#attributes-reference
-# ---------------------------------------------------------------------------------------------------------------------
-
 output "resource_group_name" {
   value       = local.resource_group.name
   description = "The name of the resource group"
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# Storage Account attributes:
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account#attributes-reference
-# ---------------------------------------------------------------------------------------------------------------------
 output "storage_account_id" {
   value       = azurerm_storage_account.tfstate.id
   description = "The ID of the Storage Account"
@@ -32,41 +23,6 @@ output "storage_account_primary_access_key" {
   description = "The primary access key for the storage account. This value is sensitive and masked from Terraform output."
   sensitive   = true
 }
-/*
-output "storage_account_secondary_access_key" {
-  value       = azurerm_storage_account.tfstate.secondary_access_key
-  description = "The secondary access key for the storage account."
-  sensitive   = true
-}
-
-output "storage_account_primary_connection_string" {
-  value       = azurerm_storage_account.tfstate.primary_connection_string
-  description = "The connection string associated with the primary location."
-  sensitive   = true
-}
-
-output "storage_account_secondary_connection_string" {
-  value       = azurerm_storage_account.tfstate.secondary_connection_string
-  description = "The connection string associated with the secondary location."
-  sensitive   = true
-}
-
-output "storage_account_primary_blob_connection_string" {
-  value       = azurerm_storage_account.tfstate.primary_blob_connection_string
-  description = "The connection string associated with the primary blob location."
-  sensitive   = true
-}
-
-output "storage_account_secondary_blob_connection_string" {
-  value       = azurerm_storage_account.tfstate.secondary_blob_connection_string
-  description = "The connection string associated with the secondary blob location."
-  sensitive   = true
-}
-*/
-# ---------------------------------------------------------------------------------------------------------------------
-# Storage Container attributes
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container#attributes-reference
-# ---------------------------------------------------------------------------------------------------------------------
 
 output "storage_container_id" {
   value       = azurerm_storage_container.tfstate.id
@@ -88,17 +44,11 @@ output "storage_container_resource_manager_id" {
   description = "The Resource Manager ID of this Storage Container."
 }
 
-# ---------------------------------------------------------------------------------------------------------------------
-# Key Vault Attributes
-# https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault_key#attributes-reference
-# ---------------------------------------------------------------------------------------------------------------------
-### The Key Vault ###
 output "key_vault_id" {
   value       = azurerm_key_vault.tfstate.id
   description = ""
 }
 
-### the Key Vault Key ###
 output "key_vault_key_id" {
   value       = azurerm_key_vault_key.tfstate.id
   description = "The Key Vault Key ID"
@@ -108,14 +58,6 @@ output "key_vault_key_version" {
   value       = azurerm_key_vault_key.tfstate.version
   description = "The current version of the Key Vault Key."
 }
-
-/*
-output "key_vault_key_versionless_id" {
-  value       = azurerm_key_vault_key.tfstate.versionless_id
-  description = "The Base ID of the Key Vault Key"
-}
-*/
-
 
 output "z_instructions" {
   value = <<INSTRUCTIONS
