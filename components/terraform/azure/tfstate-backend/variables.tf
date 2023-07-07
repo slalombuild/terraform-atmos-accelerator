@@ -66,41 +66,49 @@ variable "key_vault_firewall_bypass_ip_cidr" {
 
 variable "storage_account_network_rules" {
   description = "(Optional) A network_rules block"
+  type        = object({})
   default     = {}
 }
 
 variable "enable_storage_account_network_rules" {
   description = "Enable storage account network rules usage"
+  type        = bool
   default     = false
 }
 
 variable "storage_account_network_rules_default_action" {
   description = "Specifies the default action of allow or deny when no other rules match. Valid options are Deny or Allow"
+  type        = string
   default     = "Deny"
 }
 
 variable "storage_account_network_rules_bypass" {
   description = "(Optional) Specifies whether traffic is bypassed for Logging/Metrics/AzureServices. Valid options are any combination of Logging, Metrics, AzureServices, or None."
+  type        = list(string)
   default     = null
 }
 
 variable "storage_account_network_rules_ip_rules" {
   description = "(Optional) List of public IP or IP ranges in CIDR Format. Only IPv4 addresses are allowed. Private IP address ranges (as defined in RFC 1918) are not allowed."
+  type        = list(string)
   default     = null
 }
 
 variable "storage_account_network_rules_virtual_network_subnet_ids" {
   description = "(Optional) A list of virtual network subnet ids to to secure the storage account."
+  type        = list(string)
   default     = null
 }
 
 variable "storage_account_network_rules_private_link_access" {
   description = "(Optional) One or More private_link_access block"
+  type        = object({})
   default     = {}
 }
 
 variable "storage_account_network_rules_timeouts" {
   description = "Set timeouts for storage account network rules"
+  type        = object({})
   default     = {}
 }
 

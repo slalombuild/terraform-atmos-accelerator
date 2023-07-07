@@ -20,6 +20,28 @@ resource "azurerm_storage_account" "tfstate" {
     type = "SystemAssigned"
   }
 
+  dynamic "network_rules" {
+    iterator = network_rules
+    for_each = length(keys(var.storage_account_network_rules)) > 0 ? [var.storage_account_network_rules] : []
+
+    content {
+      default_action = lookup(network_rules.value, "default_action", null)
+
+      bypass                     = lookup(network_rules.value, "bypass", null)
+      ip_rules                   = lookup(network_rules.value, "ip_rules", null)
+      virtual_network_subnet_ids = lookup(network_rules.value, "virtual_network_subnet_ids", null)
+
+      dynamic "private_link_access" {
+        iterator = private_link_access
+        for_each = length(keys(lookup(network_rules.value, "private_link_access", {}))) > 0 ? [lookup(network_rules.value, "private_link_access", {})] : []
+        content {
+          endpoint_resource_id = lookup(private_link_access.value, "endpoint_resource_id", null)
+          endpoint_tenant_id   = lookup(private_link_access.value, "endpoint_tenant_id", null)
+        }
+      }
+    }
+  }
+
   enable_https_traffic_only = true
   min_tls_version           = "TLS1_2"
 
@@ -51,7 +73,7 @@ resource "azurerm_key_vault" "tfstate" {
 resource "azurerm_key_vault_access_policy" "storage" {
   key_vault_id = azurerm_key_vault.tfstate.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_storage_account.tfstate.identity.0.principal_id
+  object_id    = azurerm_storage_account.tfstate.identity[0].principal_id
 
   key_permissions    = ["Get", "Create", "List", "Restore", "Recover", "UnwrapKey", "WrapKey", "Purge", "Encrypt", "Decrypt", "Sign", "Verify"]
   secret_permissions = ["Get"]
