@@ -23,7 +23,7 @@ resource "azurerm_user_assigned_identity" "aks" {
 
 module "aks_cluster_name" {
   source  = "Azure/aks/azurerm"
-  version = "7.1.0"
+  version = "7.2.0"
 
   prefix                               = "aks"
   resource_group_name                  = local.resource_group.name
