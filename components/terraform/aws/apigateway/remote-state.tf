@@ -7,34 +7,8 @@ data "aws_caller_identity" "current" {
   count = local.enabled ? 1 : 0
 }
 
-data "aws_partition" "current" {
-  count = local.enabled ? 1 : 0
-}
-
 data "aws_vpc" "main" {
   tags = {
     Name = format("%s-%s-%s*", var.namespace, var.environment, var.stage)
-  }
-}
-
-data "aws_subnets" "private" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.main.id]
-  }
-
-  tags = {
-    Name = "*private*"
-  }
-}
-
-data "aws_subnets" "public" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.main.id]
-  }
-
-  tags = {
-    Name = "*public*"
   }
 }

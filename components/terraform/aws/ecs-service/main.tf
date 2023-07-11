@@ -1,6 +1,6 @@
 module "logs" {
   source  = "cloudposse/cloudwatch-logs/aws"
-  version = "0.6.6"
+  version = "0.6.7"
 
   stream_names      = lookup(var.logs, "stream_names", [])
   retention_in_days = lookup(var.logs, "retention_in_days", 90)
@@ -19,7 +19,7 @@ module "logs" {
 
 module "container_definition" {
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "0.58.1"
+  version = "0.60.0"
 
   for_each = var.containers
 
@@ -79,7 +79,7 @@ module "container_definition" {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.69.0"
+  version = "0.70.0"
 
   count = var.enabled ? 1 : 0
 
@@ -153,7 +153,7 @@ module "alb_ecs_label" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.26.0"
+  version = "0.27.0"
 
   count = var.use_lb ? 1 : 0
 
@@ -187,7 +187,7 @@ module "alb_ingress" {
 
 resource "aws_iam_policy" "default" {
   count    = local.enabled && var.iam_policy_enabled ? 1 : 0
-  policy   = join("", data.aws_iam_policy_document.this.*.json)
+  policy   = join("", data.aws_iam_policy_document.this[*].json)
   tags_all = module.this.tags
 }
 
@@ -237,7 +237,7 @@ resource "aws_kinesis_stream" "default" {
   count               = local.enabled && var.kinesis_enabled ? 1 : 0
   name                = format("%s-%s", module.this.id, "kinesis-stream")
   shard_count         = var.shard_count
-  retention_period    = var.retention_period
+  retention_period    = var.retention_period_hours
   shard_level_metrics = var.shard_level_metrics
   stream_mode_details {
     stream_mode = var.stream_mode

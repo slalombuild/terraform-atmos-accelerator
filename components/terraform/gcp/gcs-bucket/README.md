@@ -11,13 +11,16 @@ Note: If the project id is not set on the resource or in the provider block it w
 
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.72 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | n/a |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.72 |
 
 ## Modules
 

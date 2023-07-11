@@ -32,18 +32,6 @@ variable "region" {
   description = "AWS Region for S3 bucket"
 }
 
-variable "vpc_name" {
-  type        = string
-  description = "The name of the vpc, if multiples vpc are defined in the same aws account make sure to enter only the value of var.name of the selected vpc to use"
-  default     = "vpc"
-}
-
-variable "security_group_id" {
-  type        = list(string)
-  default     = null
-  description = "The ID of the security group"
-}
-
 variable "account_number" {
   type        = string
   description = "The account number for the assume role"

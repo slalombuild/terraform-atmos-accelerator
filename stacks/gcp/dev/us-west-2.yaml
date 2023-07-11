@@ -1,7 +1,7 @@
 ---
 import:
-  - gcp/dev/_defaults
-  - gcp/dev/globals
+  - dev/_defaults
+  - dev/globals
 
 vars:
   label_key_case: "lower"
@@ -9,7 +9,7 @@ vars:
   enabled: true
   region: "us-west-2"
   environment: "dev"
-  namespace: "accelerator-dev"
+  namespace: "accelerator"
   stage: "uw2"
 
 components:
@@ -21,27 +21,24 @@ components:
         name: vpc
         auto_create_subnetworks: false
         subnets:
-        - name: "subnet-1"
-          
-          ip_cidr_range: "10.1.0.0/16"
-          secondary_ip_ranges:
-            -
-              range_name: "pods-1" 
-              ip_cidr_range: "172.16.1.0/24"
-              
-            -
-              range_name: "services-1"
-              ip_cidr_range: "192.168.1.0/24"
-        - name: "subnet-2"
-          
-          ip_cidr_range: "10.2.0.0/16"
-          secondary_ip_ranges:
-            -
-              range_name: "pods-2" 
-              ip_cidr_range: "172.16.2.0/24"
-              
-            -  range_name: "services-2"
-               ip_cidr_range: "192.168.2.0/24"
+          - name: "subnet-1"
+
+            ip_cidr_range: "10.1.0.0/16"
+            secondary_ip_ranges:
+              - range_name: "pods-1"
+                ip_cidr_range: "172.16.1.0/24"
+
+              - range_name: "services-1"
+                ip_cidr_range: "192.168.1.0/24"
+          - name: "subnet-2"
+
+            ip_cidr_range: "10.2.0.0/16"
+            secondary_ip_ranges:
+              - range_name: "pods-2"
+                ip_cidr_range: "172.16.2.0/24"
+
+              - range_name: "services-2"
+                ip_cidr_range: "192.168.2.0/24"
 
     gcs-bucket:
       metadata:
@@ -53,6 +50,76 @@ components:
         kms: {}
         bucket_iam: []
         tags: {}
+
+    network:
+      metadata:
+        component: gcp/network
+      vars:
+        name: null
+        routing_mode: "GLOBAL"
+        shared_vpc_host: false
+        service_project_names: []
+        subnets:
+          - subnet_name: "subnet-1"
+            subnet_ip: "10.1.0.0/16"
+            subnet_region: "us-west2"
+            subnet_private_access: true
+            subnet_flow_logs: true
+            subnet_flow_logs_interval: "INTERVAL_5_SEC"
+            subnet_flow_logs_sampling: 0.5
+            subnet_flow_logs_metadata: "INCLUDE_ALL_METADATA"
+
+          - subnet_name: "subnet-2"
+            subnet_ip: "10.2.0.0/16"
+            subnet_region: "us-west2"
+            subnet_private_access: false
+            subnet_flow_logs: false
+
+        secondary_ip_ranges:
+          "subnet-1":
+            - ip_cidr_range: "172.16.1.0/24"
+              range_name: "pods-1"
+            - ip_cidr_range: "192.168.1.0/24"
+              range_name: "services-1"
+
+          "subnet-2":
+            - ip_cidr_range: "172.16.2.0/24"
+              range_name: "pods-2"
+            - ip_cidr_range: "192.168.2.0/24"
+              range_name: "services-2"
+
+        routes:
+          - name: "egress-internet"
+            destination_range: "0.0.0.0/0"
+            tags: "egress-inet"
+            next_hop_internet: "true"
+
+        firewall_rules:
+          - name: "test"
+            direction: "INGRESS"
+            ranges:
+              - "10.2.0.0/16"
+            allow:
+              - protocol: "TCP"
+
+        cloud_nat:
+          subnetworks:
+            - name: "subnet-1"
+              source_ip_ranges_to_nat:
+                - "ALL_IP_RANGES"
+
+            - name: "subnet-2"
+              source_ip_ranges_to_nat:
+                - "10.2.0.0/16"
+                - "172.16.2.0/24"
+                - "192.168.2.0/24"
+        private_connections:
+          - name: "test-data"
+            prefix_start: "10.3.0.0"
+            prefix_length: 16
+        peers: []
+        attributes: []
+
     dns:
       metadata:
         component: gcp/dns
@@ -62,4 +129,53 @@ components:
         record_sets: []
         attributes: []
         tags: {}
+
+    cloud-function:
+      metadata:
+        component: gcp/cloud-function
+      vars:
+        function_location: "US"
+        entrypoint: "entrypoint.test"
+        runtime: "python3"
+
+        bucket_source_enabled: true
+        bucket_name: null
+        bucket:
+          object_path: "/"
+          generation: null
+
+        repo_source_enabled: false
+        repo_source:
+          branch_name: "test"
+          repo_name: "test"
+
+        attributes: []
+        kms_encryption_enabled: false
+        gcs_bucket: {}
+        kms: {}
+        bucket_iam: []
+        tags: {}
+
+    kms:
+      metadata:
+        component: gcp/kms
+      vars:
+        location: "US"
+        create_default_key: true
+        keys: []
+
+        set_owners_for_default_key: true
+        owners_iam: ["user:test@gmail.com"]
+        set_owners_fo: []
+
+        set_encrypters_for_default_key: true
+        encrypters_iam: ["group:test@gmail.com"]
+        set_encrypters_for: []
+ 
+        set_decrypters_for_default_key: true
+        decrypters_iam: ["serviceaccount:test@gmail.com"]
+        set_decrypters_for: []
         
+        attributes: []
+        tags: {}
+

@@ -135,18 +135,6 @@ variable "stage_name" {
   description = "The name of the stage"
 }
 
-variable "vpc_id" {
-  type        = string
-  description = "Id of the VPC"
-  default     = ""
-}
-
-variable "vpc_cidr" {
-  type        = string
-  description = "CIRD of the vpc"
-  default     = ""
-}
-
 variable "api_gateway_account_settings_enabled" {
   type        = bool
   default     = false
@@ -174,10 +162,4 @@ variable "region" {
 variable "account_map" {
   type        = map(any)
   description = "Account map of all the available accounts"
-}
-
-variable "vpc_name" {
-  type        = string
-  description = "The name of the vpc, if multiples vpc are defined in the same aws account make sure to enter only the value of var.name of the selected vpc to use"
-  default     = "vpc"
 }

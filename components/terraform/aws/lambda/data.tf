@@ -1,11 +1,3 @@
-data "aws_region" "current" {
-  count = local.enabled ? 1 : 0
-}
-
-data "aws_caller_identity" "automation_caller" {
-  count = local.enabled ? 1 : 0
-}
-
 data "aws_caller_identity" "current" {
   count = local.enabled ? 1 : 0
 }
@@ -31,16 +23,5 @@ data "aws_subnets" "private" {
 
   tags = {
     Name = "*private*"
-  }
-}
-
-data "aws_subnets" "public" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.main.id]
-  }
-
-  tags = {
-    Name = "*public*"
   }
 }

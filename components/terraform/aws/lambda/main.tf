@@ -19,7 +19,7 @@ resource "aws_security_group_rule" "lambda_egress" {
 
 module "lambda_function" {
   source  = "cloudposse/lambda-function/aws"
-  version = "0.5.0"
+  version = "0.5.1"
 
   s3_bucket                          = module.lambda_s3_bucket.bucket_id
   s3_key                             = local.lambda_s3_key
@@ -47,7 +47,7 @@ module "lambda_function" {
 
 module "lambda_s3_bucket" {
   source  = "cloudposse/s3-bucket/aws"
-  version = "3.1.1"
+  version = "3.1.2"
 
   bucket_name             = module.this.id
   allow_ssl_requests_only = true

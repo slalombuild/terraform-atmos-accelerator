@@ -9,17 +9,20 @@ The resources/services/activations/deletions that this module will create/trigge
 
 ## Reference to pass variable values from atmos stack
 
-<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;gcs-bucket:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/gcs-bucket <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "gcs" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;project_id: "gcp-project-id" <br>&emsp;&emsp;&emsp;&emsp;attributes: [] <br>&emsp;&emsp;&emsp;&emsp;dns: <br>&emsp;&emsp;&emsp;&emsp;&emsp;type: "public"<br>&emsp;&emsp;&emsp;&emsp;&emsp;domain_name:<br>&emsp;&emsp;&emsp;&emsp;&emsp; "testdomain.io"<br>&emsp;&emsp;&emsp;&emsp;&emsp;record_sets: []<br></p>
+<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;dns:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/dns <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "dns" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;project_id: "gcp-project-id" <br>&emsp;&emsp;&emsp;&emsp;attributes: [] <br>&emsp;&emsp;&emsp;&emsp;dns: <br>&emsp;&emsp;&emsp;&emsp;&emsp;type: "public"<br>&emsp;&emsp;&emsp;&emsp;&emsp;domain_name:<br>&emsp;&emsp;&emsp;&emsp;&emsp; "testdomain.io"<br>&emsp;&emsp;&emsp;&emsp;&emsp;record_sets: []<br></p>
 
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | ~> 4.72 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | n/a |
+| <a name="provider_google"></a> [google](#provider\_google) | ~> 4.72 |
 
 ## Modules
 

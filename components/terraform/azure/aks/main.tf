@@ -1,6 +1,7 @@
 module "naming" {
-  source = "Azure/naming/azurerm"
-  suffix = [var.component_suffix]
+  version = "0.3.0"
+  source  = "Azure/naming/azurerm"
+  suffix  = [var.component_suffix]
 }
 
 resource "azurerm_resource_group" "main" {
@@ -22,14 +23,14 @@ resource "azurerm_user_assigned_identity" "aks" {
 
 module "aks_cluster_name" {
   source  = "Azure/aks/azurerm"
-  version = "7.1.0"
+  version = "7.2.0"
 
   prefix                               = "aks"
   resource_group_name                  = local.resource_group.name
   admin_username                       = null
   azure_policy_enabled                 = true
   cluster_log_analytics_workspace_name = module.naming.log_analytics_workspace.name_unique
-  cluster_name                         = module.naming.kubernetes_cluster.name_unique
+  cluster_name                         = module.this.id # module.naming.kubernetes_cluster.name_unique
   disk_encryption_set_id               = azurerm_disk_encryption_set.des.id
   public_network_access_enabled        = false
   identity_ids                         = [azurerm_user_assigned_identity.aks.id]
@@ -64,7 +65,7 @@ module "aks_cluster_name" {
   kms_key_vault_key_id         = azurerm_key_vault_key.kms.id
   kms_key_vault_network_access = "Private"
 
-  tags = var.default_tags
+  tags = module.this.tags # var.default_tags
 
   depends_on = [
     azurerm_key_vault_access_policy.kms,

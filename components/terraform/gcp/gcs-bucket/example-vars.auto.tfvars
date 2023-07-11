@@ -1,6 +1,6 @@
 # enabled        = true
 # namespace      = "test"
-# environment    = "network"
+# environment    = "gcs"
 # stage          = "uw2"
 # label_key_case = "lower"
 # project_id     = "platlive-nonprod"
