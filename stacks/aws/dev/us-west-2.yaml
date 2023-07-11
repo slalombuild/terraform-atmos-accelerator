@@ -2,13 +2,10 @@
 import:
   - dev/_defaults
   - dev/globals
-  - catalog/asg/*
-  - catalog/ec2/*
-  - catalog/alb/*
-  - catalog/ecs-service/*
+  - catalog/*/*
 
 vars:
-  region: us-east-2
+  region: us-west-2
   environment: uw2
   namespace: accelerator-dev
 
@@ -20,21 +17,16 @@ components:
         tags:
           component: "vpc"
           expense-class: "network"
-        ipv4_primary_cidr_block: "10.240.128.0/18"
-        ipv4_cidrs:
-          -
-            public:
-              - "10.240.128.0/24"
-              - "10.240.129.0/24"
-              - "10.240.130.0/24"
-            private:
-              - "10.240.144.0/20"
-              - "10.240.160.0/20"
-              - "10.240.176.0/20"
+        ipv4_primary_cidr_block: "10.21.0.0/16"
         enable_vpc_endpoints: true
         transit_gateway_id: ""
         nat_gateway_enabled: true
         availability_zones:
+<<<<<<< HEAD
+          - us-west-2a
+          - us-west-2b
+          - us-west-2c
+=======
           - us-east-2a
           - us-east-2b
           - us-east-2c
@@ -190,3 +182,4 @@ components:
           desired_count: 1
           task_memory: 512
           task_cpu: 256
+>>>>>>> 594dcd58d17737441caec4d2180f77b7941452e7
