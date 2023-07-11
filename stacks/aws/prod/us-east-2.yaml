@@ -2,9 +2,7 @@
 import:
   - prod/_defaults
   - prod/globals
-  - catalog/asg/*
-  - catalog/ec2/*
-  - catalog/alb/*
+  - catalog/*/*
 
 vars:
   region: us-east-2
