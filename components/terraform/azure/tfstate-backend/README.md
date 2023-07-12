@@ -10,6 +10,17 @@ The module supports the following:
 2. Encryption in transit using TLS 1.2
 3. State locking is applied automatically by Azure Blob Storage to prevent state file corruption
 
+If you'd like to update Key Vault/network rules with your public IP address for development purposes, this `data` block may be useful:
+
+```go
+data "http" "public_ip" {
+  count = var.key_vault_firewall_bypass_ip_cidr == null  ? 1 : 0
+  url = "http://ipv4.icanhazip.com"
+}
+
+ip_rules =  [ replace(data.http.public_ip[0].response_body, "\n", "") ]
+```
+
 <!-- BEGIN-TERRAFORM-DOCS -->
 ## Requirements
 

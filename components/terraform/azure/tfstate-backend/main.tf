@@ -64,7 +64,7 @@ resource "azurerm_key_vault" "tfstate" {
   network_acls {
     bypass         = "AzureServices"
     default_action = "Deny"
-    ip_rules       = [local.public_ip]
+    ip_rules       = var.key_vault_firewall_bypass_ip_cidr
   }
   purge_protection_enabled = true
   tags                     = module.this.tags

@@ -59,8 +59,8 @@ variable "key_vault_name" {
 }
 
 variable "key_vault_firewall_bypass_ip_cidr" {
-  type        = string
-  description = "IP range to allow access to Keyvault. If null, the requesting IP address will be added to enable resource provisioning."
+  type        = list(string)
+  description = "IP range to allow access to Keyvault."
   default     = null
 }
 
