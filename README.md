@@ -34,6 +34,43 @@ June 2023: We're just getting this project off the ground, and it's under heavy 
 1. Build a community of maintainers and contributors for as long as the accelerator remains useful
 1. Manage vulnerabilities to improve the overall security posture of solutions based on the accelerator
 
+## 🚀 Setup
+
+See the [Getting started](docs/GETTING-STARTED.md) docs for complete instructions on how to use this accelerator.
+
+
+## 🧬 Project structure
+
+```
+.
+├── .github                         # GitHub workflows and repo config
+├── .vscode                         # VSCode settings
+├── components                     
+│   └── terraform                   # Terraform components
+│       ├── aws                     
+│       ├── azure                   
+│       └── gcp                     
+├── config                          # Atmos configuration files
+│   ├── aws                         
+│   │   └── atmos.yaml
+│   ├── azure
+│   │   └── atmos.yaml
+│   └── gcp
+│       └── atmos.yaml
+├── docs                            # Project documentation
+└── stacks                          # Atmos stack configurations
+    ├── aws                         # AWS stack definitions
+    │   ├── automation
+    │   ├── catalog                 
+    │   ├── dev
+    │   ├── prod
+    │   └── staging
+    ├── azure                       # Azure stack definitions
+    │   └── dev
+    └── gcp                         # GCP stack definitions
+        └── dev
+```
+
 ## 💬 Talk to us! 
 We host a community chat every Tuesday at 11am (Vancouver/Pacific Time), where we talk about the accelerator, recent and upcoming changes, feature requests, etc. Please join us https://bit.ly/terraform-accelerator-chat
 
@@ -41,7 +78,7 @@ We host a community chat every Tuesday at 11am (Vancouver/Pacific Time), where w
 Contributions are always welcome! Fork this repository, make your changes, submit a PR. You know how it works.
 
 ## 🐛 Support 
-Raise an issue via Github. Or if you're part of the Slalom Build team, contact us internally via our [#terraform-accelerator](https://slalom.slack.com/archives/C04GX9XA60P) channel
+Raise an issue via Github. Or if you're part of the Slalom Build team, contact us internally via our [#terraform-accelerator](https://slalom.slack.com/archives/C04GX9XA60P) channel.
 
 ---
 ## License
