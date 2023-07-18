@@ -13,6 +13,9 @@ You clicked on a link, and arrived a page that says "Terraform Accelerator". You
 [Option 3:  Learn about this accelerator, and the patterns and standards used](./patterns-and-practices.md)
 <br/><br/>
 
+[Option 4:  I want to demo the accelerator to a client, or include it in sales material](./sell-the-accelator.md)
+<br/><br/>
+
 Good luck!
 <br/><br/>
 COMMAND ?
