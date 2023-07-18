@@ -5,6 +5,10 @@ Modular Global HTTP Load Balancer for GCE using forwarding rules.
 * If you would like to allow for backend groups to be managed outside Terraform, such as via GKE services, see the dynamic backends submodule.
 * If you would like to use load balancing with serverless backends (Cloud Run, Cloud Functions or App Engine), see the serverless_negs submodule and cloudrun example.
 
+## Reference to pass variable values from atmos stack
+
+<p>components: <br>&emsp;terraform:<br>&emsp;&emsp;http-lb:<br>&emsp;&emsp;&emsp;metadata:<br>&emsp;&emsp;&emsp;&emsp;component: gcp/net-lb-l7 <br>&emsp;&emsp;&emsp;vars:<br>&emsp;&emsp;&emsp;&emsp;enabled: true <br>&emsp;&emsp;&emsp;&emsp;namespace: "test" <br>&emsp;&emsp;&emsp;&emsp;environment: "http-lb" <br>&emsp;&emsp;&emsp;&emsp;stage: "uw2" <br>&emsp;&emsp;&emsp;&emsp;label_key_case: "lower" <br>&emsp;&emsp;&emsp;&emsp;project_id: "gcp-project-id" <br>&emsp;&emsp;&emsp;&emsp;attributes: [] <br>&emsp;&emsp;&emsp;&emsp;tags: {} <br>&emsp;&emsp;&emsp;&emsp;backends: {} <br>&emsp;&emsp;&emsp;&emsp;target_tags: [] <br>&emsp;&emsp;&emsp;&emsp;http_forward: true <br>&emsp;&emsp;&emsp;&emsp;http_redirect: false <br>&emsp;&emsp;&emsp;&emsp;load_balancing_scheme: "EXTERNAL" <br></p>
+
 ## Requirements
 
 | Name | Version |

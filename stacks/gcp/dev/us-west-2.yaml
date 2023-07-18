@@ -179,3 +179,14 @@ components:
         attributes: []
         tags: {}
 
+    http-lb:
+      metadata:
+        component: gcp/net-lb-l7
+      vars:
+        backends: {}
+        target_tags: []
+        attributes: []
+        tags: {}
+        http_forward: true
+        http_redirect: false
+        load_balancing_scheme: "EXTERNAL"
