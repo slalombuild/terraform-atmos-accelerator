@@ -238,3 +238,12 @@ components:
         http_forward: true
         http_redirect: false
         load_balancing_scheme: "EXTERNAL"
+    
+    network-lb:
+      metadata:
+        component: gcp/net-ilb-l4
+      vars:
+        service_port: 80
+        attributes: []
+        tags: {}
+
