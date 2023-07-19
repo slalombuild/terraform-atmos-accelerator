@@ -1,9 +1,11 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
 ## Description
 
-Regional TCP Load Balancer Terraform Module
-
-* Modular Regional TCP Load Balancer for GCE using target pool and forwarding rule.
+Modular Regional TCP Load Balancer for GCE using target pool and forwarding rule. The foolowing resources will be created using this module
+* google_compute_forwarding_rule.default: TCP Forwarding rule to the service port on the instances.
+* google_compute_target_pool.default: The target pool created for the instance group.
+* google_compute_http_health_check.default: The health check for the instance group targeted at the service port.
+* google_compute_firewall.default-lb-fw: Firewall that allows traffic from anywhere to instances service port.
 
 ## Reference to pass variable values from atmos stack
 
