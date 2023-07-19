@@ -2,8 +2,8 @@
 ## Description
 
 Modular Global HTTP Load Balancer for GCE using forwarding rules.
-* If you would like to allow for backend groups to be managed outside Terraform, such as via GKE services, see the dynamic backends submodule.
-* If you would like to use load balancing with serverless backends (Cloud Run, Cloud Functions or App Engine), see the serverless_negs submodule and cloudrun example.
+* If you would like to allow for backend groups to be managed outside Terraform, such as via GKE services, see the dynamic backends submodule [https://github.com/terraform-google-modules/terraform-google-lb-http/tree/master/modules/dynamic_backends]
+* If you would like to use load balancing with serverless backends (Cloud Run, Cloud Functions or App Engine), see the serverless_negs submodule and cloudrun example [https://github.com/terraform-google-modules/terraform-google-lb-http/tree/master/modules/serverless_negs]
 
 ## Reference to pass variable values from atmos stack
 
