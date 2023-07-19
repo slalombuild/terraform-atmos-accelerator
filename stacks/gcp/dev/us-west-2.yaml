@@ -181,7 +181,7 @@ components:
 
     http-lb:
       metadata:
-        component: gcp/net-lb-l7
+        component: gcp/net-ilb-l7
       vars:
         backends: {}
         target_tags: []
