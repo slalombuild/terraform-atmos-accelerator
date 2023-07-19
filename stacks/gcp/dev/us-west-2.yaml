@@ -179,3 +179,9 @@ components:
         attributes: []
         tags: {}
 
+    network-lb:
+      metadata:
+        component: gcp/net-ilb-l4
+      vars:
+        service_port: 80
+
