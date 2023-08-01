@@ -17,7 +17,6 @@ There are 4 main use cases for this accelerator:
   * `atmos vendor` vs copy and paste
 * Learn about this accelerator, and the patterns and standards used
   * Atmos
-  * Stacks, Components, Backends
   * Workflows
 * Demo the accelerator to a client, or include it in sales material
   * Powerpoint deck
@@ -46,7 +45,7 @@ This will clone the terraform accelerator into a folder of your choice and run t
 
 Next we'll configure the stacks of components to be provisioned. We'll do this on our local machine, and will setup a CI/CD workflow in a later stage.
 
-See: [Atmos](/docs/atmos.md) and [Stacks, Components, Backends](/docs/atmos.md#stacks,%20components,%20backends)
+See: [Atmos](/docs/atmos.md) and [Atmos CLI command cheat sheet](https://atmos.tools/cli/cheatsheet)
 
 Change to the atmos configuration folder for the cloud you want to configure
 ```bash
