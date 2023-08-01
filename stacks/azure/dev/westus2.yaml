@@ -26,3 +26,7 @@ components:
         managed_identity_principal_id: null
         tags:
           component: aks
+
+    tfstate-backend:
+      metadata:
+        component: azure/tfstate-backend
