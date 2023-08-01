@@ -79,7 +79,7 @@ module "container_definition" {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.70.0"
+  version = "0.71.0"
 
   count = var.enabled ? 1 : 0
 
