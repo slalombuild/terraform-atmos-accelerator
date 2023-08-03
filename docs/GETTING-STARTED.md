@@ -47,12 +47,12 @@ Next we'll configure the stacks of components to be provisioned. We'll do this o
 
 See: [Atmos](/docs/atmos.md) and [Atmos CLI command cheat sheet](https://atmos.tools/cli/cheatsheet)
 
-Change to the atmos configuration folder for the cloud you want to configure
+Change to the atmos configuration folder for the cloud you want to configure (we'll use `aws` as an example):
 ```bash
 cd config/aws
 ```
 
-Run `atmos describe stacks` to describe the configured stacks. The terraform accelerator already has a fully defined stack which is used for testing. While you *could* provision all of the components defined in the stack, it's highly recommended that you use the configuration as a guide, remove the unnecessary components, and choose only the components you need to get started.
+Run `atmos describe stacks` to describe the configured stacks in `/stacks`. The terraform accelerator already has several stacks defined which are used during development to ensure components work correctly. While you *could* provision all of the components defined in the stack, it's highly recommended that you use the configuration as a guide, remove unnecessary components, and choose only the components you need to get started.
 
 ```yaml
 accelerator-dev:
@@ -75,7 +75,7 @@ accelerator-dev:
 
 This stack is called `accelerator-dev` and contains the terraform components `aks` and `tfstate-backend`.
 
-Run `atmos describe component aks --stack accelerator-dev` to describe the component in the `accelerator-dev` stack. 
+Run `atmos describe component aks --stack accelerator-dev` to describe the components in the `accelerator-dev` stack. 
 
 ```yaml
 atmos_component: aks
@@ -101,9 +101,24 @@ sources:
 ...
 ```
 
-These outputs originate from the stack configurations in the `/stacks` folder.
+ ++ Update stack/component guidances goes here ++
 
-..explain the stack config...
+Purpose of these accounts:
+ ++ automation
+ ++ catalog
+ ++ dev
+ ++ prod
+ ++ staging
+ ++ workflows
+
+What goes where
+`_defaults.yaml`
+`globals.yaml`
+`account-globals.yaml`
+
+
+---
+
 
 ## Before you start to build your infrastructure
 
