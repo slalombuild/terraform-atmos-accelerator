@@ -42,6 +42,10 @@ removeUnnecessaryFiles() {
 
 }
 
+removeDevelopmentStacks() {
+    find ./stacks -type f -delete
+}
+
 removeThisScript() {
     rm -- "$0"
     echo -e "${TICK} $0 removed"
@@ -50,6 +54,7 @@ removeThisScript() {
 removeGitFolder
 removeGitHubFolder
 removeUnnecessaryFiles
+removeDevelopmentStacks
 removeThisScript
 
 echo "========================================"
