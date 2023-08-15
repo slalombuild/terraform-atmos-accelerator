@@ -2,10 +2,7 @@
 import:
   - dev/_defaults
   - dev/globals
-  - catalog/asg/*
-  - catalog/ec2/*
-  - catalog/alb/*
-  - catalog/ecs-service/*
+  - catalog/*/*
 
 vars:
   region: us-east-2
@@ -20,19 +17,8 @@ components:
         tags:
           component: "vpc"
           expense-class: "network"
-        ipv4_primary_cidr_block: "10.240.128.0/18"
-        ipv4_cidrs:
-          -
-            public:
-              - "10.240.128.0/24"
-              - "10.240.129.0/24"
-              - "10.240.130.0/24"
-            private:
-              - "10.240.144.0/20"
-              - "10.240.160.0/20"
-              - "10.240.176.0/20"
+        ipv4_primary_cidr_block: "10.20.0.0/16"
         enable_vpc_endpoints: true
-        transit_gateway_id: "tgw-00765178b819867a6"
         nat_gateway_enabled: true
         availability_zones:
           - us-east-2a
@@ -48,126 +34,4 @@ components:
             zone_name: accelerator.slalom.com
         request_acm_certificate: true
         dns_private_zone_enabled: false
-    guardduty:
-      vars:
-        name: guarddutty
-        tags:
-          component: "guardduty"
-          expense-class: "compute"
-    macie:
-      vars:
-        name: macie
-        tags:
-          component: "macie"
-          expense-class: "compute"
-    sns:
-      vars:
-        name: sns
-        tags:
-          component: "sns"
-          expense-class: "network"
-
-    config:
-      vars:
-        name: config
-        tags:
-          component: "config"
-          expense-class: "compute"
-        global_resource_collector_region: "us-east-2"
-        create_iam_role: true
-
-    cloudwatch:
-      vars:
-        name: cloudwatch
-        tags:
-          component: "cloudwatch"
-          expense-class: "compute"
-        cloudwatch_event_rule_pattern:
-          source: ["aws.health"]
-          detail-type: ["AWS Health Event"]
-          detail:
-            service: ["EC2"]
-            eventTypeCategory: ["issue"]
-    waf:
-      vars:
-        name: waf
-        tags:
-          component: "waf"
-          expense-class: "compute"
-
-    securityhub:
-      vars:
-        name: "securityhub"
-      tags:
-          component: "securityhub"
-          expense-class: "compute"
-
-    asg/test-component:
-      metadata:
-        component: asg
-        type: real
-        inherits:
-          - asg/test-component/defaults
-      vars:
-        name: "test-component"
-        enabled: true
-          
-    service-quotas:
-      vars:
-        name: "service-quotas"
-      tags:
-          component: "service-quotas"
-          expense-class: "compute"
-
-    ############################
-    ### ECS example
-
-    # ALB + ECS Cluster attachment
-    ecs/example/alb:
-      metadata:
-          component: ecs
-          type: real
-      vars:
-        name: nginxhello
-        enabled: true
-        tags:
-          component: "nginxhello"
-        acm_certificate_domain: dev.accelerator.slalom.com
-        route53_record_name: "nginxhello"
-        domain_name: dev.accelerator.slalom.com
-        alb_configuration:
-          nginxhello:
-            https_ingress_cidr_blocks: 
-              - 38.88.7.139/32
-              - 96.49.34.55/32
-    example/ecs:
-      metadata:
-        component: ecs-service
-        inherits:
-          - ecs-service/defaults
-      vars:
-        enabled: false
-        name: nginxhello
-        public_lb_enabled: true
-        use_lb: true
-        alb_domain_name: nginxhello.dev.accelerator.slalom.com
-        domain_name: dev.accelerator.slalom.com
-        unauthenticated_priority: 50
-        unauthenticated_paths: 
-          - "/"
-        cluster_name: nginxhello
-        containers:
-          service:
-            name: "nginxhello"
-            image: nginxdemos/hello:latest
-            port_mappings:
-              - containerPort: 80
-                hostPort: 80
-                protocol: tcp
-            log_configuration:
-              logDriver: "awslogs"
-              options: {}
-        task:
-          desired_count: 1
-          task_memory: 512
-          task_cpu: 256
+   

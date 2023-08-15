@@ -34,6 +34,20 @@ June 2023: We're just getting this project off the ground, and it's under heavy 
 1. Build a community of maintainers and contributors for as long as the accelerator remains useful
 1. Manage vulnerabilities to improve the overall security posture of solutions based on the accelerator
 
+## 🤔 When to use the terraform accelerator (or not)
+
+This accelerator is best suited for:
+
+* Managing multiple environments on a medium/large/enterprise scale
+* Multi-region cloud deployments
+* Hybrid (multi-cloud) deployments
+* Terraform automation and collaboration, to enable team autonomy and enable multiple teams to own infrastructure
+
+When you should pass on this accelerator:
+
+* If you need to use Terraform Cloud as a backend (atmos doesn't support it yet)
+* If your terraform is very simple and likely won't grow in complexity
+
 ## 🚀 Setup
 
 See the [Getting started](docs/GETTING-STARTED.md) docs for complete instructions on how to use this accelerator.

@@ -10,12 +10,15 @@ vars:
 components:
   terraform:
     vpc:
+      metadata:
+        component: aws/vpc
+        type: real
       vars:
         name: vpc
         tags:
           component: "vpc"
           expense-class: "network"
-        ipv4_primary_cidr_block: "10.156.192.0/18"
+        ipv4_primary_cidr_block: "10.21.0.0/16"
         nat_gateway_enabled: true
         availability_zones:
           - us-east-2a

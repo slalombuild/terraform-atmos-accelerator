@@ -3,11 +3,12 @@
 
 ## Overview
 
-The terraform accelerator is a new project template for provisioning infrastructure as code in AWS, Azure or GCP. Typically you would use this accelerator after using a cloud-specific accelerator to setup an account hierarchy (such as the AWS Landing Zone Accelerator or the Azure Cloud Adoption Framework). Every cloud operator provides their own bespoke setup framework, and we believe it's best to use their tools.
+The terraform accelerator is a new project template for provisioning infrastructure as code in AWS, Azure or GCP. Typically you would use this accelerator *after* using a cloud-specific accelerator to setup an account hierarchy (such as the AWS Landing Zone Accelerator or the Azure Cloud Adoption Framework). Every cloud operator provides their own bespoke setup framework, and we believe it's best to use their tools.
 
 There are 4 main use cases for this accelerator:
 
 * Use the accelerator to provision and manage infrastructure in one or more clouds
+  * Before using this accelerator
   * Setup your local environment
   * Setup the project
   * Configure stacks of components
@@ -21,7 +22,7 @@ There are 4 main use cases for this accelerator:
 * Demo the accelerator to a client, or include it in sales material
   * Powerpoint deck
 
-### Before using this accelerator
+## Before using this accelerator
 
 We recommend that you configure these AWS accounts/Azure subscriptions/GCP projects -
 
@@ -54,7 +55,7 @@ cd your-project-name
 ```
 This will clone the terraform accelerator into a folder of your choice and run the first-time-setup.sh shell script in the repository root to remove the scaffolding folders and files.
 
-## Intoduction to atmos configuration, stacks and components
+## Introduction to atmos configuration, stacks and components
 
 Next we'll examine the stacks of components that can be provisioned. We'll do this on our local machine, and we'll setup a CI/CD workflow in a later stage.
 
@@ -122,10 +123,20 @@ env: {}
 ...
 ```
 
-
 Although the majority of your configuration work will be done via the IDE to the `/stacks` yaml, it's important to understand these `atmos` commands so that you can describe the generated configuration for debugging purposes.
 
 ## Provision the development stack
+
+### Bootstrap terraform state S3 bucket
+
+> Other backends exist, but we recommend S3/tfstate-backend
+> We also recommend one s3 bucket per account
+
+
+
+How to do it
+
+Summary
 
 
 

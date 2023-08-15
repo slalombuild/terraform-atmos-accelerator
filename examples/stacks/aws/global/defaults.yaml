@@ -13,7 +13,7 @@ terraform:
       dynamodb_table: "accelerator-auto-ue2-tfstate-lock"
       acl: "bucket-owner-full-control"
       region: "us-east-2"
-      role_arn: "arn:aws:iam::111111111111:role/accelerator-auto-automation-role"
+      role_arn: "arn:aws:iam::863615190391:role/pipeline-role"
 
   remote_state_backend:
     s3:

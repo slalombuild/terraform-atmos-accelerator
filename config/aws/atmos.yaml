@@ -44,7 +44,7 @@ components:
 stacks:
   # Can also be set using `ATMOS_STACKS_BASE_PATH` ENV var, or `--config-dir` and `--stacks-dir` command-line arguments
   # Supports both absolute and relative paths
-  base_path: "examples/stacks/aws"
+  base_path: "stacks/aws"
   # Can also be set using `ATMOS_STACKS_INCLUDED_PATHS` ENV var (comma-separated values string)
   included_paths:
     - "**/**"
@@ -59,7 +59,7 @@ stacks:
 workflows:
   # Can also be set using `ATMOS_WORKFLOWS_BASE_PATH` ENV var, or `--workflows-dir` command-line arguments
   # Supports both absolute and relative paths
-  base_path: "/examples/stacks/aws/workflows"
+  base_path: "stacks/aws/workflows"
 
 logs:
   verbose: false

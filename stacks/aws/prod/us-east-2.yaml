@@ -2,9 +2,7 @@
 import:
   - prod/_defaults
   - prod/globals
-  - catalog/asg/*
-  - catalog/ec2/*
-  - catalog/alb/*
+  - catalog/*/*
 
 vars:
   region: us-east-2
@@ -19,18 +17,7 @@ components:
         tags:
           component: "vpc"
           expense-class: "network"
-        ipv4_primary_cidr_block: "10.240.0.0/17"
-        ipv4_cidrs:
-        -
-          public:
-            - "10.240.0.0/24"
-            - "10.240.1.0/24"
-            - "10.240.2.0/24"
-          private:
-            - "10.240.32.0/19"
-            - "10.240.64.0/19"
-            - "10.240.96.0/19"
-        #transit_gateway_id: "tgw-00765178b819867a6"
+        ipv4_primary_cidr_block: "10.20.0.0/16"
         nat_gateway_enabled: true
         availability_zones:
           - us-east-2a

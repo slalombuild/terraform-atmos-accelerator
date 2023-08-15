@@ -15,7 +15,7 @@ workflows:
   destroy-new-account:
     description: deploy landingzone in the staging account
     steps:
-      #- command: terraform apply vpc -s accelerator-staging-ue2
+      - command: terraform apply vpc -s accelerator-staging-ue2
       - command: terraform destroy dns-delegated -s accelerator-staging-ue2
       - command: terraform destroy guardduty -s accelerator-staging-ue2
       - command: terraform destroy macie -s accelerator-staging-ue2
