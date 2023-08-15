@@ -58,6 +58,9 @@ See the [Getting started](docs/GETTING-STARTED.md) docs for complete instruction
 │   └── gcp
 │       └── atmos.yaml
 ├── docs                            # Project documentation
+├── examples                        # Example configs and stacks
+│   ├── config
+│   └── stacks
 └── stacks                          # Atmos stack configurations
     ├── aws                         # AWS stack definitions
     │   ├── automation

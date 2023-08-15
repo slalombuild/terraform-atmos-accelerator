@@ -54,18 +54,18 @@ cd your-project-name
 ```
 This will clone the terraform accelerator into a folder of your choice and run the first-time-setup.sh shell script in the repository root to remove the scaffolding folders and files.
 
-## Configure stacks of components
+## Intoduction to atmos configuration, stacks and components
 
-Next we'll configure the stacks of components to be provisioned. We'll do this on our local machine, and we'll setup a CI/CD workflow in a later stage.
+Next we'll examine the stacks of components that can be provisioned. We'll do this on our local machine, and we'll setup a CI/CD workflow in a later stage.
 
 > IMPORTANT: Need an introduction to Atmos? See [Atmos](/docs/atmos.md) and [Atmos CLI command cheat sheet](https://atmos.tools/cli/cheatsheet)
 
-Change to the atmos configuration folder for the cloud you want to configure (we'll use `aws` as an example):
+Change to the example atmos configuration folder (we'll use `aws` as an example):
 ```bash
 cd examples/config/aws
 ```
 
-> NOTE: `/config` and `/stacks` contains the configuration and stacks used by the terraform accelerator development team. `/stacks` will be cleared by the `first-time-setup.sh` script, so that you can configure your own stacks.
+> NOTE:  `/config` and `/stacks` contains the configuration and stacks used by the terraform accelerator development team. `/stacks` will be cleared by the `first-time-setup.sh` script, so that you can define your own configuration and stacks.
 
 Run `atmos describe stacks` to describe the configured stacks in `/examples/stacks/aws`. The terraform accelerator has several example stacks defined to help you learn the structure.
 
@@ -86,13 +86,6 @@ automation-ue2:
     ...
 ```
 
-> NOTE: You can obtain a more useful list of the stacks defined by using `yq`. For example: `atmos describe stacks | yq '. | keys'`
-> ```yaml
-> - automation-ue2
-> - development-ue2
-> - production-ue2
-> ```
-
 You'll see several example stacks -
 * an **automation** stack, containing these components:
   * a VPC
@@ -104,8 +97,9 @@ You'll see several example stacks -
   * a VPC
   * S3 bucket for terraform state
 
+These stacks correspond to the accounts documented in the [Before using this accelerator](#Before-using-this-accelerator) section.
 
-Run `atmos describe component vpc --stack development-ue2` to describe the components in the `development-ue2` stack. 
+Next, run `atmos describe component vpc --stack development-ue2` to describe the vpc component in the `development-ue2` stack. This will describe the generated configuration for the vpc component.
 
 ```yaml
 atmos_component: vpc
@@ -128,35 +122,14 @@ env: {}
 ...
 ```
 
-> NOTE: You can obtain a more concise list of the stacks defined by using `yq`. For example: `atmos describe stacks | yq '. | keys'`
-> ```yaml
-> - automation-ue2
-> - development-ue2
-> - production-ue2
-> ```
 
+Although the majority of your configuration work will be done via the IDE to the `/stacks` yaml, it's important to understand these `atmos` commands so that you can describe the generated configuration for debugging purposes.
 
- ++ Update stack/component guidances goes here ++
+## Provision the development stack
 
-Purpose of these accounts:
- ++ automation
- ++ catalog
- ++ dev
- ++ prod
- ++ staging
- ++ workflows
-
-What goes where
-`_defaults.yaml`
-`globals.yaml`
-`account-globals.yaml`
 
 
 ---
-
-
-## Before you start to build your infrastructure
-
 
 ## Project Setup
 
@@ -175,6 +148,8 @@ Instructions go here.
 Instructions go here.
 
 ## Setup for GitHub
+
+https://github.com/orgs/cloudposse/repositories?q=github-action+atmos&type=all&language=&sort=
 
 ## Setup for other CI/CD tools
 
