@@ -1,6 +1,6 @@
 module "cloud_router" {
   source  = "terraform-google-modules/cloud-router/google"
-  version = "~> 5.1.0"
+  version = "~> 6.0.0"
   count   = local.enabled && var.cloud_nat != null ? 1 : 0
   name    = module.this.id
   project = var.project_id
