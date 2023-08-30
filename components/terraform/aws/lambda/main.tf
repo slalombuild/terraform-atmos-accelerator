@@ -1,3 +1,16 @@
+locals {
+  enabled    = module.this.enabled
+  region     = var.region
+  vpc_id     = data.aws_vpc.main.id
+  subnet_ids = data.aws_subnets.private.ids
+  vpc_cidr   = data.aws_vpc.main.cidr_block
+  account_id = join("", data.aws_caller_identity.current[*].account_id)
+  # Lambda Config
+  lambda_s3_key = var.s3_key == null ? var.package_name : var.s3_key
+  package_name  = var.package_name
+  s3_bucket     = var.s3_bucket_name != "" ? var.s3_bucket_name : module.lambda_s3_bucket[0].bucket_id
+}
+
 resource "aws_security_group" "lambda_sg" {
   name        = module.this.id
   vpc_id      = local.vpc_id
@@ -19,9 +32,9 @@ resource "aws_security_group_rule" "lambda_egress" {
 
 module "lambda_function" {
   source  = "cloudposse/lambda-function/aws"
-  version = "0.5.1"
+  version = "0.5.0"
 
-  s3_bucket                          = module.lambda_s3_bucket.bucket_id
+  s3_bucket                          = local.s3_bucket
   s3_key                             = local.lambda_s3_key
   function_name                      = module.this.id
   handler                            = var.handler
@@ -46,8 +59,9 @@ module "lambda_function" {
 }
 
 module "lambda_s3_bucket" {
+  count   = var.s3_bucket_name != "" ? 0 : 1
   source  = "cloudposse/s3-bucket/aws"
-  version = "3.1.3"
+  version = "3.1.1"
 
   bucket_name             = module.this.id
   allow_ssl_requests_only = true
@@ -59,7 +73,8 @@ module "lambda_s3_bucket" {
 
 # Uploading lambda artifact to S3
 resource "aws_s3_bucket_object" "lambda_zip" {
-  bucket       = module.lambda_s3_bucket.bucket_id
+  count        = var.s3_bucket_name != "" ? 0 : 1
+  bucket       = module.lambda_s3_bucket[count.index].bucket_id
   key          = local.lambda_s3_key
   source       = "${path.module}/${local.package_name}"
   content_type = "application/zip"
