@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Terraform format
         uses: dflook/terraform-fmt@v1
@@ -27,7 +27,7 @@ jobs:
   lint-find-dirs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: set-matrix
         run: |
@@ -52,7 +52,7 @@ jobs:
       TFLINT_PLUGIN_DIR: ${{ github.workspace }}/.tflint.d/plugins
       TFLINT_PLUGINS: aws azurerm google
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: hashicorp/setup-terraform@v2
 
