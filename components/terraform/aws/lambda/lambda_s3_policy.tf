@@ -19,10 +19,11 @@ locals {
           "s3:HeadObject",
           "s3:GetObject",
           "s3:GetObjectVersion",
+          "s3:PutObject"
         ]
         Effect = "Allow"
-        Resource = ["arn:aws:s3:::${module.lambda_s3_bucket.bucket_id}",
-        "arn:aws:s3:::${module.lambda_s3_bucket.bucket_id}/*"]
+        Resource = ["arn:aws:s3:::${local.s3_bucket}",
+        "arn:aws:s3:::${local.s3_bucket}/*"]
       },
     ]
   })

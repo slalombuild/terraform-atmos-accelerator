@@ -27,17 +27,27 @@ variable "s3_key" {
   type        = string
 }
 
+variable "s3_bucket_name" {
+  type        = string
+  description = <<EOF
+  The S3 bucket location containing the function's deployment package. Conflicts with filename and image_uri.
+  This bucket must reside in the same AWS region where you are creating the Lambda function.
+  EOF
+  default     = ""
+}
+
 variable "region" {
   type        = string
   description = "AWS Region for S3 bucket"
 }
 
-variable "account_number" {
-  type        = string
-  description = "The account number for the assume role"
+variable "security_group_id" {
+  type        = list(string)
+  default     = null
+  description = "The ID of the security group"
 }
 
-variable "account_name" {
-  type        = string
-  description = "AWS Account name"
+variable "account_map" {
+  type        = map(any)
+  description = "Account map of all the available accounts"
 }
