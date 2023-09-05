@@ -1,0 +1,37 @@
+---
+import:
+  - dev/_defaults
+  - dev/globals
+  - catalog/*/*
+
+vars:
+  region: us-east-2
+  environment: ue2
+  namespace: accelerator-dev
+
+components:
+  terraform:
+    vpc:
+      vars:
+        name: vpc
+        tags:
+          component: "vpc"
+          expense-class: "network"
+        ipv4_primary_cidr_block: "10.20.0.0/16"
+        enable_vpc_endpoints: true
+        nat_gateway_enabled: true
+        availability_zones:
+          - us-east-2a
+          - us-east-2b
+          - us-east-2c
+    dns-delegated:
+      vars:
+        tags:
+          component: "dns-delegated"
+          expense-class: "network"
+        zone_config:
+          - subdomain: dev
+            zone_name: accelerator.slalom.com
+        request_acm_certificate: true
+        dns_private_zone_enabled: false
+   

@@ -1,0 +1,32 @@
+---
+import:
+  - dev/_defaults
+  - account-globals.yaml
+
+vars:
+  label_key_case: "lower"
+  label_value_case: "lower"
+  delimiter: ""
+  enabled: true
+  location: "westus2"
+  environment: "dev"
+  namespace: "accelerator"
+  stage: "wu2"
+
+components:
+  terraform:
+    aks:
+      metadata:
+        component: azure/aks
+      vars:
+        name: aks
+        create_resource_group: true
+        resource_group_name: null
+        key_vault_firewall_bypass_ip_cidr: null
+        managed_identity_principal_id: null
+        tags:
+          component: aks
+
+    tfstate-backend:
+      metadata:
+        component: azure/tfstate-backend

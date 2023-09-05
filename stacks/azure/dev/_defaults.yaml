@@ -1,0 +1,10 @@
+---
+import:
+  - account-globals
+vars:
+  tags:
+    product: "accelerator"
+    environment: "dev"
+    component: ""
+    expense-class: ""
+    contact: "accelerator@slalom.com"

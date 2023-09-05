@@ -1,0 +1,6 @@
+---
+import:
+  - dev/_defaults
+
+terraform:
+  vars: {}
