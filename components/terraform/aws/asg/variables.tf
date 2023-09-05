@@ -553,7 +553,7 @@ variable "custom_managed_policies" {
 variable "egress_cidrs" {
   type        = list(string)
   description = "Egress cidr to allow the asg to connect to"
-  default     = ["10.240.128.0/18"]
+  default     = ["10.20.0.0/18"]
 }
 
 variable "service_port" {
