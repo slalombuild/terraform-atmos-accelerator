@@ -1,0 +1,12 @@
+---
+import:
+  - account-globals
+vars:
+  project_id: "solid-clone-348519"
+  account_name: dev
+  tags:
+    product: "accelerator"
+    environment: "dev"
+    component: ""
+    expense-class: ""
+    contact: "accelerator@slalom.com"

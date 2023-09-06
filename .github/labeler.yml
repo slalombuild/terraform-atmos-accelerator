@@ -1,0 +1,17 @@
+documentation:
+  - "docs/**"
+  - "**/*.md"
+
+github_actions:
+  - ".github/*"
+  - ".github/**/*"
+
+terraform:
+  - "components/terraform/**"
+  - "components/terraform/**/*"
+  - "**/*.tf"
+  - "**/*.tfvars"
+  - "stacks/**"
+
+atmos:
+  - "config/**"

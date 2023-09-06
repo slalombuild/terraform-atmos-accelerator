@@ -1,0 +1,25 @@
+---
+# DO NOT CHANGE THIS FILE
+import:
+  - dev/_defaults
+
+vars:
+  region: us-east-2
+  environment: ue2
+  namespace: accelerator-dev
+
+components:
+  terraform:
+    tfstate-backend:
+      backend:
+        s3:
+          role_arn: null
+      vars:
+        enable_server_side_encryption: true
+        enabled: true
+        force_destroy: false
+        name: tfstate
+        prevent_unencrypted_uploads: true
+        tags:
+          component: "tfstate-backend"
+          expense-class: "storage"

@@ -1,0 +1,27 @@
+---
+import:
+  - dev/_defaults
+  - dev/globals
+  - catalog/*/*
+
+vars:
+  region: us-west-2
+  environment: uw2
+  namespace: accelerator-dev
+
+components:
+  terraform:
+    vpc:
+      vars:
+        name: vpc
+        tags:
+          component: "vpc"
+          expense-class: "network"
+        ipv4_primary_cidr_block: "10.21.0.0/16"
+        enable_vpc_endpoints: true
+        transit_gateway_id: ""
+        nat_gateway_enabled: true
+        availability_zones:
+          - us-west-2a
+          - us-west-2b
+          - us-west-2c

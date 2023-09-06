@@ -1,0 +1,249 @@
+---
+import:
+  - dev/_defaults
+  - dev/globals
+
+vars:
+  label_key_case: "lower"
+  label_value_case: "lower"
+  enabled: true
+  region: "us-west-2"
+  environment: "dev"
+  namespace: "accelerator"
+  stage: "uw2"
+
+components:
+  terraform:
+    vpc:
+      metadata:
+        component: gcp/net-vpc
+      vars:
+        name: vpc
+        auto_create_subnetworks: false
+        subnets:
+          - name: "subnet-1"
+
+            ip_cidr_range: "10.1.0.0/16"
+            secondary_ip_ranges:
+              - range_name: "pods-1"
+                ip_cidr_range: "172.16.1.0/24"
+
+              - range_name: "services-1"
+                ip_cidr_range: "192.168.1.0/24"
+          - name: "subnet-2"
+
+            ip_cidr_range: "10.2.0.0/16"
+            secondary_ip_ranges:
+              - range_name: "pods-2"
+                ip_cidr_range: "172.16.2.0/24"
+
+              - range_name: "services-2"
+                ip_cidr_range: "192.168.2.0/24"
+
+    gcs-bucket:
+      metadata:
+        component: gcp/gcs-bucket
+      vars:
+        attributes: []
+        kms_encryption_enabled: false
+        gcs_bucket: {}
+        kms: {}
+        bucket_iam: []
+        tags: {}
+
+    network:
+      metadata:
+        component: gcp/network
+      vars:
+        name: null
+        routing_mode: "GLOBAL"
+        shared_vpc_host: false
+        service_project_names: []
+        subnets:
+          - subnet_name: "subnet-1"
+            subnet_ip: "10.1.0.0/16"
+            subnet_region: "us-west2"
+            subnet_private_access: true
+            subnet_flow_logs: true
+            subnet_flow_logs_interval: "INTERVAL_5_SEC"
+            subnet_flow_logs_sampling: 0.5
+            subnet_flow_logs_metadata: "INCLUDE_ALL_METADATA"
+
+          - subnet_name: "subnet-2"
+            subnet_ip: "10.2.0.0/16"
+            subnet_region: "us-west2"
+            subnet_private_access: false
+            subnet_flow_logs: false
+
+        secondary_ip_ranges:
+          "subnet-1":
+            - ip_cidr_range: "172.16.1.0/24"
+              range_name: "pods-1"
+            - ip_cidr_range: "192.168.1.0/24"
+              range_name: "services-1"
+
+          "subnet-2":
+            - ip_cidr_range: "172.16.2.0/24"
+              range_name: "pods-2"
+            - ip_cidr_range: "192.168.2.0/24"
+              range_name: "services-2"
+
+        routes:
+          - name: "egress-internet"
+            destination_range: "0.0.0.0/0"
+            tags: "egress-inet"
+            next_hop_internet: "true"
+
+        firewall_rules:
+          - name: "test"
+            direction: "INGRESS"
+            ranges:
+              - "10.2.0.0/16"
+            allow:
+              - protocol: "TCP"
+
+        cloud_nat:
+          subnetworks:
+            - name: "subnet-1"
+              source_ip_ranges_to_nat:
+                - "ALL_IP_RANGES"
+
+            - name: "subnet-2"
+              source_ip_ranges_to_nat:
+                - "10.2.0.0/16"
+                - "172.16.2.0/24"
+                - "192.168.2.0/24"
+        private_connections:
+          - name: "test-data"
+            prefix_start: "10.3.0.0"
+            prefix_length: 16
+        peers: []
+        attributes: []
+
+    dns:
+      metadata:
+        component: gcp/dns
+      vars:
+        type: "private"
+        domain_name: "testdomain.io."
+        record_sets: []
+        attributes: []
+        tags: {}
+
+    cloud-function:
+      metadata:
+        component: gcp/cloud-function
+      vars:
+        function_location: "US"
+        entrypoint: "entrypoint.test"
+        runtime: "python3"
+
+        bucket_source_enabled: true
+        bucket_name: null
+        bucket:
+          object_path: "/"
+          generation: null
+
+        repo_source_enabled: false
+        repo_source:
+          branch_name: "test"
+          repo_name: "test"
+
+        attributes: []
+        kms_encryption_enabled: false
+        gcs_bucket: {}
+        kms: {}
+        bucket_iam: []
+        tags: {}
+
+    kms:
+      metadata:
+        component: gcp/kms
+      vars:
+        location: "US"
+        create_default_key: true
+        keys: []
+
+        set_owners_for_default_key: true
+        owners_iam: ["user:test@gmail.com"]
+        set_owners_fo: []
+
+        set_encrypters_for_default_key: true
+        encrypters_iam: ["group:test@gmail.com"]
+        set_encrypters_for: []
+ 
+        set_decrypters_for_default_key: true
+        decrypters_iam: ["serviceaccount:test@gmail.com"]
+        set_decrypters_for: []
+        
+        attributes: []
+        tags: {}
+
+    http-lb:
+      metadata:
+        component: gcp/net-ilb-l7
+      vars:
+        backends:
+          default:
+            description: null
+            port: 8080
+            protocol: "HTTP"
+            port_name:  "test"
+            timeout_sec: 10
+            enable_cdn: false
+            custom_request_headers: null
+            custom_response_headers: null
+            security_policy: null
+            compression_mode: null
+
+            connection_draining_timeout_sec: null
+            session_affinity: null
+            affinity_cookie_ttl_sec: null
+
+            health_check: 
+              check_interval_sec: null
+              timeout_sec: null
+              healthy_threshold: null
+              unhealthy_threshold: null
+              request_path: "/"
+              port: 8080
+              host: null
+              logging: null
+
+            log_config:
+              enable: true
+              sample_rate: 1.0
+
+            groups:
+              - group: "gcs"
+                balancing_mode: null
+                capacity_scaler: null
+                description: null
+                max_connections: null
+                max_connections_per_instance: null
+                max_connections_per_endpoint: null
+                max_rate: null
+                max_rate_per_instance: null
+                max_rate_per_endpoint: null
+                max_utilization: null
+            
+            iap_config:
+              enable: false
+              oauth2_client_id: null
+              oauth2_client_secret: null
+       
+        target_tags: []
+        attributes: []
+        tags: {}
+        http_forward: true
+        http_redirect: false
+        load_balancing_scheme: "EXTERNAL"
+    
+    network-lb:
+      metadata:
+        component: gcp/net-ilb-l4
+      vars:
+        service_port: 80
+        attributes: []
+        tags: {}
+

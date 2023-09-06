@@ -1,0 +1,7 @@
+# Global variables used for account maps, role maps and other global values
+vars:
+  account_map:
+    dev: ""
+    staging: ""
+    automation: ""
+    prod: ""

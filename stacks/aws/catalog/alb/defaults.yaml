@@ -1,0 +1,33 @@
+# stacks/catalog/alb/defaults.yaml
+components:
+  terraform:
+    alb/defaults:
+      metadata:
+        component: alb
+        type: abstract
+      vars: 
+        name: alb
+        tags:
+          component: "alb"
+          expense-class: "network"
+        alb_access_logs_s3_bucket_force_destroy: true
+        alb_access_logs_s3_bucket_force_destroy_enabled: true
+        deletion_protection_enabled: false
+        deregistration_delay: 15
+        health_check_path: "/"
+        health_check_timeout: 10
+        health_check_healthy_threshold: 2
+        health_check_unhealthy_threshold: 2
+        health_check_interval: 15
+        health_check_matcher: "200-399"
+        internal: false
+        http_enabled: false
+        http_redirect: false
+        http2_enabled: true
+        https_enabled: true
+        access_logs_enabled: true
+        idle_timeout: 60
+        ip_address_type: "ipv4"
+        stickiness:
+          cookie_duration: 60
+          enabled: true
