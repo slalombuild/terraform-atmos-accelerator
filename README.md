@@ -4,7 +4,7 @@
 
 Originally developed internally by the Platform Engineers at Slalom Build, based on our experience building enterprise-grade Terraform for customers. We decided to open source this accelerator to empower other engineers, encourage contributions and work more collaboratively with customers.
 
-June 2023: We're just getting this project off the ground, and it's under heavy development. That said, the AWS modules are feature complete (subject to further improvement, of course), and are already being used for production workloads. The patterns and tools are well established, and likely won't change massively. The Azure and GCP modules are not complete, and while they're actively being worked on and contributions are welcome, they're not ready for production yet.
+September 2023: We're just getting this project off the ground, and it's under heavy development. That said, the AWS modules are feature complete (subject to further improvement, of course), and are already being used for production workloads. The patterns and tools are well established, and likely won't change massively. The Azure and GCP modules are not complete, and while they're actively being worked on and contributions are welcome, they're not ready for production yet. Lastly, the "getting started" documentation is a work-in-progress and our primary focus right now.
 
 ## 🎯 Project goals 
 
