@@ -73,7 +73,7 @@ jobs:
           key: tflint-plugins-${{ env.TODAY }}
 
       - name: tflint
-        uses: reviewdog/action-tflint@v1.19.1
+        uses: reviewdog/action-tflint@v1.19.2
         with:
           reporter: 'local'
           fail_on_error: true
