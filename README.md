@@ -4,7 +4,7 @@
 
 Originally developed internally by the Platform Engineers at Slalom Build, based on our experience building enterprise-grade Terraform for customers. We decided to open source this accelerator to empower other engineers, encourage contributions and work more collaboratively with customers.
 
-September 2023: We're just getting this project off the ground, and it's under heavy development. That said, the AWS modules are feature complete (subject to further improvement, of course), and are already being used for production workloads. The patterns and tools are well established, and likely won't change massively. The Azure and GCP modules are not complete, and while they're actively being worked on and contributions are welcome, they're not ready for production yet. Lastly, the "getting started" documentation is a work-in-progress and our primary focus right now.
+September 2023: We're just getting this project off the ground, and it's under heavy development. That said, the AWS modules are feature complete (subject to further improvement, of course), and are already being used for production workloads. The patterns and tools are well established, and likely won't change massively. The Azure and GCP modules are not complete, and while they're actively being worked on and contributions are welcome, they're not ready for production yet. Lastly, the "getting started" documentation and example pipelines are a work-in-progress and our primary focus right now.
 
 ## 🎯 Project goals 
 
@@ -34,6 +34,60 @@ September 2023: We're just getting this project off the ground, and it's under h
 1. Build a community of maintainers and contributors for as long as the accelerator remains useful
 1. Manage vulnerabilities to improve the overall security posture of solutions based on the accelerator
 
+## 🤔 When to use the terraform accelerator (or not)
+
+This accelerator is best suited for:
+
+* Managing multiple environments on a medium/large/enterprise scale
+* Multi-region cloud deployments
+* Hybrid (multi-cloud) deployments
+* Terraform automation and collaboration, to enable team autonomy and enable multiple teams to own infrastructure
+
+When you should pass on this accelerator:
+
+* If you need to use Terraform Cloud as a back-end (atmos doesn't support it yet)
+* If your terraform is very simple and likely won't grow in complexity
+
+## 🚀 Setup
+
+See the [Getting started](docs/GETTING-STARTED.md) docs for complete instructions on how to use this accelerator.
+
+
+## 🧬 Project structure
+
+```
+.
+├── .github                         # GitHub workflows and repo config
+├── .vscode                         # VSCode settings
+├── components                     
+│   └── terraform                   # Terraform components
+│       ├── aws                     
+│       ├── azure                   
+│       └── gcp                     
+├── config                          # Atmos configuration files
+│   ├── aws                         
+│   │   └── atmos.yaml
+│   ├── azure
+│   │   └── atmos.yaml
+│   └── gcp
+│       └── atmos.yaml
+├── docs                            # Project documentation
+├── examples                        # Example configs and stacks
+│   ├── config
+│   └── stacks
+└── stacks                          # Atmos stack configurations
+    ├── aws                         # AWS stack definitions
+    │   ├── automation
+    │   ├── catalog                 
+    │   ├── dev
+    │   ├── prod
+    │   └── staging
+    ├── azure                       # Azure stack definitions
+    │   └── dev
+    └── gcp                         # GCP stack definitions
+        └── dev
+```
+
 ## 💬 Talk to us! 
 We host a community chat every Tuesday at 11am (Vancouver/Pacific Time), where we talk about the accelerator, recent and upcoming changes, feature requests, etc. Please join us https://bit.ly/terraform-accelerator-chat
 
@@ -41,7 +95,7 @@ We host a community chat every Tuesday at 11am (Vancouver/Pacific Time), where w
 Contributions are always welcome! Fork this repository, make your changes, submit a PR. You know how it works.
 
 ## 🐛 Support 
-Raise an issue via Github. Or if you're part of the Slalom Build team, contact us internally via our [#terraform-accelerator](https://slalom.slack.com/archives/C04GX9XA60P) channel
+Raise an issue via Github. Or if you're part of the Slalom Build team, contact us internally via our [#terraform-accelerator](https://slalom.slack.com/archives/C04GX9XA60P) channel.
 
 ---
 ## License
