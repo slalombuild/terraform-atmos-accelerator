@@ -48,11 +48,6 @@ When you should pass on this accelerator:
 * If you need to use Terraform Cloud as a back-end (atmos doesn't support it yet)
 * If your terraform is very simple and likely won't grow in complexity
 
-## 🚀 Setup
-
-See the [Getting started](docs/GETTING-STARTED.md) docs for complete instructions on how to use this accelerator.
-
-
 ## 🧬 Project structure
 
 ```
