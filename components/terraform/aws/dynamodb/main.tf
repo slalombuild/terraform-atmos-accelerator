@@ -2,6 +2,7 @@ module "dynamodb" {
   source  = "cloudposse/dynamodb/aws"
   version = "v0.34.0"
 
+  enabled                            = local.enabled
   autoscale_write_target             = var.autoscale_write_target
   autoscale_read_target              = var.autoscale_read_target
   autoscale_min_read_capacity        = var.autoscale_min_read_capacity
@@ -17,6 +18,7 @@ module "dynamodb" {
   hash_key                           = var.hash_key
   hash_key_type                      = var.hash_key_type
   range_key                          = var.range_key
+  range_key_type                     = var.range_key_type
   ttl_attribute                      = var.ttl_attribute
   ttl_enabled                        = var.ttl_enabled
   enable_autoscaler                  = var.enable_autoscaler
