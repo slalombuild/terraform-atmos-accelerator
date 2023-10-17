@@ -1,5 +1,5 @@
 locals {
-  enabled = var.enable_vpc_endpoints
+  enabled      = var.enable_vpc_endpoints
   route_tables = concat(module.subnets.private_route_table_ids, module.subnets.public_route_table_ids)
   gateway_vpc_endpoints = {
     "s3" = {
