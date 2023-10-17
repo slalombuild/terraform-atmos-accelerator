@@ -20,8 +20,8 @@ locals {
       route_table_ids = local.route_tables
     }
     "dynamodb" = {
-      name   = "dynamodb"
-      policy = null
+      name            = "dynamodb"
+      policy          = null
       route_table_ids = local.route_tables
     }
   }
