@@ -1,5 +1,6 @@
 locals {
-  enabled = var.enable_vpc_endpoints
+  enabled      = var.enable_vpc_endpoints
+  route_tables = concat(module.subnets.private_route_table_ids, module.subnets.public_route_table_ids)
   gateway_vpc_endpoints = {
     "s3" = {
       name = "s3"
@@ -16,10 +17,12 @@ locals {
           },
         ]
       })
+      route_table_ids = local.route_tables
     }
     "dynamodb" = {
-      name   = "dynamodb"
-      policy = null
+      name            = "dynamodb"
+      policy          = null
+      route_table_ids = local.route_tables
     }
   }
   interface_vpc_endpoints = {
@@ -305,23 +308,4 @@ resource "aws_security_group" "ecr_dkr_vpc_endpoint_sg" {
   }
 
   tags = module.ecr_dkr_vpc_endpoint_sg_label.tags
-}
-
-/*
-Endpoint route table association
-*/
-
-locals {
-  route_tables = concat(module.subnets.private_route_table_ids, module.subnets.public_route_table_ids)
-}
-resource "aws_vpc_endpoint_route_table_association" "s3_gateway_vpc_endpoint_route_table_association" {
-  count           = local.enabled ? length(local.route_tables) : 0
-  route_table_id  = local.route_tables[count.index]
-  vpc_endpoint_id = module.vpc_endpoints.gateway_vpc_endpoints[0].id
-}
-
-resource "aws_vpc_endpoint_route_table_association" "dynamodb_gateway_vpc_endpoint_route_table_association" {
-  count           = local.enabled ? length(local.route_tables) : 0
-  route_table_id  = local.route_tables[count.index]
-  vpc_endpoint_id = module.vpc_endpoints.gateway_vpc_endpoints[1].id
 }
