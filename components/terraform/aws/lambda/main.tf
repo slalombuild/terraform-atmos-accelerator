@@ -19,7 +19,7 @@ resource "aws_security_group_rule" "lambda_egress" {
 
 module "lambda_function" {
   source  = "cloudposse/lambda-function/aws"
-  version = "0.5.1"
+  version = "0.5.3"
 
   s3_bucket                          = module.lambda_s3_bucket.bucket_id
   s3_key                             = local.lambda_s3_key
