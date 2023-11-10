@@ -1,7 +1,7 @@
 # The remote backend in the automation account
 module "terraform_state_backend" {
   source      = "cloudposse/tfstate-backend/aws"
-  version     = "1.2.0"
+  version     = "1.3.0"
   enabled     = true
   namespace   = "accelerator-auto"
   environment = "ue2"
