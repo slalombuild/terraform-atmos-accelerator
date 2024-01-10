@@ -1,4 +1,4 @@
-<h1 align="center"><img src="terraform.png" width="128" height="128" alt="Terraform Accelerator"/><br/>Terraform Accelerator<br/>
+<h1 align="center"><img src="terraform.png" width="128" height="128" alt="Terraform Accelerator"/><br/>Terraform (Atmos) Accelerator<br/>
 </h1><div align="center"><b>An opinionated, multi-cloud, multi-region, best-practice accelerator for Terraform</b></div><br/>
 <br/>
 
