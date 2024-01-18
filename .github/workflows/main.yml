@@ -51,6 +51,7 @@ jobs:
     env:
       TFLINT_PLUGIN_DIR: ${{ github.workspace }}/.tflint.d/plugins
       TFLINT_PLUGINS: aws azurerm google
+
     steps:
       - uses: actions/checkout@v3
 
@@ -79,6 +80,5 @@ jobs:
           fail_on_error: true
           tflint_rulesets: ${{ env.TFLINT_PLUGINS }}
           tflint_init: true
-          working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
-          flags: "--config='${{ github.workspace }}/.tflint.hcl'"
+          flags: "--chdir=${{ matrix.tfdir }}"
