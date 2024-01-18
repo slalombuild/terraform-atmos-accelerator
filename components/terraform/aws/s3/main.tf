@@ -1,7 +1,7 @@
 module "s3_bucket" {
   count                                   = local.enabled ? 1 : 0
   source                                  = "cloudposse/s3-bucket/aws"
-  version                                 = "3.1.3"
+  version                                 = "4.0.1"
   block_public_acls                       = var.block_public_acls
   block_public_policy                     = var.block_public_policy
   ignore_public_acls                      = var.ignore_public_acls

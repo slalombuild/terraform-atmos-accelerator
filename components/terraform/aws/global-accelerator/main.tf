@@ -46,7 +46,7 @@ module "endpoint_group" {
 
 module "s3_bucket" {
   source  = "cloudposse/s3-bucket/aws"
-  version = "3.1.3"
+  version = "4.0.1"
 
   context = module.this.context
 
