@@ -66,6 +66,17 @@ jobs:
       - name: Set current date as env variable
         run: echo "TODAY=$(date +'%Y-%b-%d' | awk '{print toupper($0)}')" >> $GITHUB_ENV
 
+      - name: tflint
+        uses: reviewdog/action-tflint@v1.21.0
+        with:
+          reporter: "local"
+          fail_on_error: false
+          tflint_rulesets: ${{ env.TFLINT_PLUGINS }}
+          tflint_init: true
+          working_directory: "./init"
+          filter_mode: nofilter
+          tflint_version: "v0.49.0"
+
       - name: cache tflint plugins
         id: cache-plugins
         uses: actions/cache@v3
@@ -79,8 +90,7 @@ jobs:
           reporter: "local"
           fail_on_error: true
           tflint_rulesets: ${{ env.TFLINT_PLUGINS }}
-          tflint_init: true
+          tflint_init: false
           working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
-          # workaround for https://github.com/reviewdog/action-tflint/issues/83
           tflint_version: "v0.49.0"
