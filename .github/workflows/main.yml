@@ -82,3 +82,5 @@ jobs:
           tflint_init: true
           working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
+          # workaround for https://github.com/reviewdog/action-tflint/issues/83
+          tflint_version: "v0.49.0"
