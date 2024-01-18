@@ -13,7 +13,7 @@ module "sns" {
 
 module "cloudwatch_event" {
   source  = "cloudposse/cloudwatch-events/aws"
-  version = "0.6.1"
+  version = "0.7.0"
 
   cloudwatch_event_rule_description = var.cloudwatch_event_rule_description
   cloudwatch_event_rule_pattern     = var.cloudwatch_event_rule_pattern
