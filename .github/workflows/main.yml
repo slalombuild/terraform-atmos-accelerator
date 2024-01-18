@@ -80,5 +80,5 @@ jobs:
           fail_on_error: true
           tflint_rulesets: ${{ env.TFLINT_PLUGINS }}
           tflint_init: true
+          working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
-          flags: "--chdir=${{ matrix.tfdir }}"
