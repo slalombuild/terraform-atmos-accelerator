@@ -1,6 +1,6 @@
 module "autoscale_group" {
   source  = "cloudposse/ec2-autoscale-group/aws"
-  version = "0.35.1"
+  version = "0.39.0"
 
   image_id                    = local.image_id
   instance_type               = var.instance_type
