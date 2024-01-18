@@ -48,6 +48,12 @@ jobs:
       TFLINT_PLUGINS: aws azurerm google
 
     steps:
+      - name: Create TFLint Plugin Directory
+        run: mkdir -p ${{ env.TFLINT_PLUGIN_DIR }}
+
+      - name: Create temp empty folder
+        run: mkdir -p empty
+
       - name: tflint init
         uses: reviewdog/action-tflint@v1.21.0
         with:
@@ -55,7 +61,7 @@ jobs:
           fail_on_error: false
           tflint_rulesets: ${{ env.TFLINT_PLUGINS }}
           tflint_init: true
-          working_directory: "./init"
+          working_directory: "./empty"
           filter_mode: nofilter
           tflint_version: "v0.49.0"
 
@@ -84,9 +90,6 @@ jobs:
 
       - run: terraform init
         working-directory: ${{ matrix.tfdir }}
-
-      - name: Create TFLint Plugin Directory
-        run: mkdir -p ${{ env.TFLINT_PLUGIN_DIR }}
 
       - name: Set current date as env variable
         run: echo "TODAY=$(date +'%Y-%b-%d' | awk '{print toupper($0)}')" >> $GITHUB_ENV
