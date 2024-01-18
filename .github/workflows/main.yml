@@ -74,7 +74,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    needs: lint-init
+    needs: [lint-find-dirs, lint-init]
     strategy:
       fail-fast: false
       matrix:
