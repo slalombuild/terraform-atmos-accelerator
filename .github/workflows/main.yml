@@ -58,7 +58,7 @@ jobs:
 
       - run: terraform init
         working-directory: ${{ matrix.tfdir }}
-      
+
       - name: Create TFLint Plugin Directory
         run: mkdir -p ${{ env.TFLINT_PLUGIN_DIR }}
 
@@ -73,11 +73,12 @@ jobs:
           key: tflint-plugins-${{ env.TODAY }}
 
       - name: tflint
-        uses: reviewdog/action-tflint@v1.19.1
+        uses: reviewdog/action-tflint@v1.21.0
         with:
-          reporter: 'local'
+          reporter: "local"
           fail_on_error: true
           tflint_rulesets: ${{ env.TFLINT_PLUGINS }}
           tflint_init: true
           working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
+          flags: "--config=${GITHUB_WORKSPACE}/.tflint.hcl"
