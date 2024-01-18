@@ -81,4 +81,4 @@ jobs:
           tflint_init: true
           working_directory: ${{ matrix.tfdir }}
           filter_mode: nofilter
-          flags: "--config=${GITHUB_WORKSPACE}/.tflint.hcl"
+          flags: "--config='${{ github.workspace }}/.tflint.hcl'"
