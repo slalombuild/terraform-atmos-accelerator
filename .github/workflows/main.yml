@@ -66,7 +66,7 @@ jobs:
       - name: Set current date as env variable
         run: echo "TODAY=$(date +'%Y-%b-%d' | awk '{print toupper($0)}')" >> $GITHUB_ENV
 
-      - name: tflint
+      - name: tflint init
         uses: reviewdog/action-tflint@v1.21.0
         with:
           reporter: "local"
