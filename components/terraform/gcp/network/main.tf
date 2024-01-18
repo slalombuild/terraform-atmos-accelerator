@@ -1,7 +1,7 @@
 module "network" {
   count   = local.enabled ? 1 : 0
   source  = "terraform-google-modules/network/google"
-  version = "~> 7.5.0"
+  version = "~> 9.0.0"
 
   project_id   = var.project_id
   network_name = var.name != null ? var.name : module.this.id
