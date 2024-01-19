@@ -1,7 +1,7 @@
 module "network_lb" {
   count                   = local.enabled ? 1 : 0
   source                  = "terraform-google-modules/lb/google"
-  version                 = "~>4.0.1"
+  version                 = "~> 4.1.0"
   region                  = var.region
   project                 = var.project_id
   firewall_project        = var.firewall_project != null ? var.firewall_project : var.project_id
