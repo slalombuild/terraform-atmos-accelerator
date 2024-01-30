@@ -1,5 +1,8 @@
 name: AWS
 on:
+  push:
+    branches:
+      - aws-pipeline
   workflow_dispatch:
 
 permissions:
