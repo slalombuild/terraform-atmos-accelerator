@@ -1,4 +1,4 @@
-name: Pull Request
+name: AWS
 on:
   workflow_dispatch:
 
