@@ -1,6 +1,6 @@
 module "dynamodb" {
   source  = "cloudposse/dynamodb/aws"
-  version = "v0.34.0"
+  version = "v0.35.0"
 
   enabled                            = local.enabled
   autoscale_write_target             = var.autoscale_write_target
