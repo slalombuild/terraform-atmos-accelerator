@@ -12,7 +12,7 @@ module "aws_config_storage" {
 
 module "aws_config" {
   source  = "cloudposse/config/aws"
-  version = "1.4.0"
+  version = "1.5.0"
 
   create_sns_topic                 = var.create_sns_topic
   create_iam_role                  = var.create_iam_role
