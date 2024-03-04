@@ -1,5 +1,5 @@
 module "vpc" {
-  version                          = "2.1.1"
+  version                          = "2.2.0"
   source                           = "cloudposse/vpc/aws"
   ipv4_primary_cidr_block          = var.ipv4_primary_cidr_block
   assign_generated_ipv6_cidr_block = true
