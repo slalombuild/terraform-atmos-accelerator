@@ -1,5 +1,5 @@
 module "flow_logs" {
-  version          = "1.0.1"
+  version          = "1.1.0"
   source           = "cloudposse/vpc-flow-logs-s3-bucket/aws"
   flow_log_enabled = var.flow_log_enabled
   enabled          = var.flow_log_enabled
