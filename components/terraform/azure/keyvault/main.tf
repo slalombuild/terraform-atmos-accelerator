@@ -1,6 +1,6 @@
 module "naming" {
   source        = "Azure/naming/azurerm"
-  version       = "0.4.0"
+  version       = "0.4.1"
   unique-length = 4
   suffix        = [var.suffix]
 }
