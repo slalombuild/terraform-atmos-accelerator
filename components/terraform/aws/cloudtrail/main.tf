@@ -1,6 +1,6 @@
 module "cloudtrail" {
   source  = "cloudposse/cloudtrail/aws"
-  version = "0.23.0"
+  version = "0.24.0"
 
   enable_logging                = var.enable_logging
   enable_log_file_validation    = var.enable_log_file_validation
