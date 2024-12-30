@@ -62,4 +62,4 @@ repos:
         name: update terraform documentation
         args:
           - --args=--config=.terraform-docs.yaml
-          - --hook-config=--create-file-if-not-exist=false
+          - --hook-config=--create-file-if-not-exist=true
