@@ -4,7 +4,7 @@ locals {
 
 module "cloudtrail" {
   source  = "cloudposse/cloudtrail/aws"
-  version = "0.23.0"
+  version = "0.24.0"
 
   cloud_watch_logs_role_arn     = join("", aws_iam_role.cloudtrail_cloudwatch_logs[*].arn)
   cloud_watch_logs_group_arn    = "${join("", aws_cloudwatch_log_group.cloudtrail_cloudwatch_logs[*].arn)}:*"
