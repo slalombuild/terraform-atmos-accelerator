@@ -1,18 +1,35 @@
 {
   "timezone": "America/Vancouver",
-  "extends": ["config:base", ":preserveSemverRanges"],
-  "baseBranches": ["main", "/^release\\/v\\d{1,2}$/"],
-  "labels": ["auto-update"],
+  "extends": [
+    "config:recommended",
+    ":preserveSemverRanges"
+  ],
+  "baseBranches": [
+    "main",
+    "/^release\\/v\\d{1,2}$/"
+  ],
+  "labels": [
+    "auto-update"
+  ],
   "dependencyDashboardAutoclose": true,
-  "enabledManagers": ["terraform"],
+  "enabledManagers": [
+    "terraform"
+  ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     }
   ],
   "terraform": {
-    "ignorePaths": ["docs/**", "examples/**", "**/context.tf"]
+    "ignorePaths": [
+      "docs/**",
+      "examples/**",
+      "**/context.tf"
+    ]
   }
 }
