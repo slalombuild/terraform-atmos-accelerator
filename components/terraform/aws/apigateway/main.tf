@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "rest_api_policy" {
 
 module "api_gateway" {
   source  = "cloudposse/api-gateway/aws"
-  version = "0.3.1"
+  version = "0.7.1"
 
   openapi_config           = local.open_api_config
   endpoint_type            = var.endpoint_type
@@ -84,7 +84,7 @@ resource "aws_lambda_permission" "allow_apigateway_invoke_lambda" {
 module "api_gateway_account_settings" {
   count   = local.enabled && var.api_gateway_account_settings_enabled ? 1 : 0
   source  = "cloudposse/api-gateway/aws//modules/account-settings"
-  version = "0.3.1"
+  version = "0.7.1"
 
   name                 = "apigateway-settings"
   permissions_boundary = var.permissions_boundary
