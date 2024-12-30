@@ -113,7 +113,7 @@ Perform the following commands on the root folder:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_alb"></a> [alb](#module\_alb) | cloudposse/alb/aws | 1.10.0 |
+| <a name="module_alb"></a> [alb](#module\_alb) | cloudposse/alb/aws | 1.7.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources

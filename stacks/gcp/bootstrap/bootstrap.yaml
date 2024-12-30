@@ -6,7 +6,7 @@ vars:
   enabled: true
   label_key_case: "lower"
   label_value_case: "lower"
-  
+
 
 
 components:
@@ -18,11 +18,10 @@ components:
         name: "test-project"
         project_id: "test-project"
         tags: {}
-        
+
     folder:
       metadata:
         component: gcp/folder
       vars:
         name: "test-folder"
         parent: "organizations/{org_id}"
-        

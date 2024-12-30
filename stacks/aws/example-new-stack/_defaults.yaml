@@ -1,0 +1,15 @@
+---
+vars:
+  region: us-east-1
+  # This is the naming convention for the environment
+  # this is base on the atmos.yaml configuration
+  # name_pattern: "{namespace}-{environment}-{stage}"
+  environment: ue1
+  namespace: accelerator
+  # The stage name MUST match the account stage name
+  stage: example
+
+  tags:
+    product: "accelerator"
+    environment: "example"
+    contact: "accelerator@accelerator.com"

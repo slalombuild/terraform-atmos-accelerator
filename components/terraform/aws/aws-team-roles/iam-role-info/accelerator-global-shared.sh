@@ -4,44 +4,43 @@ functions=()
 
 functions+=(namespace)
 function namespace() {
-  echo draiver
+	echo accelerator
 }
 
 declare -A profiles
 
 profiles=(
-    ["admin"]="draiver-global-prod-admin"
-    ["developers"]="draiver-global-prod-developers"
-    ["devops"]="draiver-global-prod-devops"
-    ["terraform"]="draiver-global-prod-terraform"
-  )
+	["admin"]="accelerator-global-shared-admin"
+	["developers"]="accelerator-global-shared-developers"
+	["devops"]="accelerator-global-shared-devops"
+	["terraform"]="accelerator-global-shared-terraform"
+)
 
 declare -A role_arns
 
 role_arns=(
-    ["admin"]="arn:aws:iam::755834691864:role/draiver-global-prod-admin"
-    ["developers"]="arn:aws:iam::755834691864:role/draiver-global-prod-developers"
-    ["devops"]="arn:aws:iam::755834691864:role/draiver-global-prod-devops"
-    ["terraform"]="arn:aws:iam::755834691864:role/draiver-global-prod-terraform"
-  )
+	["admin"]="arn:aws:iam::012345678910:role/accelerator-global-shared-admin"
+	["developers"]="arn:aws:iam::012345678910:role/accelerator-global-shared-developers"
+	["devops"]="arn:aws:iam::012345678910:role/accelerator-global-shared-devops"
+	["terraform"]="arn:aws:iam::012345678910:role/accelerator-global-shared-terraform"
+)
 
 functions+=("role-names")
 function role-names() {
-  printf "%s\n" "${!profiles[@]}" | sort
+	printf "%s\n" "${!profiles[@]}" | sort
 }
 
 functions+=("profiles")
 function profiles() {
-  printf "%s\n" "${profiles[@]}" | sort
+	printf "%s\n" "${profiles[@]}" | sort
 }
 
 functions+=("role-arns")
 function role-arns() {
-  for name in $(role-names); do
-    printf "%s = %s\n" "$name" "${role_arns[$name]}"
-  done
+	for name in $(role-names); do
+		printf "%s = %s\n" "$name" "${role_arns[$name]}"
+	done
 }
-
 
 ########### non-template helpers ###########
 

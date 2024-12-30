@@ -34,4 +34,4 @@ components:
             zone_name: accelerator.slalom.com
         request_acm_certificate: true
         dns_private_zone_enabled: false
-   
+

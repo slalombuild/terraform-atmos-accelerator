@@ -1,4 +1,51 @@
 <!-- BEGIN-TERRAFORM-DOCS -->
+# Component: terraform-aws-s3-bucket
+
+# Description: |-
+  This module creates an S3 bucket with support for versioning, lifecycles, object locks, replication, encryption, ACL,
+  bucket object policies, and static website hosting.
+
+  If `user_enabled` variable is set to `true`, the module will provision a basic IAM user with permissions to access the bucket.
+  This basic IAM system user is suitable for CI/CD systems (_e.g._ TravisCI, CircleCI) or systems which are *external* to AWS that cannot leverage
+  [AWS IAM Instance Profiles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html)
+  or [AWS OIDC](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) to authenticate and
+  do not already have IAM credentials. Users or systems that have IAM credentials should either be granted access directly based on
+  their IAM identity via `privileged_principal_arns` or be allowed to assume an IAM role with access.
+
+  We do not recommend creating IAM users this way for any other purpose.
+
+  This module blocks public access to the bucket by default. See `block_public_acls`, `block_public_policy`,
+  `ignore_public_acls`, and `restrict_public_buckets` to change the settings. See [AWS documentation](https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html)
+  for more details.
+
+  If an IAM user is created, the IAM user name is constructed using [terraform-null-label](https://github.com/cloudposse/terraform-null-label)
+  and some input is required. The simplest input is `name`. By default the name will be converted to lower case
+  and all non-alphanumeric characters except for hyphen will be removed. See the documentation for `terraform-null-label`
+  to learn how to override these defaults if desired.
+
+  If an AWS Access Key is created, it is stored either in SSM Parameter Store or is provided as a module output,
+  but not both. Using SSM Parameter Store is recommended because module outputs are stored in plaintext in
+  the Terraform state file.
+# Usage of atmos stack
+Components:
+    terraform:
+      s3:
+       metadata:
+        component: aws/s3
+       vars:
+        bucket_name: null
+        kms_master_key_id: null
+        enabled: true
+        namespace: "accelerator"
+        environment: "dev"
+        account_map: {
+          dev: 123456789
+          staging: 123456789
+          prod: 123456789
+        }
+        region: "us-west-2"
+        stage: "uw2"
+
 ## Requirements
 
 | Name | Version |
@@ -16,7 +63,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | cloudposse/s3-bucket/aws | 3.1.3 |
+| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | cloudposse/s3-bucket/aws | 3.1.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
@@ -38,6 +85,7 @@
 | <a name="input_block_public_acls"></a> [block\_public\_acls](#input\_block\_public\_acls) | Set to `false` to disable the blocking of new public access lists on the bucket | `bool` | `true` | no |
 | <a name="input_block_public_policy"></a> [block\_public\_policy](#input\_block\_public\_policy) | Set to `false` to disable the blocking of new public policies on the bucket | `bool` | `true` | no |
 | <a name="input_bucket_key_enabled"></a> [bucket\_key\_enabled](#input\_bucket\_key\_enabled) | Set this to true to use Amazon S3 Bucket Keys for SSE-KMS, which reduce the cost of AWS KMS requests.<br><br>For more information, see: https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-key.html | `bool` | `false` | no |
+| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Bucket name. If provided, the bucket will be created with this name instead of generating the name from the context | `string` | `null` | no |
 | <a name="input_context"></a> [context](#input\_context) | Single object for setting entire context at once.<br>See description of individual variables for details.<br>Leave string and numeric variables as `null` to use default value.<br>Individual variable settings (non-null) override settings in context object,<br>except for attributes, tags, and additional\_tag\_map, which are merged. | `any` | <pre>{<br>  "additional_tag_map": {},<br>  "attributes": [],<br>  "delimiter": null,<br>  "descriptor_formats": {},<br>  "enabled": true,<br>  "environment": null,<br>  "id_length_limit": null,<br>  "label_key_case": null,<br>  "label_order": [],<br>  "label_value_case": null,<br>  "labels_as_tags": [<br>    "unset"<br>  ],<br>  "name": null,<br>  "namespace": null,<br>  "regex_replace_chars": null,<br>  "stage": null,<br>  "tags": {},<br>  "tenant": null<br>}</pre> | no |
 | <a name="input_cors_configuration"></a> [cors\_configuration](#input\_cors\_configuration) | Specifies the allowed headers, methods, origins and exposed headers when using CORS on this bucket | <pre>list(object({<br>    allowed_headers = list(string)<br>    allowed_methods = list(string)<br>    allowed_origins = list(string)<br>    expose_headers  = list(string)<br>    max_age_seconds = number<br>  }))</pre> | `[]` | no |
 | <a name="input_delimiter"></a> [delimiter](#input\_delimiter) | Delimiter to be used between ID elements.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
@@ -82,17 +130,5 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_access_key_id"></a> [access\_key\_id](#output\_access\_key\_id) | access key output |
-| <a name="output_access_key_id_ssm_path"></a> [access\_key\_id\_ssm\_path](#output\_access\_key\_id\_ssm\_path) | The SSM Path under which the S3 User's access key ID is stored |
-| <a name="output_bucket_arn"></a> [bucket\_arn](#output\_bucket\_arn) | Bucket ARN |
-| <a name="output_bucket_domain_name"></a> [bucket\_domain\_name](#output\_bucket\_domain\_name) | FQDN of bucket |
-| <a name="output_bucket_id"></a> [bucket\_id](#output\_bucket\_id) | Bucket Name (aka ID) |
-| <a name="output_bucket_region"></a> [bucket\_region](#output\_bucket\_region) | Bucket region |
-| <a name="output_bucket_regional_domain_name"></a> [bucket\_regional\_domain\_name](#output\_bucket\_regional\_domain\_name) | The bucket region-specific domain name |
-| <a name="output_bucket_website_domain"></a> [bucket\_website\_domain](#output\_bucket\_website\_domain) | The bucket website domain, if website is enabled |
-| <a name="output_bucket_website_endpoint"></a> [bucket\_website\_endpoint](#output\_bucket\_website\_endpoint) | The bucket website endpoint, if website is enabled |
-| <a name="output_replication_role_arn"></a> [replication\_role\_arn](#output\_replication\_role\_arn) | The ARN of the replication IAM Role |
-| <a name="output_secret_access_key"></a> [secret\_access\_key](#output\_secret\_access\_key) | secret access key output |
-| <a name="output_secret_access_key_ssm_path"></a> [secret\_access\_key\_ssm\_path](#output\_secret\_access\_key\_ssm\_path) | The SSM Path under which the S3 User's secret access key is stored |
-| <a name="output_user_unique_id"></a> [user\_unique\_id](#output\_user\_unique\_id) | The user unique ID assigned by AWS |
+| <a name="output_s3"></a> [s3](#output\_s3) | output for s3 bucket |
 <!-- END-TERRAFORM-DOCS -->

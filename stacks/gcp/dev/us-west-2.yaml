@@ -171,11 +171,11 @@ components:
         set_encrypters_for_default_key: true
         encrypters_iam: ["group:test@gmail.com"]
         set_encrypters_for: []
- 
+
         set_decrypters_for_default_key: true
         decrypters_iam: ["serviceaccount:test@gmail.com"]
         set_decrypters_for: []
-        
+
         attributes: []
         tags: {}
 
@@ -200,7 +200,7 @@ components:
             session_affinity: null
             affinity_cookie_ttl_sec: null
 
-            health_check: 
+            health_check:
               check_interval_sec: null
               timeout_sec: null
               healthy_threshold: null
@@ -226,19 +226,19 @@ components:
                 max_rate_per_instance: null
                 max_rate_per_endpoint: null
                 max_utilization: null
-            
+
             iap_config:
               enable: false
               oauth2_client_id: null
               oauth2_client_secret: null
-       
+
         target_tags: []
         attributes: []
         tags: {}
         http_forward: true
         http_redirect: false
         load_balancing_scheme: "EXTERNAL"
-    
+
     network-lb:
       metadata:
         component: gcp/net-ilb-l4

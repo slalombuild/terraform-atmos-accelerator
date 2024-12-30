@@ -10,65 +10,63 @@
 # organization, so it must destroy/override variables
 # like `accounts` and `account_roles`.
 
-
 functions+=(namespace)
 function namespace() {
-  echo draiver
+  echo accelerator
 }
 
 functions+=("source-profile")
 function source-profile() {
-  echo draiver-identity
+  echo accelerator-identity
 }
-
 
 declare -A accounts
 
 # root account included
 accounts=(
-    ["audit"]="206033381289"
-    ["automation"]="598987556933"
-    ["development"]="999085683799"
-    ["dns"]="014102593407"
-    ["identity"]="461874932894"
-    ["ipam"]="838147303013"
-    ["log-archive"]="576911256458"
-    ["nonprod"]="532904089877"
-    ["prod"]="755834691864"
-    ["root"]="531267869156"
-    ["sec-tooling"]="401031529788"
-    ["shared"]="958201063996"
-    ["transit"]="523262733422"
-  )
+  ["audit"]="012345678910"
+  ["automation"]="012345678910"
+  ["development"]="012345678910"
+  ["dns"]="012345678910"
+  ["identity"]="012345678910"
+  ["ipam"]="012345678910"
+  ["log-archive"]="012345678910"
+  ["nonprod"]="012345678910"
+  ["prod"]="012345678910"
+  ["root"]="012345678910"
+  ["sec-tooling"]="012345678910"
+  ["shared"]="012345678910"
+  ["transit"]="012345678910"
+)
 
 declare -A account_profiles
 
 # root account included
 account_profiles=(
-    ["audit"]="draiver-global-audit"
-    ["automation"]="draiver-global-automation"
-    ["development"]="draiver-global-development"
-    ["dns"]="draiver-global-dns"
-    ["identity"]="draiver-global-identity"
-    ["ipam"]="draiver-global-ipam"
-    ["log-archive"]="draiver-global-log-archive"
-    ["nonprod"]="draiver-global-nonprod"
-    ["prod"]="draiver-global-prod"
-    ["root"]="draiver-global-root"
-    ["sec-tooling"]="draiver-global-sec-tooling"
-    ["shared"]="draiver-global-shared"
-    ["transit"]="draiver-global-transit"
-  )
+  ["audit"]="accelerator-global-audit"
+  ["automation"]="accelerator-global-automation"
+  ["development"]="accelerator-global-development"
+  ["dns"]="accelerator-global-dns"
+  ["identity"]="accelerator-global-identity"
+  ["ipam"]="accelerator-global-ipam"
+  ["log-archive"]="accelerator-global-log-archive"
+  ["nonprod"]="accelerator-global-nonprod"
+  ["prod"]="accelerator-global-prod"
+  ["root"]="accelerator-global-root"
+  ["sec-tooling"]="accelerator-global-sec-tooling"
+  ["shared"]="accelerator-global-shared"
+  ["transit"]="accelerator-global-transit"
+)
 
 declare -A account_roles
 
 account_roles=(
-    ["artifacts"]="artifacts"
-    ["audit"]="audit"
-    ["dns"]="dns"
-    ["identity"]="identity"
-    ["root"]="root"
-  )
+  ["artifacts"]="artifacts"
+  ["audit"]="audit"
+  ["dns"]="dns"
+  ["identity"]="identity"
+  ["root"]="root"
+)
 
 functions+=("account-names")
 function _account-names() {
@@ -90,9 +88,9 @@ function _account-roles() {
   printf "%s\n" "${!account_roles[@]}" | sort
 }
 function account-roles() {
-	for role in $(_account-roles); do
-  	printf "${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}: }%s -> ${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}-}%s\n" $role "${account_roles[$role]}"
-	done
+  for role in $(_account-roles); do
+    printf "${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}: }%s -> ${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}-}%s\n" $role "${account_roles[$role]}"
+  done
 }
 
 ########### non-template helpers ###########
@@ -104,29 +102,29 @@ function account-profile() {
 
 functions+=("account-id")
 function account-id() {
-	local id="${accounts[$1]}"
-	if [[ -n $id ]]; then
-		echo "${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}: }$id"
-	else
-		echo "Account $1 not found" >&2
-		exit 1
-	fi
+  local id="${accounts[$1]}"
+  if [[ -n $id ]]; then
+    echo "${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}: }$id"
+  else
+    echo "Account $1 not found" >&2
+    exit 1
+  fi
 }
 
 functions+=("account-for-role")
 function account-for-role() {
-	local account="${account_roles[$1]}"
-	if [[ -n $account ]]; then
-		echo "${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}: }$account"
-	else
-		echo "Account $1 not found" >&2
-		exit 1
-	fi
+  local account="${account_roles[$1]}"
+  if [[ -n $account ]]; then
+    echo "${CONFIG_NAMESPACE:+${CONFIG_NAMESPACE}: }$account"
+  else
+    echo "Account $1 not found" >&2
+    exit 1
+  fi
 }
 
 function account_info_main() {
   if printf '%s\0' "${functions[@]}" | grep -Fxqz -- "$1"; then
-	  "$@"
+    "$@"
   else
     fns=$(printf '%s\n' "${functions[@]}" | sort | uniq)
     usage=${fns//$'\n'/ | }

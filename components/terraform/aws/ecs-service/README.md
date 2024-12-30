@@ -171,12 +171,12 @@ components:
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_alb_ecs_label"></a> [alb\_ecs\_label](#module\_alb\_ecs\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.28.0 |
-| <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.60.0 |
-| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.71.0 |
+| <a name="module_alb_ingress"></a> [alb\_ingress](#module\_alb\_ingress) | cloudposse/alb-ingress/aws | 0.26.0 |
+| <a name="module_container_definition"></a> [container\_definition](#module\_container\_definition) | cloudposse/ecs-container-definition/aws | 0.58.1 |
+| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | cloudposse/ecs-alb-service-task/aws | 0.69.0 |
 | <a name="module_ecs_cloudwatch_autoscaling"></a> [ecs\_cloudwatch\_autoscaling](#module\_ecs\_cloudwatch\_autoscaling) | cloudposse/ecs-cloudwatch-autoscaling/aws | 0.7.3 |
 | <a name="module_ecs_label"></a> [ecs\_label](#module\_ecs\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_logs"></a> [logs](#module\_logs) | cloudposse/cloudwatch-logs/aws | 0.6.8 |
+| <a name="module_logs"></a> [logs](#module\_logs) | cloudposse/cloudwatch-logs/aws | 0.6.6 |
 | <a name="module_rds_sg_label"></a> [rds\_sg\_label](#module\_rds\_sg\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
@@ -208,15 +208,21 @@ components:
 | <a name="input_account-number"></a> [account-number](#input\_account-number) | The aws account number to where to deploy the services | `string` | `""` | no |
 | <a name="input_account_name"></a> [account\_name](#input\_account\_name) | AWS Account name | `string` | n/a | yes |
 | <a name="input_account_number"></a> [account\_number](#input\_account\_number) | The account number for the assume role | `string` | n/a | yes |
+| <a name="input_account_stage"></a> [account\_stage](#input\_account\_stage) | The ecr stage (account) name to use for the fully qualified stage parameter store. | `string` | `"auto"` | no |
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.<br>This is for some rare cases where resources want additional configuration of tags<br>and therefore take a list of maps with tag key, value, and additional configuration. | `map(string)` | `{}` | no |
 | <a name="input_alb_domain_name"></a> [alb\_domain\_name](#input\_alb\_domain\_name) | The full CNAME record for the ALB | `string` | `null` | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | ID element. Additional attributes (e.g. `workers` or `cluster`) to add to `id`,<br>in the order they appear in the list. New attributes are appended to the<br>end of the list. The elements of the list are joined by the `delimiter`<br>and treated as a single ID element. | `list(string)` | `[]` | no |
+| <a name="input_authenticated_hosts"></a> [authenticated\_hosts](#input\_authenticated\_hosts) | Authenticated hosts to match in Hosts header | `list(string)` | `[]` | no |
+| <a name="input_authenticated_listener_arns"></a> [authenticated\_listener\_arns](#input\_authenticated\_listener\_arns) | A list of authenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
 | <a name="input_authenticated_paths"></a> [authenticated\_paths](#input\_authenticated\_paths) | Authenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
 | <a name="input_authenticated_priority"></a> [authenticated\_priority](#input\_authenticated\_priority) | The priority for the rules with authentication, between 1 and 50000 (1 being highest priority). Must be different from `unauthenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `null` | no |
 | <a name="input_authentication_oidc_authorization_endpoint"></a> [authentication\_oidc\_authorization\_endpoint](#input\_authentication\_oidc\_authorization\_endpoint) | OIDC Authorization Endpoint | `string` | `""` | no |
 | <a name="input_authentication_oidc_client_id"></a> [authentication\_oidc\_client\_id](#input\_authentication\_oidc\_client\_id) | OIDC Client ID | `string` | `""` | no |
 | <a name="input_authentication_oidc_client_secret"></a> [authentication\_oidc\_client\_secret](#input\_authentication\_oidc\_client\_secret) | OIDC Client Secret | `string` | `""` | no |
 | <a name="input_authentication_oidc_issuer"></a> [authentication\_oidc\_issuer](#input\_authentication\_oidc\_issuer) | OIDC Issuer | `string` | `""` | no |
+| <a name="input_authentication_oidc_on_unauthenticated_request"></a> [authentication\_oidc\_on\_unauthenticated\_request](#input\_authentication\_oidc\_on\_unauthenticated\_request) | OIDC unauthenticated behavior, deny, allow, or authenticate | `string` | `"authenticate"` | no |
+| <a name="input_authentication_oidc_request_extra_params"></a> [authentication\_oidc\_request\_extra\_params](#input\_authentication\_oidc\_request\_extra\_params) | OIDC query parameters to include in redirect request | `map(string)` | `null` | no |
+| <a name="input_authentication_oidc_scope"></a> [authentication\_oidc\_scope](#input\_authentication\_oidc\_scope) | OIDC scope, which should be a space separated string of requested scopes (see https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims, and https://developers.google.com/identity/protocols/oauth2/openid-connect#scope-param for an example set of scopes when using Google as the IdP) | `string` | `null` | no |
 | <a name="input_authentication_oidc_token_endpoint"></a> [authentication\_oidc\_token\_endpoint](#input\_authentication\_oidc\_token\_endpoint) | OIDC Token Endpoint | `string` | `""` | no |
 | <a name="input_authentication_oidc_user_info_endpoint"></a> [authentication\_oidc\_user\_info\_endpoint](#input\_authentication\_oidc\_user\_info\_endpoint) | OIDC User Info Endpoint | `string` | `""` | no |
 | <a name="input_authentication_type"></a> [authentication\_type](#input\_authentication\_type) | Authentication type. Supported values are `COGNITO` and `OIDC` | `string` | `""` | no |
@@ -229,6 +235,8 @@ components:
 | <a name="input_descriptor_formats"></a> [descriptor\_formats](#input\_descriptor\_formats) | Describe additional descriptors to be output in the `descriptors` output map.<br>Map of maps. Keys are names of descriptors. Values are maps of the form<br>`{<br>   format = string<br>   labels = list(string)<br>}`<br>(Type is `any` so the map values can later be enhanced to provide additional options.)<br>`format` is a Terraform format string to be passed to the `format()` function.<br>`labels` is a list of labels, in order, to pass to `format()` function.<br>Label values will be normalized before being passed to `format()` so they will be<br>identical to how they appear in `id`.<br>Default is `{}` (`descriptors` output will be empty). | `any` | `{}` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | The domain name to use as the host header suffix | `string` | `""` | no |
 | <a name="input_ecr_region"></a> [ecr\_region](#input\_ecr\_region) | The region to use for the fully qualified ECR image URL. Defaults to the current region. | `string` | `""` | no |
+| <a name="input_ecr_stage_name"></a> [ecr\_stage\_name](#input\_ecr\_stage\_name) | The ecr stage (account) name to use for the fully qualified ECR image URL. | `string` | `"auto"` | no |
+| <a name="input_ecs_service_enabled"></a> [ecs\_service\_enabled](#input\_ecs\_service\_enabled) | Whether to create the ECS service | `bool` | `true` | no |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | ID element. Usually used for region e.g. 'uw2', 'us-west-2', OR role 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | <a name="input_iam_policy_enabled"></a> [iam\_policy\_enabled](#input\_iam\_policy\_enabled) | If set to true will create IAM policy in AWS | `bool` | `false` | no |
@@ -240,14 +248,16 @@ components:
 | <a name="input_label_order"></a> [label\_order](#input\_label\_order) | The order in which the labels (ID elements) appear in the `id`.<br>Defaults to ["namespace", "environment", "stage", "name", "attributes"].<br>You can omit any of the 6 labels ("tenant" is the 6th), but at least one must be present. | `list(string)` | `null` | no |
 | <a name="input_label_value_case"></a> [label\_value\_case](#input\_label\_value\_case) | Controls the letter case of ID elements (labels) as included in `id`,<br>set as tag values, and output by this module individually.<br>Does not affect values of tags passed in via the `tags` input.<br>Possible values: `lower`, `title`, `upper` and `none` (no transformation).<br>Set this to `title` and set `delimiter` to `""` to yield Pascal Case IDs.<br>Default value: `lower`. | `string` | `null` | no |
 | <a name="input_labels_as_tags"></a> [labels\_as\_tags](#input\_labels\_as\_tags) | Set of labels (ID elements) to include as tags in the `tags` output.<br>Default is to include all labels.<br>Tags with empty values will not be included in the `tags` output.<br>Set to `[]` to suppress all generated tags.<br>**Notes:**<br>  The value of the `name` tag, if included, will be the `id`, not the `name`.<br>  Unlike other `null-label` inputs, the initial setting of `labels_as_tags` cannot be<br>  changed in later chained modules. Attempts to change it will be silently ignored. | `set(string)` | <pre>[<br>  "default"<br>]</pre> | no |
+| <a name="input_lb_match_tags"></a> [lb\_match\_tags](#input\_lb\_match\_tags) | The additional matching tags for the LB data source. Used with current namespace, tenant, env, and stage tags. | `map(string)` | `{}` | no |
 | <a name="input_logs"></a> [logs](#input\_logs) | Feed inputs into cloudwatch logs module | `any` | `{}` | no |
 | <a name="input_name"></a> [name](#input\_name) | ID element. Usually the component or solution name, e.g. 'app' or 'jenkins'.<br>This is the only ID element not also included as a `tag`.<br>The "name" tag is set to the full `id` string. There is no tag with the value of the `name` input. | `string` | `null` | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | ID element. Usually an abbreviation of your organization name, e.g. 'eg' or 'cp', to help ensure generated IDs are globally unique | `string` | `null` | no |
+| <a name="input_public_lb_enabled"></a> [public\_lb\_enabled](#input\_public\_lb\_enabled) | Whether or not to use public LB and public subnets | `bool` | `false` | no |
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br>Characters matching the regex will be removed from the ID elements.<br>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS Region | `string` | n/a | yes |
-| <a name="input_retention_period_hours"></a> [retention\_period\_hours](#input\_retention\_period\_hours) | Length of time data records are accessible after they are added to the stream | `number` | `48` | no |
-| <a name="input_shard_count"></a> [shard\_count](#input\_shard\_count) | Number of shards that the stream will use | `number` | `1` | no |
-| <a name="input_shard_level_metrics"></a> [shard\_level\_metrics](#input\_shard\_level\_metrics) | List of shard-level CloudWatch metrics which can be enabled for the stream | `set(string)` | <pre>[<br>  "IncomingBytes",<br>  "IncomingRecords",<br>  "IteratorAgeMilliseconds",<br>  "OutgoingBytes",<br>  "OutgoingRecords",<br>  "ReadProvisionedThroughputExceeded",<br>  "WriteProvisionedThroughputExceeded"<br>]</pre> | no |
+| <a name="input_retention_period"></a> [retention\_period](#input\_retention\_period) | Length of time data records are accessible after they are added to the stream | `string` | `"48"` | no |
+| <a name="input_shard_count"></a> [shard\_count](#input\_shard\_count) | Number of shards that the stream will use | `string` | `"1"` | no |
+| <a name="input_shard_level_metrics"></a> [shard\_level\_metrics](#input\_shard\_level\_metrics) | List of shard-level CloudWatch metrics which can be enabled for the stream | `list` | <pre>[<br>  "IncomingBytes",<br>  "IncomingRecords",<br>  "IteratorAgeMilliseconds",<br>  "OutgoingBytes",<br>  "OutgoingRecords",<br>  "ReadProvisionedThroughputExceeded",<br>  "WriteProvisionedThroughputExceeded"<br>]</pre> | no |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_stream_mode"></a> [stream\_mode](#input\_stream\_mode) | Stream mode details for the Kinesis stream | `string` | `"PROVISIONED"` | no |
 | <a name="input_subnet_match_tags"></a> [subnet\_match\_tags](#input\_subnet\_match\_tags) | The additional matching tags for the VPC subnet data source. Used with current namespace, tenant, env, and stage tags. | `map(string)` | `{}` | no |
@@ -256,10 +266,13 @@ components:
 | <a name="input_task_enabled"></a> [task\_enabled](#input\_task\_enabled) | Whether or not to use the ECS task module | `bool` | `true` | no |
 | <a name="input_task_policy_arns"></a> [task\_policy\_arns](#input\_task\_policy\_arns) | The IAM policy ARNs to attach to the ECS task IAM role | `list(string)` | <pre>[<br>  "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly",<br>  "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"<br>]</pre> | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_. A customer identifier, indicating who this instance of a resource is for | `string` | `null` | no |
+| <a name="input_unauthenticated_listener_arns"></a> [unauthenticated\_listener\_arns](#input\_unauthenticated\_listener\_arns) | A list of unauthenticated ALB listener ARNs to attach ALB listener rules to | `list(string)` | `[]` | no |
 | <a name="input_unauthenticated_paths"></a> [unauthenticated\_paths](#input\_unauthenticated\_paths) | Unauthenticated path pattern to match (a maximum of 1 can be defined) | `list(string)` | `[]` | no |
 | <a name="input_unauthenticated_priority"></a> [unauthenticated\_priority](#input\_unauthenticated\_priority) | The priority for the rules without authentication, between 1 and 50000 (1 being highest priority). Must be different from `authenticated_priority` since a listener can't have multiple rules with the same priority | `number` | `0` | no |
 | <a name="input_use_lb"></a> [use\_lb](#input\_use\_lb) | Whether use load balancer for the service | `bool` | `false` | no |
 | <a name="input_use_rds_client_sg"></a> [use\_rds\_client\_sg](#input\_use\_rds\_client\_sg) | Use the RDS client security group | `bool` | `false` | no |
+| <a name="input_vanity_alias"></a> [vanity\_alias](#input\_vanity\_alias) | The vanity aliases to use for the public LB. | `list(string)` | `[]` | no |
+| <a name="input_vpc_match_tags"></a> [vpc\_match\_tags](#input\_vpc\_match\_tags) | The additional matching tags for the VPC data source. Used with current namespace, tenant, env, and stage tags. | `map(any)` | `{}` | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | The name of the vpc, if multiples vpc are defined in the same aws account make sure to enter only the value of var.name of the selected vpc to use | `string` | `"vpc"` | no |
 
 ## Outputs

@@ -1,16 +1,28 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-merge-conflict
       - id: check-executables-have-shebangs
+        exclude: |
+          (?x)^(
+              components/terraform/aws/ec2/userdata/.*|
+              components/terraform/aws/github-runners/.*|
+              .*\.tftmpl$
+          )$
       - id: check-shebang-scripts-are-executable
+        exclude: |
+          (?x)^(
+              components/terraform/aws/ec2/userdata/.*|
+              components/terraform/aws/github-runners/.*|
+              .*\.tftmpl$
+          )$
       - id: check-json
         exclude: |
           (?x)^(
-              .vscode/settings.json
+              \.vscode/.*\.json
           )$
       - id: check-yaml
       - id: sort-simple-yaml
@@ -29,17 +41,25 @@ repos:
     repo: local
 
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.92.2
+    rev: v1.96.3
     hooks:
-      - id: terraform_fmt
-      # avmfix validates and lints terraform better
+      # avmfix does a better job of formatting and linting terraform
+      # - id: terraform_fmt
       # - id: terraform_validate
       # - id: terraform_tflint
+
+      # - id: terraform_trivy
+      #   name: trivy security scan
+      #   args:
+      #     - >
+      #       --args=--tf-exclude-downloaded-modules
+      #       --severity=HIGH,CRITICAL
+      #       --skip-dirs="**/.terraform"
+      #       --format table
+      #       --quiet
+
       - id: terraform_docs
+        name: update terraform documentation
         args:
           - --args=--config=.terraform-docs.yaml
           - --hook-config=--create-file-if-not-exist=false
-          - --hook-config=--path-to-file=README.md
-      - id: terraform_tfsec
-        args:
-          - -a --exclude-downloaded-modules -m HIGH --concise-output

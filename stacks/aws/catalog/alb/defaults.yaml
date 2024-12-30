@@ -5,7 +5,7 @@ components:
       metadata:
         component: alb
         type: abstract
-      vars: 
+      vars:
         name: alb
         tags:
           component: "alb"
