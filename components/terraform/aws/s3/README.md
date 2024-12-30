@@ -4,10 +4,10 @@
 # Description: |-
   This module creates an S3 bucket with support for versioning, lifecycles, object locks, replication, encryption, ACL,
   bucket object policies, and static website hosting.
-  
+
   If `user_enabled` variable is set to `true`, the module will provision a basic IAM user with permissions to access the bucket.
   This basic IAM system user is suitable for CI/CD systems (_e.g._ TravisCI, CircleCI) or systems which are *external* to AWS that cannot leverage
-  [AWS IAM Instance Profiles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html) 
+  [AWS IAM Instance Profiles](http://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html)
   or [AWS OIDC](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html) to authenticate and
   do not already have IAM credentials. Users or systems that have IAM credentials should either be granted access directly based on
   their IAM identity via `privileged_principal_arns` or be allowed to assume an IAM role with access.
@@ -22,7 +22,7 @@
   and some input is required. The simplest input is `name`. By default the name will be converted to lower case
   and all non-alphanumeric characters except for hyphen will be removed. See the documentation for `terraform-null-label`
   to learn how to override these defaults if desired.
-  
+
   If an AWS Access Key is created, it is stored either in SSM Parameter Store or is provided as a module output,
   but not both. Using SSM Parameter Store is recommended because module outputs are stored in plaintext in
   the Terraform state file.
@@ -30,7 +30,7 @@
 Components:
     terraform:
       s3:
-       metadata: 
+       metadata:
         component: aws/s3
        vars:
         bucket_name: null
@@ -45,7 +45,7 @@ Components:
         }
         region: "us-west-2"
         stage: "uw2"
-        
+
 ## Requirements
 
 | Name | Version |

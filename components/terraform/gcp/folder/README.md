@@ -3,7 +3,7 @@
 
 Allows creation and management of a Google Cloud Platform Folder.
 
-A folder can contain projects, other folders, or a combination of both. You can use folders to group projects under an organization in a hierarchy. For example, your organization might contain multiple departments, each with its own set of Cloud Platform resources. Folders allows you to group these resources on a per-department basis. 
+A folder can contain projects, other folders, or a combination of both. You can use folders to group projects under an organization in a hierarchy. For example, your organization might contain multiple departments, each with its own set of Cloud Platform resources. Folders allows you to group these resources on a per-department basis.
 
 IAM permissions at folder level can be implemented while creating a folder and those permissions apply to all projects in that folder (if applicable).
 

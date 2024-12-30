@@ -1,9 +1,9 @@
-output "zones" {
-  value       = aws_route53_zone.root
-  description = "DNS zones"
+output "acms" {
+  description = "ACM certificates for domains"
+  value       = { for k, v in module.acm : k => v.arn }
 }
 
-output "acms" {
-  value       = { for k, v in module.acm : k => v.arn }
-  description = "ACM certificates for domains"
+output "zones" {
+  description = "DNS zones"
+  value       = aws_route53_zone.root
 }

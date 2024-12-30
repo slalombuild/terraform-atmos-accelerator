@@ -1,20 +1,20 @@
 resource "aws_route53_record" "default" {
-  count   = local.dns_enabled ? 1 : 0
-  zone_id = local.zone_id
+  count = local.dns_enabled ? 1 : 0
+
   name    = "${var.route53_record_name}-${var.environment}"
   type    = "A"
+  zone_id = local.zone_id
 
   alias {
+    evaluate_target_health = true
     name                   = module.alb.alb_dns_name
     zone_id                = module.alb.alb_zone_id
-    evaluate_target_health = true
   }
 }
 
-
 module "alb" {
   source                            = "cloudposse/alb/aws"
-  version                           = "1.11.1"
+  version                           = "1.10.0"
   vpc_id                            = local.vpc_id
   security_group_ids                = local.alb_security_group_id
   subnet_ids                        = local.public_subnet_ids

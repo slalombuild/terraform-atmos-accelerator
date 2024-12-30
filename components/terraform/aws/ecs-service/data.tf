@@ -1,6 +1,7 @@
 data "aws_ssm_parameter" "oid_client_secret" {
   count = var.authentication_oidc_client_secret != "" ? 1 : 0
-  name  = format("/%s", var.authentication_oidc_client_secret)
+
+  name = format("/%s", var.authentication_oidc_client_secret)
 }
 
 data "aws_caller_identity" "current" {
@@ -9,6 +10,7 @@ data "aws_caller_identity" "current" {
 
 data "aws_vpc" "selected" {
   count = local.enabled ? 1 : 0
+
   tags = {
     Name = format("%s-%s-%s", var.namespace, var.environment, var.vpc_name)
   }
@@ -17,22 +19,20 @@ data "aws_vpc" "selected" {
 data "aws_security_group" "vpc_default" {
   count = local.enabled ? 1 : 0
 
-  name = "default"
-
+  name   = "default"
+  tags   = local.match_tags
   vpc_id = local.vpc_id
-
-  tags = local.match_tags
 }
 
 data "aws_subnets" "selected" {
   count = local.enabled ? 1 : 0
 
+  tags = merge(local.match_tags, local.subnet_match_tags)
+
   filter {
     name   = "vpc-id"
     values = [local.vpc_id]
   }
-
-  tags = merge(local.match_tags, local.subnet_match_tags)
 }
 
 data "aws_iam_policy_document" "this" {
@@ -43,40 +43,36 @@ data "aws_iam_policy_document" "this" {
     for_each = try(flatten(var.iam_policy_statements), var.iam_policy_statements)
 
     content {
-      sid    = lookup(statement.value, "sid", statement.key)
-      effect = lookup(statement.value, "effect", null)
-
-      actions     = lookup(statement.value, "actions", null)
-      not_actions = lookup(statement.value, "not_actions", null)
-
-      resources     = lookup(statement.value, "resources", null)
+      actions       = lookup(statement.value, "actions", null)
+      effect        = lookup(statement.value, "effect", null)
+      not_actions   = lookup(statement.value, "not_actions", null)
       not_resources = lookup(statement.value, "not_resources", null)
-
-      dynamic "principals" {
-        for_each = lookup(statement.value, "principals", [])
-
-        content {
-          type        = principals.value.type
-          identifiers = principals.value.identifiers
-        }
-      }
-
-      dynamic "not_principals" {
-        for_each = lookup(statement.value, "not_principals", [])
-
-        content {
-          type        = not_principals.value.type
-          identifiers = not_principals.value.identifiers
-        }
-      }
+      resources     = lookup(statement.value, "resources", null)
+      sid           = lookup(statement.value, "sid", statement.key)
 
       dynamic "condition" {
         for_each = lookup(statement.value, "conditions", [])
 
         content {
           test     = condition.value.test
-          variable = condition.value.variable
           values   = condition.value.values
+          variable = condition.value.variable
+        }
+      }
+      dynamic "not_principals" {
+        for_each = lookup(statement.value, "not_principals", [])
+
+        content {
+          identifiers = not_principals.value.identifiers
+          type        = not_principals.value.type
+        }
+      }
+      dynamic "principals" {
+        for_each = lookup(statement.value, "principals", [])
+
+        content {
+          identifiers = principals.value.identifiers
+          type        = principals.value.type
         }
       }
     }
@@ -86,11 +82,10 @@ data "aws_iam_policy_document" "this" {
 data "aws_security_group" "rds" {
   count = local.enabled && var.use_rds_client_sg ? 1 : 0
 
-  vpc_id = local.vpc_id
-
   tags = {
     "Name" = module.rds_sg_label.id
   }
+  vpc_id = local.vpc_id
 }
 
 data "aws_ecs_cluster" "selected" {
@@ -102,9 +97,8 @@ data "aws_ecs_cluster" "selected" {
 data "aws_security_group" "lb" {
   count = local.enabled ? 1 : 0
 
+  tags   = merge(local.match_tags, local.lb_match_tags)
   vpc_id = local.vpc_id
-
-  tags = merge(local.match_tags, local.lb_match_tags)
 }
 
 data "aws_lb" "selected" {
@@ -123,12 +117,14 @@ data "aws_lb_listener" "selected_https" {
 # This is purely a check to ensure this zone exists
 # tflint-ignore: terraform_unused_declarations
 data "aws_route53_zone" "selected" {
-  count        = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
   name         = local.zone_domain
   private_zone = false
 }
 
 data "aws_kms_alias" "selected" {
   count = local.enabled && var.kinesis_enabled ? 1 : 0
-  name  = format("alias/%s", coalesce(var.kms_key_alias, var.name))
+
+  name = format("alias/%s", coalesce(var.kms_key_alias, var.name))
 }

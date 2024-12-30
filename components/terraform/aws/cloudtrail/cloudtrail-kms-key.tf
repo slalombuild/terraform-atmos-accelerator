@@ -1,0 +1,92 @@
+locals {
+  audit_access_enabled = module.this.enabled && var.audit_access_enabled
+  audit_account_id     = module.account_map.outputs.full_account_map[module.account_map.outputs.audit_account_account_name]
+}
+
+module "kms_key_cloudtrail" {
+  source  = "cloudposse/kms-key/aws"
+  version = "0.12.1"
+
+  description             = "KMS key for CloudTrail"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+  policy                  = join("", data.aws_iam_policy_document.kms_key_cloudtrail[*].json)
+
+  context = module.this.context
+}
+
+data "aws_caller_identity" "this" {
+  count = local.enabled ? 1 : 0
+}
+
+data "aws_partition" "current" {
+  count = local.enabled ? 1 : 0
+}
+
+data "aws_iam_policy_document" "kms_key_cloudtrail" {
+  count = local.enabled ? 1 : 0
+
+  statement {
+    actions = [
+      "kms:*"
+    ]
+    effect = "Allow"
+    resources = [
+      "*"
+    ]
+    sid = "Allow the account identity to manage the KMS key"
+
+    principals {
+      identifiers = [
+        format("arn:${join("", data.aws_partition.current[*].partition)}:iam::%s:root", join("", data.aws_caller_identity.this[*].account_id))
+      ]
+      type = "AWS"
+    }
+  }
+  statement {
+    actions = [
+      "kms:Encrypt",
+      "kms:GenerateDataKey*"
+    ]
+    effect = "Allow"
+    resources = [
+      "*"
+    ]
+    sid = "Allow CloudTrail to encrypt with the KMS key"
+
+    condition {
+      test = "StringLike"
+      values = [
+        format("arn:${join("", data.aws_partition.current[*].partition)}:cloudtrail:*:%s:trail/*", join("", data.aws_caller_identity.this[*].account_id))
+      ]
+      variable = "kms:EncryptionContext:aws:cloudtrail:arn"
+    }
+    principals {
+      identifiers = [
+        "cloudtrail.amazonaws.com"
+      ]
+      type = "Service"
+    }
+  }
+  dynamic "statement" {
+    for_each = local.audit_access_enabled ? [1] : []
+
+    content {
+      actions = [
+        "kms:Decrypt*",
+      ]
+      effect = "Allow"
+      resources = [
+        "*"
+      ]
+      sid = "Allow Audit to decrypt with the KMS key"
+
+      principals {
+        identifiers = [
+          format("arn:${join("", data.aws_partition.current[*].partition)}:iam::%s:root", local.audit_account_id)
+        ]
+        type = "AWS"
+      }
+    }
+  }
+}

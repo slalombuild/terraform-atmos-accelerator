@@ -1,6 +1,5 @@
 locals {
-  enabled      = var.enable_vpc_endpoints
-  route_tables = concat(module.subnets.private_route_table_ids, module.subnets.public_route_table_ids)
+  enabled = var.enable_vpc_endpoints
   gateway_vpc_endpoints = {
     "s3" = {
       name = "s3"
@@ -90,6 +89,7 @@ locals {
       private_dns_enabled = true
     }
   }
+  route_tables = concat(module.subnets.private_route_table_ids, module.subnets.public_route_table_ids)
 }
 
 /*
@@ -97,7 +97,7 @@ Endpoints
 */
 module "vpc_endpoints" {
   source  = "cloudposse/vpc/aws//modules/vpc-endpoints"
-  version = "v2.2.0"
+  version = "v2.1.0"
   enabled = local.enabled
   vpc_id  = module.vpc.vpc_id
 
@@ -185,127 +185,136 @@ module "ecr_dkr_vpc_endpoint_sg_label" {
 }
 
 resource "aws_security_group" "ec2_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.ec2_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for EC2 Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for EC2 Interface VPC Endpoint"
   }
-
-  tags = module.ec2_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "ecs_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.ecs_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for ECS Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for ECS Interface VPC Endpoint"
   }
-
-  tags = module.ecs_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "execute_api_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.execute_api_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for Execute API Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for Execute API Interface VPC Endpoint"
   }
-
-  tags = module.execute_api_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "secretsmanager_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.secretsmanager_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for Secrets Manager Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for Secrets Manager Interface VPC Endpoint"
   }
-
-  tags = module.secretsmanager_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "ssm_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.ssm_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for SSM Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for SSM Interface VPC Endpoint"
   }
-
-  tags = module.ssm_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "kinesis_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.kinesis_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for Kinesis Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for Kinesis Interface VPC Endpoint"
   }
-
-  tags = module.kinesis_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "sqs_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.sqs_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for SQS Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for SQS Interface VPC Endpoint"
   }
-
-  tags = module.sqs_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "ecr_api_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.ecr_api_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for ECR API Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for ECR API Interface VPC Endpoint"
   }
-
-  tags = module.ecr_api_vpc_endpoint_sg_label.tags
 }
 
 resource "aws_security_group" "ecr_dkr_vpc_endpoint_sg" {
-  count  = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
+  tags   = module.ecr_dkr_vpc_endpoint_sg_label.tags
   vpc_id = module.vpc.vpc_id
+
   ingress {
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+    description = "Security Group for ECR DKR Interface VPC Endpoint"
     from_port   = 443
     protocol    = "TCP"
     to_port     = 443
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-    description = "Security Group for ECR DKR Interface VPC Endpoint"
   }
-
-  tags = module.ecr_dkr_vpc_endpoint_sg_label.tags
 }

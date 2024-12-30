@@ -1,8 +1,3 @@
-variable "region" {
-  type        = string
-  description = "AWS Region"
-}
-
 variable "domain_names" {
   type = list(object({
     domain_name     = string
@@ -76,22 +71,20 @@ variable "domain_names" {
    EOT
 }
 
-variable "record_config" {
-  description = "DNS Record config"
-  type = list(object({
-    root_zone = string
-    name      = string
-    type      = string
-    ttl       = string
-    records   = list(string)
-  }))
-  default = []
+variable "region" {
+  type        = string
+  description = "AWS Region"
+}
+
+variable "account_map" {
+  type        = map(any)
+  default     = {}
+  description = "Account map of all the available accounts"
 }
 
 # Elastic Load Balancing Hosted Zone IDs can be found here: https://docs.aws.amazon.com/general/latest/gr/elb.html
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record#alias-record
 variable "alias_record_config" {
-  description = "DNS Alias Record config"
   type = list(object({
     root_zone              = string
     name                   = string
@@ -100,11 +93,13 @@ variable "alias_record_config" {
     record                 = string
     evaluate_target_health = bool
   }))
-  default = []
+  default     = []
+  description = "DNS Alias Record config"
 }
 
 variable "dns_soa_config" {
   type        = string
+  default     = "awsdns-hostmaster.amazon.com. 1 7200 900 1209600 60"
   description = <<-EOT
     Root domain name DNS SOA record:
     - awsdns-hostmaster.amazon.com. ; AWS default value for administrator email address
@@ -115,17 +110,22 @@ variable "dns_soa_config" {
     - 60 ; nxdomain TTL, or time in seconds for secondary DNS servers to cache negative responses
     See [SOA Record Documentation](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html) for more information.
    EOT
-  default     = "awsdns-hostmaster.amazon.com. 1 7200 900 1209600 60"
+}
+
+variable "record_config" {
+  type = list(object({
+    root_zone = string
+    name      = string
+    type      = string
+    ttl       = string
+    records   = list(string)
+  }))
+  default     = []
+  description = "DNS Record config"
 }
 
 variable "soa_record_ttl" {
   type        = number
-  description = "TTL of the SOA record for the domain"
   default     = 60
-}
-
-variable "account_map" {
-  type        = map(any)
-  description = "Account map of all the available accounts"
-  default     = {}
+  description = "TTL of the SOA record for the domain"
 }

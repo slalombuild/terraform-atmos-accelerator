@@ -1,7 +1,7 @@
 # https://github.com/cloudposse/terraform-aws-acm-request-certificate
 module "acm" {
   source  = "cloudposse/acm-request-certificate/aws"
-  version = "0.18.0"
+  version = "0.17.0"
 
   validation_method                 = var.validation_method
   domain_name                       = var.domain_name
@@ -17,10 +17,9 @@ resource "aws_ssm_parameter" "acm_arn" {
   count = local.enabled ? 1 : 0
 
   name        = "/acm/${var.domain_name}"
-  value       = module.acm.arn
-  description = format("ACM certificate ARN for '%s' domain", var.domain_name)
   type        = "String"
+  description = format("ACM certificate ARN for '%s' domain", var.domain_name)
   overwrite   = true
-
-  tags = module.this.tags
+  tags        = module.this.tags
+  value       = module.acm.arn
 }

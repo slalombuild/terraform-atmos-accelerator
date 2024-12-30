@@ -1,0 +1,22 @@
+---
+vars:
+  region: ca-central-1
+  environment: dev
+  namespace: terraform-accelerator
+
+components:
+  terraform:
+    vpc:
+      vars:
+        name: vpc
+        tags:
+          component: "vpc"
+          expense-class: "network"
+        ipv4_primary_cidr_block: "10.21.0.0/16"
+        enable_vpc_endpoints: true
+        transit_gateway_id: ""
+        nat_gateway_enabled: true
+        availability_zones:
+          - ca-central-1a
+          - ca-central-1b
+          - ca-central-1c

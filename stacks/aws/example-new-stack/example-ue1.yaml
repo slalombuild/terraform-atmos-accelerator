@@ -1,0 +1,16 @@
+---
+import:
+  - globals/root-remote-state
+  - globals/aws-config
+
+vars:
+  region: us-east-1
+  environment: ue1
+  namespace: accelerator
+  stage: example
+
+components:
+  terraform:
+    aws-config:
+      vars:
+        enabled: true

@@ -11,7 +11,7 @@ workflows:
       - command: terraform deploy cloudwatch -s accelerator-staging-ue2
       - command: terraform deploy waf -s accelerator-staging-ue2
       - command: terraform deploy securityhub -s accelerator-staging-ue2
-  
+
   destroy-new-account:
     description: deploy landingzone in the staging account
     steps:

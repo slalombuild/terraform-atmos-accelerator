@@ -13,11 +13,11 @@ Two key concepts of Atmos are [components](https://atmos.tools/core-concepts/com
 
   * A **component** is a set of infrastructure-as-code resource definitions, analogous to a _module_ in Terraform
     * Convention: parent or root modules should be in `components/terraform/` directory and child modules in `modules/`
-  * A **stack** is a YAML file that describes _both_ which components to deploy to an environment _and_ the configuration settings to apply to the components 
+  * A **stack** is a YAML file that describes _both_ which components to deploy to an environment _and_ the configuration settings to apply to the components
     * The centralized stack configurations (variables for the Terraform components) are in the `stacks/` folder.
   * When deploying resources using the `atmos` command-line tool, you specify which component to deploy and which stack to apply to it, similarly to:
     ```bash
-    atmos terraform apply vpc-flow-logs-bucket-1 --stack core-ue2-dev 
+    atmos terraform apply vpc-flow-logs-bucket-1 --stack core-ue2-dev
     ```
 
 ## Example pipeline workflow
@@ -43,7 +43,7 @@ graph LR;
 ```
 .
 ├── .github                         ... Github Actions workflows
-├── config                          ... Atmos configuration files  
+├── config                          ... Atmos configuration files
 │   └── aws
 │       ├── _defaults               ... Default variables, inherited by environment-specific deployments
 │       ├── ci                      ... Environment-specific variables
@@ -77,29 +77,29 @@ graph LR;
 ```
 .
 │  # Store components separately according to which IaC tool they use
-├── components/ 
-│   └── terraform/  # Root modules go here 
-│       ├── vpc/ 
-│       ├── waf/ 
-│       ├── sns/ 
-│       ├── config/ 
-│       └── cloudwatch/ 
-│ 
+├── components/
+│   └── terraform/  # Root modules go here
+│       ├── vpc/
+│       ├── waf/
+│       ├── sns/
+│       ├── config/
+│       └── cloudwatch/
+│
 │  # Configuration to apply to components
-├── stacks/ 
-│   ├── aws/ 
-│   │    ├── _defaults.yaml 
+├── stacks/
+│   ├── aws/
+│   │    ├── _defaults.yaml
 │   │    ├── global-region.yaml
 │   │   └── $region.yaml
-│   ├── azure/ 
-│   └── gcp/ 
-│       
+│   ├── azure/
+│   └── gcp/
+│      
 │  # Atmos configuration file
-└── atmos.yaml 
+└── atmos.yaml
 ```
 In this example (which assumes an AWS deployment):
 
-  * `components/` contains all resource configurations 
+  * `components/` contains all resource configurations
   * `stacks/` contains all stack configurations
   * For each environment and region, there is a stack configuration file named `$environment-$region.yaml` where `$environment` is the abbreviation for an AWS region
   * `$environment/globals.yaml` contains values to use in all stages in a particular environment
@@ -107,9 +107,9 @@ In this example (which assumes an AWS deployment):
 
 For a complete `atmos.yaml`, see [the example in the CloudPosse repo](https://github.com/cloudposse/atmos/blob/master/examples/complete/atmos.yaml).
 
-## Example: a stack defintiion 
+## Example: a stack defintiion
 
-This is for deploying Terraform-defined IaC resources in the `test` environment in the `us-west-2` AWS region for a customer named `accelerator`:  
+This is for deploying Terraform-defined IaC resources in the `test` environment in the `us-west-2` AWS region for a customer named `accelerator`: 
   ```yaml
   import: # Any other stack files to import and combine with this one
     - test/_defaults

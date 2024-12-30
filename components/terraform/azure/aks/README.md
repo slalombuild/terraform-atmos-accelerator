@@ -1,6 +1,6 @@
 # Component: **aks**
 
-## About 
+## About
 
 This module creates the required resources for Azure Kubernetes Service (AKS), including:
 + Resource Group (optional)
@@ -8,11 +8,11 @@ This module creates the required resources for Azure Kubernetes Service (AKS), i
 + AKS
 + VNet
 + Subnet
-+ NACLs 
++ NACLs
 + Keyvault
 + Container Registry
 + Log Analytics workspace
- 
+
 ***
 
 ## Usage

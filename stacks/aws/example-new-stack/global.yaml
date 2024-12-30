@@ -1,0 +1,16 @@
+---
+import:
+  - globals/root-remote-state
+  - globals/aws-team-roles
+
+vars:
+  region: us-east-1
+  environment: global
+  namespace: accelerator
+  stage: exmaple
+
+components:
+  terraform:
+    aws-team-roles:
+      vars:
+        enabled: true

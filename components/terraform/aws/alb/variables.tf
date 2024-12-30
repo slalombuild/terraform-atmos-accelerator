@@ -1,132 +1,16 @@
-variable "region" {
-  type        = string
-  description = "AWS Region for S3 bucket"
-}
-
-variable "vpc_name" {
-  type        = string
-  default     = "vpc"
-  description = "The name of the vpc, if multiples vpc are defined in the same aws account make sure to enter only the value of var.name of the selected vpc to use"
-}
-
-variable "route53_record_name" {
-  type        = string
-  default     = "*"
-  description = "The route53 record name"
-}
-
-variable "domain_name" {
-  type        = string
-  default     = ""
-  description = "The domain name to use to create the record for the ecs app"
-}
-
-variable "acm_certificate_domain" {
-  type        = string
-  default     = ""
-  description = "Domain to get the ACM cert to use on the ALB."
-}
-
-variable "internal" {
-  type        = bool
-  description = "A boolean flag to determine whether the ALB should be internal"
-}
-
-variable "http_enabled" {
-  type        = bool
-  description = "A boolean flag to enable/disable HTTP listener"
-}
-
-variable "http_redirect" {
-  type        = bool
-  description = "A boolean flag to enable/disable HTTP redirect to HTTPS"
-}
-
-variable "http_ingress_cidr_blocks" {
-  type        = list(string)
-  default     = []
-  description = "List of CIDR blocks to allow in HTTP security group"
-}
-
-variable "https_ingress_cidr_blocks" {
-  type        = list(string)
-  default     = []
-  description = "List of CIDR blocks to allow in HTTPS security group"
-}
 variable "access_logs_enabled" {
   type        = bool
   description = "A boolean flag to enable/disable access_logs"
 }
 
-variable "cross_zone_load_balancing_enabled" {
-  type        = bool
-  description = "A boolean flag to enable/disable cross zone load balancing"
-  default     = false
-}
-
-variable "http2_enabled" {
-  type        = bool
-  description = "A boolean flag to enable/disable HTTP/2"
-}
-
-variable "https_enabled" {
-  type        = bool
-  description = "A boolean flag to enable/disable HTTPS listener"
-}
-
-variable "https_ssl_policy" {
+variable "account_name" {
   type        = string
-  description = "The name of the SSL Policy for the listener"
+  description = "AWS Account name"
 }
 
-variable "idle_timeout" {
-  type        = number
-  description = "The time in seconds that the connection is allowed to be idle"
-}
-
-variable "ip_address_type" {
+variable "account_number" {
   type        = string
-  description = "The type of IP addresses used by the subnets for your load balancer. The possible values are `ipv4` and `dualstack`."
-}
-
-variable "deletion_protection_enabled" {
-  type        = bool
-  description = "A boolean flag to enable/disable deletion protection for ALB"
-}
-
-variable "deregistration_delay" {
-  type        = number
-  description = "The amount of time to wait in seconds before changing the state of a deregistering target to unused"
-}
-
-variable "health_check_path" {
-  type        = string
-  description = "The destination for the health check request"
-}
-
-variable "health_check_timeout" {
-  type        = number
-  description = "The amount of time to wait in seconds before failing a health check request"
-}
-
-variable "health_check_healthy_threshold" {
-  type        = number
-  description = "The number of consecutive health checks successes required before considering an unhealthy target healthy"
-}
-
-variable "health_check_unhealthy_threshold" {
-  type        = number
-  description = "The number of consecutive health check failures required before considering the target unhealthy"
-}
-
-variable "health_check_interval" {
-  type        = number
-  description = "The duration in seconds in between health checks"
-}
-
-variable "health_check_matcher" {
-  type        = string
-  description = "The HTTP response codes to indicate a healthy check"
+  description = "The account number for the assume role"
 }
 
 variable "alb_access_logs_s3_bucket_force_destroy" {
@@ -147,14 +31,89 @@ variable "alb_access_logs_s3_bucket_force_destroy_enabled" {
     EOT
 }
 
-variable "target_group_port" {
-  type        = number
-  description = "The port for the default target group"
+variable "deletion_protection_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable deletion protection for ALB"
 }
 
-variable "target_group_target_type" {
+variable "deregistration_delay" {
+  type        = number
+  description = "The amount of time to wait in seconds before changing the state of a deregistering target to unused"
+}
+
+variable "health_check_healthy_threshold" {
+  type        = number
+  description = "The number of consecutive health checks successes required before considering an unhealthy target healthy"
+}
+
+variable "health_check_interval" {
+  type        = number
+  description = "The duration in seconds in between health checks"
+}
+
+variable "health_check_matcher" {
   type        = string
-  description = "The type (`instance`, `ip` or `lambda`) of targets that can be registered with the target group"
+  description = "The HTTP response codes to indicate a healthy check"
+}
+
+variable "health_check_path" {
+  type        = string
+  description = "The destination for the health check request"
+}
+
+variable "health_check_timeout" {
+  type        = number
+  description = "The amount of time to wait in seconds before failing a health check request"
+}
+
+variable "health_check_unhealthy_threshold" {
+  type        = number
+  description = "The number of consecutive health check failures required before considering the target unhealthy"
+}
+
+variable "http2_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable HTTP/2"
+}
+
+variable "http_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable HTTP listener"
+}
+
+variable "http_redirect" {
+  type        = bool
+  description = "A boolean flag to enable/disable HTTP redirect to HTTPS"
+}
+
+variable "https_enabled" {
+  type        = bool
+  description = "A boolean flag to enable/disable HTTPS listener"
+}
+
+variable "https_ssl_policy" {
+  type        = string
+  description = "The name of the SSL Policy for the listener"
+}
+
+variable "idle_timeout" {
+  type        = number
+  description = "The time in seconds that the connection is allowed to be idle"
+}
+
+variable "internal" {
+  type        = bool
+  description = "A boolean flag to determine whether the ALB should be internal"
+}
+
+variable "ip_address_type" {
+  type        = string
+  description = "The type of IP addresses used by the subnets for your load balancer. The possible values are `ipv4` and `dualstack`."
+}
+
+variable "region" {
+  type        = string
+  description = "AWS Region for S3 bucket"
 }
 
 variable "stickiness" {
@@ -165,12 +124,54 @@ variable "stickiness" {
   description = "Target group sticky configuration"
 }
 
-variable "account_number" {
-  type        = string
-  description = "The account number for the assume role"
+variable "target_group_port" {
+  type        = number
+  description = "The port for the default target group"
 }
 
-variable "account_name" {
+variable "target_group_target_type" {
   type        = string
-  description = "AWS Account name"
+  description = "The type (`instance`, `ip` or `lambda`) of targets that can be registered with the target group"
+}
+
+variable "acm_certificate_domain" {
+  type        = string
+  default     = ""
+  description = "Domain to get the ACM cert to use on the ALB."
+}
+
+variable "cross_zone_load_balancing_enabled" {
+  type        = bool
+  default     = false
+  description = "A boolean flag to enable/disable cross zone load balancing"
+}
+
+variable "domain_name" {
+  type        = string
+  default     = ""
+  description = "The domain name to use to create the record for the ecs app"
+}
+
+variable "http_ingress_cidr_blocks" {
+  type        = list(string)
+  default     = []
+  description = "List of CIDR blocks to allow in HTTP security group"
+}
+
+variable "https_ingress_cidr_blocks" {
+  type        = list(string)
+  default     = []
+  description = "List of CIDR blocks to allow in HTTPS security group"
+}
+
+variable "route53_record_name" {
+  type        = string
+  default     = "*"
+  description = "The route53 record name"
+}
+
+variable "vpc_name" {
+  type        = string
+  default     = "vpc"
+  description = "The name of the vpc, if multiples vpc are defined in the same aws account make sure to enter only the value of var.name of the selected vpc to use"
 }

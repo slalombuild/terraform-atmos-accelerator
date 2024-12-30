@@ -1,23 +1,11 @@
+variable "hash_key" {
+  type        = string
+  description = "DynamoDB table Hash Key"
+}
+
 variable "region" {
-  type = string
-}
-
-variable "autoscale_write_target" {
-  type        = number
-  default     = 50
-  description = "The target value (in %) for DynamoDB write autoscaling"
-}
-
-variable "autoscale_read_target" {
-  type        = number
-  default     = 50
-  description = "The target value (in %) for DynamoDB read autoscaling"
-}
-
-variable "autoscale_min_read_capacity" {
-  type        = number
-  default     = 5
-  description = "DynamoDB autoscaling min read capacity"
+  type        = string
+  description = "AWS Region."
 }
 
 variable "autoscale_max_read_capacity" {
@@ -26,93 +14,34 @@ variable "autoscale_max_read_capacity" {
   description = "DynamoDB autoscaling max read capacity"
 }
 
-variable "autoscale_min_write_capacity" {
-  type        = number
-  default     = 5
-  description = "DynamoDB autoscaling min write capacity"
-}
-
 variable "autoscale_max_write_capacity" {
   type        = number
   default     = 20
   description = "DynamoDB autoscaling max write capacity"
 }
 
-variable "billing_mode" {
-  type        = string
-  default     = "PROVISIONED"
-  description = "DynamoDB Billing mode. Can be PROVISIONED or PAY_PER_REQUEST"
+variable "autoscale_min_read_capacity" {
+  type        = number
+  default     = 5
+  description = "DynamoDB autoscaling min read capacity"
 }
 
-variable "enable_streams" {
-  type        = bool
-  default     = false
-  description = "Enable DynamoDB streams"
+variable "autoscale_min_write_capacity" {
+  type        = number
+  default     = 5
+  description = "DynamoDB autoscaling min write capacity"
 }
 
-variable "stream_view_type" {
-  type        = string
-  default     = ""
-  description = "When an item in the table is modified, what information is written to the stream"
+variable "autoscale_read_target" {
+  type        = number
+  default     = 50
+  description = "The target value (in %) for DynamoDB read autoscaling"
 }
 
-variable "enable_encryption" {
-  type        = bool
-  default     = true
-  description = "Enable DynamoDB server-side encryption"
-}
-
-variable "server_side_encryption_kms_key_arn" {
-  type        = string
-  default     = null
-  description = "The ARN of the CMK that should be used for the AWS KMS encryption. This attribute should only be specified if the key is different from the default DynamoDB CMK, alias/aws/dynamodb."
-}
-
-variable "enable_point_in_time_recovery" {
-  type        = bool
-  default     = true
-  description = "Enable DynamoDB point in time recovery"
-}
-
-variable "hash_key" {
-  type        = string
-  description = "DynamoDB table Hash Key"
-}
-
-variable "hash_key_type" {
-  type        = string
-  default     = "S"
-  description = "Hash Key type, which must be a scalar type: `S`, `N`, or `B` for (S)tring, (N)umber or (B)inary data"
-}
-
-variable "range_key" {
-  type        = string
-  default     = ""
-  description = "DynamoDB table Range Key"
-}
-
-variable "range_key_type" {
-  type        = string
-  default     = "S"
-  description = "Range Key type, which must be a scalar type: `S`, `N`, or `B` for (S)tring, (N)umber or (B)inary data"
-}
-
-variable "ttl_attribute" {
-  type        = string
-  default     = "Expires"
-  description = "DynamoDB table TTL attribute"
-}
-
-variable "ttl_enabled" {
-  type        = bool
-  default     = true
-  description = "Set to false to disable DynamoDB table TTL"
-}
-
-variable "enable_autoscaler" {
-  type        = bool
-  default     = false
-  description = "Flag to enable/disable DynamoDB autoscaling"
+variable "autoscale_write_target" {
+  type        = number
+  default     = 50
+  description = "The target value (in %) for DynamoDB write autoscaling"
 }
 
 variable "autoscaler_attributes" {
@@ -121,10 +50,22 @@ variable "autoscaler_attributes" {
   description = "Additional attributes for the autoscaler module"
 }
 
+variable "autoscaler_enabled" {
+  type        = bool
+  default     = false
+  description = "Flag to enable/disable DynamoDB autoscaling"
+}
+
 variable "autoscaler_tags" {
   type        = map(string)
   default     = {}
   description = "Additional resource tags for the autoscaler module"
+}
+
+variable "billing_mode" {
+  type        = string
+  default     = "PROVISIONED"
+  description = "DynamoDB Billing mode. Can be PROVISIONED or PAY_PER_REQUEST"
 }
 
 variable "dynamodb_attributes" {
@@ -134,6 +75,12 @@ variable "dynamodb_attributes" {
   }))
   default     = []
   description = "Additional DynamoDB attributes in the form of a list of mapped values"
+}
+
+variable "encryption_enabled" {
+  type        = bool
+  default     = true
+  description = "Enable DynamoDB server-side encryption"
 }
 
 variable "global_secondary_index_map" {
@@ -150,6 +97,12 @@ variable "global_secondary_index_map" {
   description = "Additional global secondary indexes in the form of a list of mapped values"
 }
 
+variable "hash_key_type" {
+  type        = string
+  default     = "S"
+  description = "Hash Key type, which must be a scalar type: `S`, `N`, or `B` for String, Number or Binary data, respectively."
+}
+
 variable "local_secondary_index_map" {
   type = list(object({
     name               = string
@@ -161,26 +114,56 @@ variable "local_secondary_index_map" {
   description = "Additional local secondary indexes in the form of a list of mapped values"
 }
 
+variable "point_in_time_recovery_enabled" {
+  type        = bool
+  default     = true
+  description = "Enable DynamoDB point in time recovery"
+}
+
+variable "range_key" {
+  type        = string
+  default     = ""
+  description = "DynamoDB table Range Key"
+}
+
+variable "range_key_type" {
+  type        = string
+  default     = "S"
+  description = "Range Key type, which must be a scalar type: `S`, `N`, or `B` for String, Number or Binary data, respectively."
+}
+
 variable "replicas" {
   type        = list(string)
   default     = []
-  description = "List of regions to create replica"
+  description = "List of regions to create a replica table in"
 }
 
-variable "tags_enabled" {
-  type        = bool
-  default     = true
-  description = "Set to `false` to disable tagging. This can be helpful if you're managing tables on dynamodb-local with terraform as it doesn't support tagging."
-}
-
-variable "table_class" {
+variable "server_side_encryption_kms_key_arn" {
   type        = string
-  default     = "STANDARD"
-  description = "DynamoDB storage class of the table. Can be STANDARD or STANDARD_INFREQUENT_ACCESS"
+  default     = null
+  description = "The ARN of the CMK that should be used for the AWS KMS encryption. This attribute should only be specified if the key is different from the default DynamoDB CMK, alias/aws/dynamodb."
 }
 
-variable "deletion_protection_enabled" {
+variable "stream_view_type" {
+  type        = string
+  default     = ""
+  description = "When an item in the table is modified, what information is written to the stream"
+}
+
+variable "streams_enabled" {
   type        = bool
   default     = false
-  description = "Enable/disable DynamoDB table deletion protection"
+  description = "Enable DynamoDB streams"
+}
+
+variable "ttl_attribute" {
+  type        = string
+  default     = ""
+  description = "DynamoDB table TTL attribute"
+}
+
+variable "ttl_enabled" {
+  type        = bool
+  default     = false
+  description = "Set to false to disable DynamoDB table TTL"
 }

@@ -17,30 +17,31 @@ resource "aws_ecs_cluster" "default" {
   count = local.enabled ? 1 : 0
 
   name = module.this.id
+  tags = module.this.tags
+
   setting {
     name  = "containerInsights"
     value = var.container_insights_enabled ? "enabled" : "disabled"
   }
-
-  tags = module.this.tags
 }
 
 resource "aws_route53_record" "default" {
   for_each = local.dns_enabled ? var.alb_configuration : {}
-  zone_id  = data.aws_route53_zone.default.zone_id
-  name     = format("%s", lookup(each.value, "route53_record_name", var.route53_record_name))
-  type     = "A"
+
+  name    = format("%s", lookup(each.value, "route53_record_name", var.route53_record_name))
+  type    = "A"
+  zone_id = data.aws_route53_zone.default.zone_id
 
   alias {
+    evaluate_target_health = true
     name                   = module.alb[each.key].alb_dns_name
     zone_id                = module.alb[each.key].alb_zone_id
-    evaluate_target_health = true
   }
 }
 
 module "alb" {
   source  = "cloudposse/alb/aws"
-  version = "1.11.1"
+  version = "1.10.0"
 
   for_each = local.enabled ? var.alb_configuration : {}
 

@@ -19,7 +19,7 @@ module "logs" {
 
 module "container_definition" {
   source  = "cloudposse/ecs-container-definition/aws"
-  version = "0.61.1"
+  version = "0.60.0"
 
   for_each = var.containers
 
@@ -79,7 +79,7 @@ module "container_definition" {
 
 module "ecs_alb_service_task" {
   source  = "cloudposse/ecs-alb-service-task/aws"
-  version = "0.74.0"
+  version = "0.71.0"
 
   count = var.enabled ? 1 : 0
 
@@ -186,7 +186,8 @@ module "alb_ingress" {
 }
 
 resource "aws_iam_policy" "default" {
-  count    = local.enabled && var.iam_policy_enabled ? 1 : 0
+  count = local.enabled && var.iam_policy_enabled ? 1 : 0
+
   policy   = join("", data.aws_iam_policy_document.this[*].json)
   tags_all = module.this.tags
 }
@@ -234,17 +235,19 @@ module "ecs_cloudwatch_autoscaling" {
 }
 
 resource "aws_kinesis_stream" "default" {
-  count               = local.enabled && var.kinesis_enabled ? 1 : 0
+  count = local.enabled && var.kinesis_enabled ? 1 : 0
+
   name                = format("%s-%s", module.this.id, "kinesis-stream")
-  shard_count         = var.shard_count
+  encryption_type     = "KMS"
+  kms_key_id          = local.kinesis_kms_id != null ? local.kinesis_kms_id : "alias/aws/kinesis"
   retention_period    = var.retention_period_hours
+  shard_count         = var.shard_count
   shard_level_metrics = var.shard_level_metrics
+  tags                = module.this.tags
+
   stream_mode_details {
     stream_mode = var.stream_mode
   }
-  encryption_type = "KMS"
-  kms_key_id      = local.kinesis_kms_id != null ? local.kinesis_kms_id : "alias/aws/kinesis"
-  tags            = module.this.tags
 
   lifecycle {
     ignore_changes = [
