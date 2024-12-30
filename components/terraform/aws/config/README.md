@@ -51,8 +51,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_config"></a> [aws\_config](#module\_aws\_config) | cloudposse/config/aws | 0.18.0 |
-| <a name="module_aws_config_storage"></a> [aws\_config\_storage](#module\_aws\_config\_storage) | cloudposse/config-storage/aws | 0.8.1 |
+| <a name="module_aws_config"></a> [aws\_config](#module\_aws\_config) | cloudposse/config/aws | 1.1.0 |
+| <a name="module_aws_config_storage"></a> [aws\_config\_storage](#module\_aws\_config\_storage) | cloudposse/config-storage/aws | 1.0.2 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources

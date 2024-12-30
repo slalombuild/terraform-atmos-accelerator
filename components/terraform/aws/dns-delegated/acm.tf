@@ -5,17 +5,16 @@ variable "request_acm_certificate" {
 }
 
 locals {
-  certificate_enabled = local.enabled && var.request_acm_certificate
-
   # Should this be set for all ACM certs or should be set differently per each ?
-  alternative_names = [for zone in var.zone_config : format("*.%s.%s", zone.subdomain, zone.zone_name)]
+  alternative_names   = [for zone in var.zone_config : format("*.%s.%s", zone.subdomain, zone.zone_name)]
+  certificate_enabled = local.enabled && var.request_acm_certificate
 }
 
 module "acm" {
   for_each = local.zone_map
 
   source  = "cloudposse/acm-request-certificate/aws"
-  version = "0.18.0"
+  version = "0.17.0"
 
   enabled = local.certificate_enabled
 
@@ -37,12 +36,11 @@ resource "aws_ssm_parameter" "acm_arn" {
   for_each = local.certificate_enabled ? local.zone_map : {}
 
   name        = format("/acm/%s.%s", each.key, each.value)
-  value       = module.acm[each.key].arn
-  description = "ACM certificate id"
   type        = "String"
+  description = "ACM certificate id"
   overwrite   = true
-
-  tags = module.this.tags
+  tags        = module.this.tags
+  value       = module.acm[each.key].arn
 }
 
 output "certificate" {

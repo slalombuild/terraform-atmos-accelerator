@@ -63,7 +63,7 @@ No providers.
 |------|--------|---------|
 | <a name="module_endpoint_group"></a> [endpoint\_group](#module\_endpoint\_group) | cloudposse/global-accelerator/aws//modules/endpoint-group | 0.6.0 |
 | <a name="module_global_accelerator"></a> [global\_accelerator](#module\_global\_accelerator) | cloudposse/global-accelerator/aws | 0.6.0 |
-| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | cloudposse/s3-bucket/aws | 3.1.1 |
+| <a name="module_s3_bucket"></a> [s3\_bucket](#module\_s3\_bucket) | cloudposse/s3-bucket/aws | 3.1.3 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources

@@ -1,13 +1,15 @@
 data "aws_route53_zone" "default" {
   count = local.dns_enabled ? 1 : 0
-  name  = var.domain_name
+
+  name = var.domain_name
 }
 
 data "aws_acm_certificate" "default" {
-  count       = local.enabled ? 1 : 0
+  count = local.enabled ? 1 : 0
+
   domain      = local.acm_certificate_domain
-  statuses    = ["ISSUED"]
   most_recent = true
+  statuses    = ["ISSUED"]
 }
 
 # If you know the tags of your existing VPC you can searh for it this way

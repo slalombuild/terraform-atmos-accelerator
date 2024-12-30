@@ -103,7 +103,7 @@ Perform the following commands on the root folder:
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_autoscale_group"></a> [autoscale\_group](#module\_autoscale\_group) | cloudposse/ec2-autoscale-group/aws | 0.34.0 |
+| <a name="module_autoscale_group"></a> [autoscale\_group](#module\_autoscale\_group) | cloudposse/ec2-autoscale-group/aws | 0.35.1 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources
@@ -158,7 +158,7 @@ Perform the following commands on the root folder:
 | <a name="input_desired_capacity"></a> [desired\_capacity](#input\_desired\_capacity) | The number of Amazon EC2 instances that should be running in the group, if not set will use `min_size` as value | `number` | `null` | no |
 | <a name="input_disable_api_termination"></a> [disable\_api\_termination](#input\_disable\_api\_termination) | If `true`, enables EC2 Instance Termination Protection | `bool` | `false` | no |
 | <a name="input_ebs_optimized"></a> [ebs\_optimized](#input\_ebs\_optimized) | If true, the launched EC2 instance will be EBS-optimized | `bool` | `false` | no |
-| <a name="input_egress_cidrs"></a> [egress\_cidrs](#input\_egress\_cidrs) | Egress cidr to allow the asg to connect to | `list(string)` | <pre>[<br>  "10.20.0.0/18"<br>]</pre> | no |
+| <a name="input_egress_cidrs"></a> [egress\_cidrs](#input\_egress\_cidrs) | Egress cidr to allow the asg to connect to | `list(string)` | <pre>[<br>  "10.240.128.0/18"<br>]</pre> | no |
 | <a name="input_elastic_gpu_specifications"></a> [elastic\_gpu\_specifications](#input\_elastic\_gpu\_specifications) | Specifications of Elastic GPU to attach to the instances | <pre>object({<br>    type = string<br>  })</pre> | `null` | no |
 | <a name="input_enable_asg_icmp"></a> [enable\_asg\_icmp](#input\_enable\_asg\_icmp) | whether to create ICMP role | `bool` | `false` | no |
 | <a name="input_enable_monitoring"></a> [enable\_monitoring](#input\_enable\_monitoring) | Enable/disable detailed monitoring | `bool` | `true` | no |

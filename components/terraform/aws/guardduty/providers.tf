@@ -1,6 +1,30 @@
 provider "aws" {
   region = var.region
-  assume_role {
-    role_arn = format("arn:aws:iam::%s:role/accelerator-%s-automation-role", var.account_number, var.account_name)
+
+  profile = !var.privileged && module.iam_roles.profiles_enabled ? module.iam_roles.terraform_profile_name : null
+  dynamic "assume_role" {
+    for_each = var.privileged || module.iam_roles.profiles_enabled || (module.iam_roles.terraform_role_arn == null) ? [] : ["role"]
+    content {
+      role_arn = module.iam_roles.terraform_role_arn
+    }
   }
+}
+
+provider "awsutils" {
+  region = var.region
+
+  profile = !var.privileged && module.iam_roles.profiles_enabled ? module.iam_roles.terraform_profile_name : null
+  dynamic "assume_role" {
+    for_each = var.privileged || module.iam_roles.profiles_enabled || (module.iam_roles.terraform_role_arn == null) ? [] : ["role"]
+    content {
+      role_arn = module.iam_roles.terraform_role_arn
+    }
+  }
+}
+
+module "iam_roles" {
+  source     = "../account-map/modules/iam-roles"
+  privileged = var.privileged
+
+  context = module.this.context
 }

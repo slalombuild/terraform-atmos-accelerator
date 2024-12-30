@@ -1,6 +1,6 @@
 data "aws_route53_zone" "root_zone" {
-  for_each = local.enabled ? local.zone_map : {}
   provider = aws.primary
+  for_each = local.enabled ? local.zone_map : {}
 
   name         = format("%s.", each.value)
   private_zone = false

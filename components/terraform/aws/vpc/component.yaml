@@ -1,0 +1,13 @@
+apiVersion: atmos/v1
+kind: ComponentVendorConfig
+metadata:
+  name: vpc
+  description: Source for vendoring of 'tfstate-backend' component
+spec:
+  source:
+    # 'uri' supports all protocols (local files, Git, Mercurial, HTTP, HTTPS, Amazon S3, Google GCP),
+    # and all URL and archive formats as described in https://github.com/hashicorp/go-getter
+    # In 'uri', Golang templates are supported  https://pkg.go.dev/text/template
+    # If 'version' is provided, '{{.Version}}' will be replaced with the 'version' value before pulling the files from 'uri'
+    uri: git::ssh://git@github.com/slalombuild/terraform-accelerator.git//components/terraform/aws/vpc/
+    # version: v0.0.3

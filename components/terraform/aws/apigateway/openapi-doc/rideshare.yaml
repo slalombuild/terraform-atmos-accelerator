@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Swagger Rideshare - OpenAPI 3.0
+  description: |-
+    This is a sample Rideshare Server based on the OpenAPI 3.0 specification.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: eugene.kim@draiverdo.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+  - name: pet
+    description: Everything about your Rideshares
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /rideshare:
+    post:
+      tags:
+        - rideshare
+      summary: Create a new rideshare
+      description: Creates a new rideshare via Uber Api
+      operationId: addRideshare
+      requestBody:
+        description: Create a new Uber rideshare
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rideshare'
+        required: true
+      x-amazon-apigateway-integration:
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:532904089877:function:rideshare/invocations"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        type: "AWS"
+        timeoutInMillis: 29000
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rideshare'
+        '405':
+          description: Invalid input
+    get:
+      tags:
+        - rideshare
+      summary: Find rideshare by rideshareId
+      description: Returns a single rideshare
+      operationId: getRideshareByRideshareId
+      x-amazon-apigateway-integration:
+        type: "aws_proxy"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:532904089877:function:rideshare/invocations"
+        passthroughBehavior: "when_no_match"
+        timeoutInMillis: 29000
+      x-amazon-apigate-way-request-validator: "Validate query string parameters and headers"
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Rideshare not found
+components:
+  parameters:
+    rideshareId:
+      description: rideshare identifier
+      in: query
+      name: rideshareId
+      schema:
+        type: string
+      required: true
+  schemas:
+    Rideshare:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: ideshare
+  requestBodies:
+    Rideshare:
+      description: Rideshare object that needs to be created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Rideshare'

@@ -8,28 +8,28 @@ data "aws_vpc" "main" {
 }
 
 data "aws_subnets" "private" {
+  tags = {
+    Name = "*private*"
+  }
+
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.main.id]
-  }
-
-  tags = {
-    Name = "*private*"
   }
 }
 
 data "aws_ami" "default" {
   most_recent = true
+  owners      = [var.ami_owner]
 
   filter {
     name   = "name"
     values = [var.ami_name]
   }
-
-  owners = [var.ami_owner]
 }
 
 data "aws_lb_target_group" "alb" {
   count = var.alb_name != "" ? 1 : 0
-  name  = format("default-%s", var.alb_name)
+
+  name = format("default-%s", var.alb_name)
 }

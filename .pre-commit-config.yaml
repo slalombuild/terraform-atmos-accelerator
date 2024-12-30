@@ -1,12 +1,17 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.6.0
     hooks:
+      - id: check-added-large-files
       - id: check-merge-conflict
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
       - id: check-json
+        exclude: |
+          (?x)^(
+              .vscode/settings.json
+          )$
       - id: check-yaml
       - id: sort-simple-yaml
       - id: check-symlinks
@@ -14,31 +19,22 @@ repos:
         args: [--fix=lf]
       - id: trailing-whitespace
       - id: detect-private-key
-  # - repo: https://github.com/executablebooks/mdformat
-  #   rev: 0.7.16
-  #   hooks:
-  #     - id: mdformat
-  #       args:
-  #         - --wrap=80
-  #       exclude: README_TF\.md
-  #       additional_dependencies:
-  #         - mdformat-toc
-  #         - mdformat-tables
-  # - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
-  #   rev: 0.2.3
-  #   hooks:
-  #     - id: yamlfmt
-  #       args:
-  #         - --mapping=2
-  #         - --sequence=2
-  #         - --offset=0
-  #         - --width=80
+
+  - hooks:
+      - id: avmfix
+        name: autofix terraform
+        entry: /usr/bin/env bash -c 'for dir in $(git diff --cached --name-only --diff-filter=ACM | grep ".tf$" | xargs -n1 dirname | sort -u); do avmfix --folder "$dir"; done'
+        language: script
+        files: \.tf$
+    repo: local
+
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.80.0
+    rev: v1.92.2
     hooks:
       - id: terraform_fmt
-      - id: terraform_validate
-      - id: terraform_tflint
+      # avmfix validates and lints terraform better
+      # - id: terraform_validate
+      # - id: terraform_tflint
       - id: terraform_docs
         args:
           - --args=--config=.terraform-docs.yaml
@@ -47,25 +43,3 @@ repos:
       - id: terraform_tfsec
         args:
           - -a --exclude-downloaded-modules -m HIGH --concise-output
-# - repo: local
-#   hooks:
-#   - id: terraform-docs-azure-components
-#     name: terraform-docs-azure-components
-#     entry: terraform-docs components/terraform/azure
-#     language: system
-#     pass_filenames: false
-#     always_run: true
-
-#   - id: terraform-docs-aws-components
-#     name: terraform-docs-aws-components
-#     entry: terraform-docs components/terraform/aws
-#     language: system
-#     pass_filenames: false
-#     always_run: true
-
-#   - id: terraform-docs-gcp-components
-#     name: terraform-docs-gcp-components
-#     entry: terraform-docs components/terraform/gcp
-#     language: system
-#     pass_filenames: false
-#     always_run: true

@@ -1,4 +1,4 @@
-# ssm iam instance profile 
+# ssm iam instance profile
 
 resource "aws_iam_instance_profile" "iam_profile" {
   name = format("%s-%s-ec2profile-%s", var.namespace, var.environment, var.name)
@@ -6,7 +6,6 @@ resource "aws_iam_instance_profile" "iam_profile" {
 }
 
 resource "aws_iam_role" "iam_role" {
-  name               = format("%s-%s-ec2role-%s", var.namespace, var.environment, var.name)
   assume_role_policy = <<EOF
   {
   "Version": "2012-10-17",
@@ -17,16 +16,18 @@ resource "aws_iam_role" "iam_role" {
   }
   }
   EOF
+  name               = format("%s-%s-ec2role-%s", var.namespace, var.environment, var.name)
 }
 
 
 locals {
-  required_policies = ["AmazonSSMManagedInstanceCore"]
   all_policies      = toset(concat(var.custom_managed_policies, local.required_policies))
+  required_policies = ["AmazonSSMManagedInstanceCore"]
 }
 
 resource "aws_iam_role_policy_attachment" "managed_policies" {
-  for_each   = local.all_policies
-  role       = aws_iam_role.iam_role.name
+  for_each = local.all_policies
+
   policy_arn = format("arn:aws:iam::aws:policy/%s", each.key)
+  role       = aws_iam_role.iam_role.name
 }

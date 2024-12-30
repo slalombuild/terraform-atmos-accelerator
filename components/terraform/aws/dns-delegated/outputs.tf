@@ -1,6 +1,6 @@
-output "zones" {
-  value       = local.aws_route53_zone
-  description = "Subdomain and zone config"
+output "default_dns_zone_id" {
+  description = "Default root DNS zone ID for the cluster"
+  value       = local.aws_route53_zone[var.zone_config[0].subdomain].zone_id
 }
 
 output "default_domain_name" {
@@ -8,12 +8,12 @@ output "default_domain_name" {
   value       = join(".", [var.zone_config[0].subdomain, var.zone_config[0].zone_name])
 }
 
-output "default_dns_zone_id" {
-  description = "Default root DNS zone ID for the cluster"
-  value       = local.aws_route53_zone[var.zone_config[0].subdomain].zone_id
-}
-
 output "route53_hosted_zone_protections" {
   description = "List of AWS Shield Advanced Protections for Route53 Hosted Zones."
   value       = aws_shield_protection.shield_protection
+}
+
+output "zones" {
+  description = "Subdomain and zone config"
+  value       = local.aws_route53_zone
 }

@@ -60,10 +60,10 @@ Enables VPC Endpoints
 | <a name="module_secretsmanager_vpc_endpoint_sg_label"></a> [secretsmanager\_vpc\_endpoint\_sg\_label](#module\_secretsmanager\_vpc\_endpoint\_sg\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_sqs_vpc_endpoint_sg_label"></a> [sqs\_vpc\_endpoint\_sg\_label](#module\_sqs\_vpc\_endpoint\_sg\_label) | cloudposse/label/null | 0.25.0 |
 | <a name="module_ssm_vpc_endpoint_sg_label"></a> [ssm\_vpc\_endpoint\_sg\_label](#module\_ssm\_vpc\_endpoint\_sg\_label) | cloudposse/label/null | 0.25.0 |
-| <a name="module_subnets"></a> [subnets](#module\_subnets) | cloudposse/dynamic-subnets/aws | 2.3.0 |
+| <a name="module_subnets"></a> [subnets](#module\_subnets) | cloudposse/dynamic-subnets/aws | 2.4.1 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | cloudposse/vpc/aws | 2.1.0 |
-| <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | cloudposse/vpc/aws//modules/vpc-endpoints | v1.2.0 |
+| <a name="module_vpc_endpoints"></a> [vpc\_endpoints](#module\_vpc\_endpoints) | cloudposse/vpc/aws//modules/vpc-endpoints | v2.1.0 |
 
 ## Resources
 
@@ -79,8 +79,6 @@ Enables VPC Endpoints
 | [aws_security_group.secretsmanager_vpc_endpoint_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group.sqs_vpc_endpoint_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
 | [aws_security_group.ssm_vpc_endpoint_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
-| [aws_vpc_endpoint_route_table_association.dynamodb_gateway_vpc_endpoint_route_table_association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_route_table_association) | resource |
-| [aws_vpc_endpoint_route_table_association.s3_gateway_vpc_endpoint_route_table_association](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc_endpoint_route_table_association) | resource |
 
 ## Inputs
 

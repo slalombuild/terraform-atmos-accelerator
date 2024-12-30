@@ -1,7 +1,7 @@
 # The remote backend in the automation account
 module "terraform_state_backend" {
   source      = "cloudposse/tfstate-backend/aws"
-  version     = "1.4.1"
+  version     = "1.1.1"
   enabled     = true
   namespace   = "accelerator-auto"
   environment = "ue2"
@@ -18,18 +18,20 @@ module "terraform_state_backend" {
 }
 
 resource "aws_iam_policy" "allow_automation_tasks_to_assume" {
-  count       = module.this.enabled ? 1 : 0
-  name        = "allow_automation_tasks_to_assume"
-  description = "Policy used for atlantis to be permitted to assume roles"
+  provider = aws.auto
+  count    = module.this.enabled ? 1 : 0
+
   policy      = one([data.aws_iam_policy_document.assume_role_policy[*].json])
-  provider    = aws.auto
+  description = "Policy used for atlantis to be permitted to assume roles"
+  name        = "allow_automation_tasks_to_assume"
   tags        = module.this.tags
 }
 
 resource "aws_iam_role_policy_attachment" "allow_automation_tasks_to_assume" {
-  role       = var.iac_automation_role_name
+  provider = aws.auto
+
   policy_arn = one([aws_iam_policy.allow_automation_tasks_to_assume[*].arn])
-  provider   = aws.auto
+  role       = var.iac_automation_role_name
 }
 
 # The accelerator automation role definitions

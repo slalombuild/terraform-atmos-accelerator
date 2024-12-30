@@ -1,54 +1,54 @@
-output "logs" {
-  value       = module.logs
-  description = "Output of cloudwatch logs module"
-}
-
 output "container_definition" {
-  value       = local.container_definition
   description = "Output of container definition module"
-}
-
-output "task" {
-  value       = module.ecs_alb_service_task
-  description = "Output of service task module"
+  value       = local.container_definition
 }
 
 output "ecs_cluster_arn" {
-  value       = local.ecs_cluster_arn
   description = "Selected ECS cluster ARN"
-}
-
-output "subnet_ids" {
-  value       = local.subnet_ids
-  description = "Selected subnet IDs"
-}
-
-output "vpc_id" {
-  value       = local.vpc_id
-  description = "Selected VPC ID"
-}
-
-output "vpc_sg_id" {
-  value       = local.vpc_sg_id
-  description = "Selected VPC SG ID"
-}
-
-output "lb_sg_id" {
-  value       = local.lb_sg_id
-  description = "Selected LB SG ID"
-}
-
-output "lb_arn" {
-  value       = local.lb_arn
-  description = "Selected LB ARN"
-}
-
-output "lb_listener_https" {
-  value       = local.lb_listener_https_arn
-  description = "Selected LB HTTPS Listener"
+  value       = local.ecs_cluster_arn
 }
 
 output "full_domain" {
-  value       = local.full_domain
   description = "Domain to respond to GET requests"
+  value       = local.full_domain
+}
+
+output "lb_arn" {
+  description = "Selected LB ARN"
+  value       = local.lb_arn
+}
+
+output "lb_listener_https" {
+  description = "Selected LB HTTPS Listener"
+  value       = local.lb_listener_https_arn
+}
+
+output "lb_sg_id" {
+  description = "Selected LB SG ID"
+  value       = local.lb_sg_id
+}
+
+output "logs" {
+  description = "Output of cloudwatch logs module"
+  value       = module.logs
+}
+
+output "subnet_ids" {
+  description = "Selected subnet IDs"
+  value       = local.subnet_ids
+}
+
+output "task" {
+  description = "Output of service task module"
+  value       = module.ecs_alb_service_task
+}
+
+output "vpc_id" {
+  description = "Selected VPC ID"
+  value       = local.vpc_id
+}
+
+output "vpc_sg_id" {
+  description = "Selected VPC SG ID"
+  value       = local.vpc_sg_id
 }

@@ -35,9 +35,9 @@ components:
             type: A
             ttl: 60
             records:
-              - 10.20.0.10
-              - 10.20.0.20
-              - 10.20.0.30
+              - 10.128.40.111
+              - 10.128.40.135
+              - 10.128.40.136
 ```
 
 <!-- BEGIN-TERRAFORM-DOCS -->
@@ -69,11 +69,13 @@ components:
 | [aws_route53_record.dnsrec](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_record.soa](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record) | resource |
 | [aws_route53_zone.root](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
+| [aws_route53domains_registered_domain.registered_domain](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53domains_registered_domain) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_account_map"></a> [account\_map](#input\_account\_map) | Account map of all the available accounts | `map(any)` | `{}` | no |
 | <a name="input_additional_tag_map"></a> [additional\_tag\_map](#input\_additional\_tag\_map) | Additional key-value pairs to add to each map in `tags_as_list_of_maps`. Not added to `tags` or `id`.<br>This is for some rare cases where resources want additional configuration of tags<br>and therefore take a list of maps with tag key, value, and additional configuration. | `map(string)` | `{}` | no |
 | <a name="input_alias_record_config"></a> [alias\_record\_config](#input\_alias\_record\_config) | DNS Alias Record config | <pre>list(object({<br>    root_zone              = string<br>    name                   = string<br>    type                   = string<br>    zone_id                = string<br>    record                 = string<br>    evaluate_target_health = bool<br>  }))</pre> | `[]` | no |
 | <a name="input_attributes"></a> [attributes](#input\_attributes) | ID element. Additional attributes (e.g. `workers` or `cluster`) to add to `id`,<br>in the order they appear in the list. New attributes are appended to the<br>end of the list. The elements of the list are joined by the `delimiter`<br>and treated as a single ID element. | `list(string)` | `[]` | no |
@@ -81,7 +83,7 @@ components:
 | <a name="input_delimiter"></a> [delimiter](#input\_delimiter) | Delimiter to be used between ID elements.<br>Defaults to `-` (hyphen). Set to `""` to use no delimiter at all. | `string` | `null` | no |
 | <a name="input_descriptor_formats"></a> [descriptor\_formats](#input\_descriptor\_formats) | Describe additional descriptors to be output in the `descriptors` output map.<br>Map of maps. Keys are names of descriptors. Values are maps of the form<br>`{<br>   format = string<br>   labels = list(string)<br>}`<br>(Type is `any` so the map values can later be enhanced to provide additional options.)<br>`format` is a Terraform format string to be passed to the `format()` function.<br>`labels` is a list of labels, in order, to pass to `format()` function.<br>Label values will be normalized before being passed to `format()` so they will be<br>identical to how they appear in `id`.<br>Default is `{}` (`descriptors` output will be empty). | `any` | `{}` | no |
 | <a name="input_dns_soa_config"></a> [dns\_soa\_config](#input\_dns\_soa\_config) | Root domain name DNS SOA record:<br>- awsdns-hostmaster.amazon.com. ; AWS default value for administrator email address<br>- 1 ; serial number, not used by AWS<br>- 7200 ; refresh time in seconds for secondary DNS servers to refreh SOA record<br>- 900 ; retry time in seconds for secondary DNS servers to retry failed SOA record update<br>- 1209600 ; expire time in seconds (1209600 is 2 weeks) for secondary DNS servers to remove SOA record if they cannot refresh it<br>- 60 ; nxdomain TTL, or time in seconds for secondary DNS servers to cache negative responses<br>See [SOA Record Documentation](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/SOA-NSrecords.html) for more information. | `string` | `"awsdns-hostmaster.amazon.com. 1 7200 900 1209600 60"` | no |
-| <a name="input_domain_names"></a> [domain\_names](#input\_domain\_names) | Root domain name list, e.g. and the option to manage a PREVIOUSLY registered the domain. See [here](#the-register_domain-flag) for further details about the register_domain flag. | <pre>list(object({<br> domain_name        = string<br> register_domain    = optional(bool, "false")<br> admin_contact      = optional(list(object()))<br> registrant_contact = optional(list(object()))<br> tech_contact       = optional(list(object()))<br>})) </pre>| `null` | yes |
+| <a name="input_domain_names"></a> [domain\_names](#input\_domain\_names) | Root domain name list, e.g. and the option to manage a PREVIOUSLY registered the domain.<br>This last option will NOT work if the domain wasn't registered/bought before, and therefore doesn't appear in the Route53 domains console.<br>Admin, tech and registrant contact only work if register\_domain is true, but they are still optional<br>e.g.:<br>[<br>  {<br>    domain\_name = "example.net"<br>    register\_domain = false<br>    admin\_contact:<br>      - first\_name: "John"<br>        last\_name: "Wick"<br>  }<br>] | <pre>list(object({<br>    domain_name     = string<br>    register_domain = optional(bool, "false")<br>    admin_contact = optional(list(object({<br>      address_line_1    = optional(string, null)<br>      address_line_2    = optional(string, null)<br>      city              = optional(string, null)<br>      contact_type      = optional(string, null) ## PERSON COMPANY ASSOCIATION PUBLIC_BODY RESELLER<br>      country_code      = optional(string, null)<br>      email             = optional(string, null)<br>      extra_params      = optional(map(string))<br>      fax               = optional(string, null)<br>      first_name        = optional(string, null)<br>      last_name         = optional(string, null)<br>      organization_name = optional(string, null)<br>      phone_number      = optional(string, null)<br>      state             = optional(string, null)<br>      zip_code          = optional(string, null)<br>      }<br>    )))<br>    registrant_contact = optional(list(object({<br>      address_line_1    = optional(string, null)<br>      address_line_2    = optional(string, null)<br>      city              = optional(string, null)<br>      contact_type      = optional(string, null) ## PERSON COMPANY ASSOCIATION PUBLIC_BODY RESELLER<br>      country_code      = optional(string, null)<br>      email             = optional(string, null)<br>      extra_params      = optional(map(string))<br>      fax               = optional(string, null)<br>      first_name        = optional(string, null)<br>      last_name         = optional(string, null)<br>      organization_name = optional(string, null)<br>      phone_number      = optional(string, null)<br>      state             = optional(string, null)<br>      zip_code          = optional(string, null)<br>      }<br>    )))<br>    tech_contact = optional(list(object({<br>      address_line_1    = optional(string, null)<br>      address_line_2    = optional(string, null)<br>      city              = optional(string, null)<br>      contact_type      = optional(string, null) ## PERSON COMPANY ASSOCIATION PUBLIC_BODY RESELLER<br>      country_code      = optional(string, null)<br>      email             = optional(string, null)<br>      extra_params      = optional(map(string))<br>      fax               = optional(string, null)<br>      first_name        = optional(string, null)<br>      last_name         = optional(string, null)<br>      organization_name = optional(string, null)<br>      phone_number      = optional(string, null)<br>      state             = optional(string, null)<br>      zip_code          = optional(string, null)<br>      }<br>    )))<br>  }))</pre> | n/a | yes |
 | <a name="input_enabled"></a> [enabled](#input\_enabled) | Set to false to prevent the module from creating any resources | `bool` | `null` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | ID element. Usually used for region e.g. 'uw2', 'us-west-2', OR role 'prod', 'staging', 'dev', 'UAT' | `string` | `null` | no |
 | <a name="input_id_length_limit"></a> [id\_length\_limit](#input\_id\_length\_limit) | Limit `id` to this many characters (minimum 6).<br>Set to `0` for unlimited length.<br>Set to `null` for keep the existing setting, which defaults to `0`.<br>Does not affect `id_full`. | `number` | `null` | no |
@@ -99,7 +101,6 @@ components:
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_. A customer identifier, indicating who this instance of a resource is for | `string` | `null` | no |
-| <a name="input_account_map"></a> [account\_map](#input\_account\_map) | Account map of all the available accounts | `map(any)` | `{}` | no |
 
 ## Outputs
 
@@ -107,33 +108,4 @@ components:
 |------|-------------|
 | <a name="output_acms"></a> [acms](#output\_acms) | ACM certificates for domains |
 | <a name="output_zones"></a> [zones](#output\_zones) | DNS zones |
-
-
-## Note about managing Route53 Domains in the same account as the Hosted Zone
-
-### Importing the Hosted Zone
-
-When Route53 is used as a registrar, it will automatically create a Hosted Zone with the domain name that was registered. This module will attempt to create another one with the same name unless we import that Hosted zone.
-
-Steps to import the Hosted Zone:
-
-```
-# ensure atmos creates the var file
-atmos terraform plan dns-primary -s STACK_NAME
-# go to the component directory
-cd components/terraform/dns-primary
-# ensure you are in the correct workspace
-terraform workspace select STACK_NAME
-# import the hosted zone
-terraform import -var-file=STACK-NAME-dns-primary.terraform.tfvars.json 'aws_route53_zone.root["example.io"]' HOSTED_ZONE_ID
-# import the SOA record
-terraform import -var-file=STACK-NAME-dns-primary.terraform.tfvars.json 'aws_route53_record.soa["example.io"]' HOSTED_ZONE_ID_example.io_SOA
-```
-
-### The register_domain flag
-
-This flag uses the resource [aws_route53domains_registered_domain](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53domains_registered_domain) to include the Route53 domain in the Terraform state.
-This CANNOT be used to register a new domain from scratch through Terraform. That is an asynchronous process that requires somebody from the AWS side to approve it.
-This module only allows you to include that domain after the previous process has happened.
-Once in the Terraform state, one is able to change some contact information and control the renewal settings, for example.
 <!-- END-TERRAFORM-DOCS -->

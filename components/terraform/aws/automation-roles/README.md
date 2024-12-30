@@ -68,11 +68,11 @@ deployed via `terraform apply`.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_automation_auto_role"></a> [automation\_auto\_role](#module\_automation\_auto\_role) | cloudposse/iam-role/aws | 0.18.0 |
-| <a name="module_automation_dev_role"></a> [automation\_dev\_role](#module\_automation\_dev\_role) | cloudposse/iam-role/aws | 0.18.0 |
-| <a name="module_automation_prod_role"></a> [automation\_prod\_role](#module\_automation\_prod\_role) | cloudposse/iam-role/aws | 0.18.0 |
-| <a name="module_automation_staging_role"></a> [automation\_staging\_role](#module\_automation\_staging\_role) | cloudposse/iam-role/aws | 0.18.0 |
-| <a name="module_terraform_state_backend"></a> [terraform\_state\_backend](#module\_terraform\_state\_backend) | cloudposse/tfstate-backend/aws | 1.1.0 |
+| <a name="module_automation_auto_role"></a> [automation\_auto\_role](#module\_automation\_auto\_role) | cloudposse/iam-role/aws | 0.19.0 |
+| <a name="module_automation_dev_role"></a> [automation\_dev\_role](#module\_automation\_dev\_role) | cloudposse/iam-role/aws | 0.19.0 |
+| <a name="module_automation_prod_role"></a> [automation\_prod\_role](#module\_automation\_prod\_role) | cloudposse/iam-role/aws | 0.19.0 |
+| <a name="module_automation_staging_role"></a> [automation\_staging\_role](#module\_automation\_staging\_role) | cloudposse/iam-role/aws | 0.19.0 |
+| <a name="module_terraform_state_backend"></a> [terraform\_state\_backend](#module\_terraform\_state\_backend) | cloudposse/tfstate-backend/aws | 1.1.1 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 
 ## Resources

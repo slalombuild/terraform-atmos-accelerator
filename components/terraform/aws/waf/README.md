@@ -3,7 +3,7 @@
 This component is responsible to create and manage AWS WAF rules.
 This module creates the following resources:
 
-+ WAFv2 Web ACL 
++ WAFv2 Web ACL
 + WAFv2 Web ACL Association
 + WAFv2 Web ACL Logging Configuration
 
@@ -14,16 +14,16 @@ This module creates the following resources:
 Here's an example snippet for how to use this component.
 
 The following will create:
-- WAFv2 Web ACL 
+- WAFv2 Web ACL
 - WAFv2 Web ACL Association
 - WAFv2 Web ACL Logging Configuration
 
 
 ```yaml
 terraform:
-  waf: 
-    vars: 
-      region: us-east-2 
+  waf:
+    vars:
+      region: us-east-2
 ```
 Perform the following commands on the root folder:
 
@@ -108,7 +108,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
-| <a name="module_waf"></a> [waf](#module\_waf) | cloudposse/waf/aws | 0.0.4 |
+| <a name="module_waf"></a> [waf](#module\_waf) | cloudposse/waf/aws | 1.0.0 |
 
 ## Resources
 

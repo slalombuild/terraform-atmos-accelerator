@@ -1,6 +1,22 @@
+variable "account_name" {
+  type        = string
+  description = "AWS Account name"
+}
+
+variable "account_number" {
+  type        = string
+  description = "The account number for the assume role"
+}
+
 variable "region" {
   type        = string
   description = "AWS Region"
+}
+
+variable "acm_certificate_domain" {
+  type        = string
+  default     = null
+  description = "Domain to get the ACM cert to use on the ALB."
 }
 
 variable "alb_configuration" {
@@ -21,22 +37,10 @@ variable "alb_ingress_cidr_blocks_https" {
   description = "List of CIDR blocks allowed to access environment over HTTPS"
 }
 
-variable "route53_enabled" {
+variable "container_insights_enabled" {
   type        = bool
   default     = true
-  description = "Whether or not to create a route53 record for the ALB"
-}
-
-variable "acm_certificate_domain" {
-  type        = string
-  default     = null
-  description = "Domain to get the ACM cert to use on the ALB."
-}
-
-variable "route53_record_name" {
-  type        = string
-  default     = "*"
-  description = "The route53 record name"
+  description = "Whether or not to enable container insights"
 }
 
 variable "domain_name" {
@@ -57,20 +61,16 @@ variable "maintenance_page_path" {
   description = "The path from this directory to the text/html page to use as the maintenance page. Must be within 1024 characters"
 }
 
-variable "container_insights_enabled" {
+variable "route53_enabled" {
   type        = bool
   default     = true
-  description = "Whether or not to enable container insights"
+  description = "Whether or not to create a route53 record for the ALB"
 }
 
-variable "account_number" {
+variable "route53_record_name" {
   type        = string
-  description = "The account number for the assume role"
-}
-
-variable "account_name" {
-  type        = string
-  description = "AWS Account name"
+  default     = "*"
+  description = "The route53 record name"
 }
 
 variable "vpc_name" {
