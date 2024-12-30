@@ -1,5 +1,5 @@
 module "naming" {
-  version = "0.4.1"
+  version = "0.4.2"
   source  = "Azure/naming/azurerm"
   suffix  = [var.component_suffix]
 }
