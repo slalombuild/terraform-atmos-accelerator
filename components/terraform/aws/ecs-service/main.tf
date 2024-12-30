@@ -214,7 +214,7 @@ module "rds_sg_label" {
 
 module "ecs_cloudwatch_autoscaling" {
   source  = "cloudposse/ecs-cloudwatch-autoscaling/aws"
-  version = "0.7.3"
+  version = "0.7.5"
 
   count = var.task_enabled ? 1 : 0
 
