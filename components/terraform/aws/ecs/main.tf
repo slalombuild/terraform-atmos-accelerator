@@ -41,7 +41,7 @@ resource "aws_route53_record" "default" {
 
 module "alb" {
   source  = "cloudposse/alb/aws"
-  version = "1.10.0"
+  version = "1.12.0"
 
   for_each = local.enabled ? var.alb_configuration : {}
 
