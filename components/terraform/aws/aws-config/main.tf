@@ -50,7 +50,7 @@ module "utils" {
 
 module "conformance_pack" {
   source  = "cloudposse/config/aws//modules/conformance-pack"
-  version = "1.1.0"
+  version = "1.5.3"
 
   count = local.enabled ? length(var.conformance_packs) : 0
 
@@ -67,7 +67,7 @@ module "conformance_pack" {
 
 module "aws_config" {
   source  = "cloudposse/config/aws"
-  version = "1.1.0"
+  version = "1.5.3"
 
   s3_bucket_id     = local.s3_bucket.config_bucket_id
   s3_bucket_arn    = local.s3_bucket.config_bucket_arn
