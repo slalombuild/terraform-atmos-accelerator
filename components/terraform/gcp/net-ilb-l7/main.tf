@@ -1,7 +1,7 @@
 module "lb-http" {
   count                           = local.enabled ? 1 : 0
   source                          = "GoogleCloudPlatform/lb-http/google"
-  version                         = "10.2.0"
+  version                         = "12.0.0"
   project                         = var.project_id
   name                            = module.this.id
   backends                        = var.backends
