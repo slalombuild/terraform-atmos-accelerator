@@ -1,7 +1,7 @@
 # Lambda s3 access to download artifacts
 module "lambda_s3_bucket" {
   source                  = "cloudposse/s3-bucket/aws"
-  version                 = "3.1.3"
+  version                 = "4.9.0"
   enabled                 = var.s3_bucket == null ? true : false
   bucket_name             = module.this.id
   attributes              = ["bucket"]
