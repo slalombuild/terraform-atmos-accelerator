@@ -94,7 +94,7 @@ data "aws_ami" "runner" {
 
 module "sg" {
   source  = "cloudposse/security-group/aws"
-  version = "1.0.1"
+  version = "2.2.0"
 
   security_group_description = "Security group for GitHub runner"
   allow_all_egress           = true
