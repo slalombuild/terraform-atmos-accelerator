@@ -1,7 +1,7 @@
 # Example rules for WAF
 module "waf" {
   source  = "cloudposse/waf/aws"
-  version = "1.0.0"
+  version = "1.8.0"
 
   # A rule statement used to run the rules that are defined in a managed rule group.
 
