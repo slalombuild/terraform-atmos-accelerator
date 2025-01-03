@@ -17,7 +17,7 @@ module "always" {
 
 module "account_map" {
   source  = "cloudposse/stack-config/yaml//modules/remote-state"
-  version = "1.5.0"
+  version = "1.8.0"
 
   component   = "account-map"
   privileged  = var.privileged

@@ -56,7 +56,7 @@ module "github_oidc_provider" {
   count = local.github_oidc_enabled ? 1 : 0
 
   source  = "cloudposse/stack-config/yaml//modules/remote-state"
-  version = "1.5.0"
+  version = "1.8.0"
 
   component   = "github-oidc-provider"
   environment = var.global_environment_name
