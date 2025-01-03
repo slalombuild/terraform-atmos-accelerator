@@ -153,7 +153,7 @@ resource "aws_organizations_account" "organizational_units_accounts" {
 # Provision Organization Service Control Policy
 module "organization_service_control_policies" {
   source  = "cloudposse/service-control-policies/aws"
-  version = "0.9.2"
+  version = "0.15.0"
 
   count = length(local.organization_service_control_policy_statements) > 0 ? 1 : 0
 
@@ -168,7 +168,7 @@ module "organization_service_control_policies" {
 # Provision Accounts Service Control Policies
 module "accounts_service_control_policies" {
   source  = "cloudposse/service-control-policies/aws"
-  version = "0.9.2"
+  version = "0.15.0"
 
   for_each = local.account_names_service_control_policy_statements_map
 
@@ -183,7 +183,7 @@ module "accounts_service_control_policies" {
 # Provision Organizational Units Service Control Policies
 module "organizational_units_service_control_policies" {
   source  = "cloudposse/service-control-policies/aws"
-  version = "0.9.2"
+  version = "0.15.0"
 
   for_each = local.organizational_unit_names_service_control_policy_statements_map
 
