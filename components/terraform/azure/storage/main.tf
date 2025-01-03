@@ -17,7 +17,7 @@ resource "time_sleep" "wait_for_creation" {
 
 module "avm-res-storage-storageaccount" {
   source  = "Azure/avm-res-storage-storageaccount/azurerm"
-  version = "0.2.9"
+  version = "0.4.0"
 
   name                                = module.storage_naming.storage_account.name
   resource_group_name                 = local.resource_group_name
