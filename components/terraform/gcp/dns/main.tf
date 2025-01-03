@@ -1,7 +1,7 @@
 module "cloud_dns" {
   count       = local.enabled ? 1 : 0
   source      = "terraform-google-modules/cloud-dns/google"
-  version     = "5.2.0"
+  version     = "5.3.0"
   project_id  = var.project_id
   type        = var.dns.type
   name        = module.this.id
