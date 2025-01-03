@@ -14,7 +14,7 @@ module "acm" {
   for_each = local.zone_map
 
   source  = "cloudposse/acm-request-certificate/aws"
-  version = "0.17.0"
+  version = "0.18.0"
 
   enabled = local.certificate_enabled
 
