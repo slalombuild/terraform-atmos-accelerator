@@ -2,7 +2,7 @@
 # https://github.com/cloudposse/terraform-aws-sns-topic
 module "sns" {
   source  = "cloudposse/sns-topic/aws"
-  version = "0.21.0"
+  version = "1.1.0"
 
   allowed_aws_services_for_sns_published = var.allowed_aws_services_for_sns_published
 
