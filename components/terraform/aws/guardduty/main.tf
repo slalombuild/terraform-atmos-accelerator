@@ -30,7 +30,7 @@ resource "aws_guardduty_organization_admin_account" "this" {
 module "guardduty" {
   count   = local.create_guardduty_collector ? 1 : 0
   source  = "cloudposse/guardduty/aws"
-  version = "0.5.0"
+  version = "0.6.0"
 
   finding_publishing_frequency              = var.finding_publishing_frequency
   create_sns_topic                          = var.create_sns_topic
