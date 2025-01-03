@@ -14,7 +14,7 @@ resource "aws_route53_record" "default" {
 
 module "alb" {
   source                            = "cloudposse/alb/aws"
-  version                           = "1.12.0"
+  version                           = "2.2.1"
   vpc_id                            = local.vpc_id
   security_group_ids                = local.alb_security_group_id
   subnet_ids                        = local.public_subnet_ids
