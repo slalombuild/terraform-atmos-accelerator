@@ -153,7 +153,7 @@ module "alb_ecs_label" {
 
 module "alb_ingress" {
   source  = "cloudposse/alb-ingress/aws"
-  version = "0.28.0"
+  version = "0.29.0"
 
   count = var.use_lb ? 1 : 0
 
