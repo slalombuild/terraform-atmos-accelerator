@@ -37,7 +37,7 @@ resource "aws_iam_role_policy_attachment" "allow_automation_tasks_to_assume" {
 # The accelerator automation role definitions
 module "automation_auto_role" {
   source      = "cloudposse/iam-role/aws"
-  version     = "0.19.0"
+  version     = "0.20.0"
   enabled     = module.this.enabled
   namespace   = "accelerator-auto"
   environment = "automation"
@@ -67,7 +67,7 @@ module "automation_auto_role" {
 
 module "automation_dev_role" {
   source      = "cloudposse/iam-role/aws"
-  version     = "0.19.0"
+  version     = "0.20.0"
   enabled     = lookup(var.accounts, "dev", null) != null ? true : false
   namespace   = "accelerator-dev"
   environment = "automation"
@@ -94,7 +94,7 @@ module "automation_dev_role" {
 
 module "automation_staging_role" {
   source      = "cloudposse/iam-role/aws"
-  version     = "0.19.0"
+  version     = "0.20.0"
   enabled     = lookup(var.accounts, "staging", null) != null ? true : false
   namespace   = "accelerator-staging"
   environment = "automation"
@@ -121,7 +121,7 @@ module "automation_staging_role" {
 
 module "automation_prod_role" {
   source      = "cloudposse/iam-role/aws"
-  version     = "0.19.0"
+  version     = "0.20.0"
   enabled     = lookup(var.accounts, "prod", null) != null ? true : false
   namespace   = "accelerator-prod"
   environment = "automation"
