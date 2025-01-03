@@ -97,7 +97,7 @@ Endpoints
 */
 module "vpc_endpoints" {
   source  = "cloudposse/vpc/aws//modules/vpc-endpoints"
-  version = "v2.1.0"
+  version = "v2.2.0"
   enabled = local.enabled
   vpc_id  = module.vpc.vpc_id
 
